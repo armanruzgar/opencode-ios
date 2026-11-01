@@ -201,7 +201,7 @@ Issues are welcome: bug reports, problems with a particular opencode version, an
 
 ## Licence
 
-Copyright © 2026 38st.
+Copyright © 2026 armanruzgar.
 
 The app is licensed under the [GNU General Public License v3.0 only](LICENSE) (GPL-3.0-only). The push plugin ([`server/plugin`](server/plugin/LICENSE)), the relay ([`server/relay`](server/relay/LICENSE)) and their shared contracts ([`server/contracts`](server/contracts/LICENSE)) are MIT-licensed, each with its own LICENSE file.
 
