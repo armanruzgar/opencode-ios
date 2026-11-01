@@ -20,6 +20,14 @@ final class FailingTransport: HTTPTransport, @unchecked Sendable {
     }
 }
 
+/// Event types seen on a stream, readable from the main actor while the reading task appends.
+private final class ReceivedTypes: @unchecked Sendable {
+    private let lock = NSLock()
+    private var values: [String] = []
+    var types: [String] { lock.withLock { values } }
+    func append(_ type: String) { lock.withLock { values.append(type) } }
+}
+
 @MainActor
 private func eventually(_ what: @autoclosure () -> String, timeout: Duration = .seconds(20), _ condition: () -> Bool) async throws {
     let deadline = ContinuousClock.now + timeout
@@ -66,11 +74,9 @@ private func eventually(_ what: @autoclosure () -> String, timeout: Duration = .
         let live = try session(.live)
         try await store.readPath.open(live.id)
         let replyCount = { store.readPath.sessions[live.id]?.transcript?.order.count ?? 0 }
-        // A busy test host can fall behind the replayed events; a refresh, as the app's resync does, reads the end state.
-        let streamed = ContinuousClock.now + .seconds(10)
-        while replyCount() < 2 && ContinuousClock.now < streamed { try await Task.sleep(for: .milliseconds(20)) }
-        if replyCount() < 2 { try await store.readPath.refreshSession(live.id) }
+        // The whole reply arrives from the stream alone: the prompt, each step and the idle row, with no refresh.
         try await eventually("the live reply, \(replyCount()) messages") { replyCount() >= 2 }
+        try await eventually("the live session to finish") { store.readPath.sessions[live.id]?.status.isRunning == false && replyCount() == live.final.messages.count }
 
         // The permission session waits; approving it plays the rest.
         let permission = try session(.permission)
@@ -92,6 +98,43 @@ private func eventually(_ what: @autoclosure () -> String, timeout: Duration = .
         }
         await registry.shutdown()
         #expect(network.requests.isEmpty, "the demo reached \(network.requests)")
+    }
+
+    /// The app opens a session with the message page and its inbox and request reads in flight together, in no
+    /// fixed order. Only a later page read may end the replay, or the live session is left showing an empty page.
+    @Test func readsAlongsideTheOpeningPageKeepTheReplay() async throws {
+        let transport = ScenarioTransport(scenario: scenario, pacing: .zero)
+        let live = try session(.live)
+        func get(_ path: String) async throws -> JSONValue {
+            let response = try await transport.send(URLRequest(url: URL(string: path, relativeTo: ScenarioTransport.baseURL)!))
+            return try JSONDecoder().decode(JSONValue.self, from: response.data)
+        }
+        let received = ReceivedTypes()
+        let reading = Task {
+            for try await chunk in transport.stream(URLRequest(url: URL(string: "/api/event", relativeTo: ScenarioTransport.baseURL)!)) {
+                guard case .bytes(let data) = chunk else { continue }
+                for line in String(decoding: data, as: UTF8.self).split(separator: "\n") where line.hasPrefix("data: ") {
+                    let event = try JSONDecoder().decode(JSONValue.self, from: Data(line.dropFirst(6).utf8))
+                    received.append(event["type"]?.stringValue ?? "")
+                }
+            }
+        }
+        defer { reading.cancel() }
+        try await eventually("the stream to connect") { received.types.contains("server.connected") }
+
+        let opening = try await get("/api/session/\(live.id)/message?limit=50")
+        #expect(opening["data"]?.arrayValue?.isEmpty == true, "the live session starts empty and streams its reply")
+        async let inbox = get("/api/session/\(live.id)/inbox")
+        async let permissions = get("/api/session/\(live.id)/permission")
+        async let forms = get("/api/session/\(live.id)/form")
+        let pending = try await [inbox, permissions, forms].map { $0["data"]?.arrayValue?.count }
+        #expect(pending == [0, 0, 0])
+
+        try await eventually("the replayed reply") { received.types.contains("session.execution.succeeded") }
+        let deltas = live.events.filter { $0["type"]?.stringValue == "session.text.delta" }.count
+        #expect(received.types.filter { $0 == "session.text.delta" }.count == deltas, "every recorded event was streamed")
+        let final = try await get("/api/session/\(live.id)/message?limit=50")
+        #expect(final["data"]?.arrayValue?.count == live.final.messages.count)
     }
 
     @Test func anotherHostGoesToTheFallbackNotTheRecording() async throws {

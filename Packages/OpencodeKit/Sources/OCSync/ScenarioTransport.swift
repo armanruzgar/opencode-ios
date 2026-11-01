@@ -228,8 +228,9 @@ actor ScenarioServer {
             let slice = Array(ordered.dropFirst(start).prefix(limit))
             return (200, page(slice, next: start + slice.count < ordered.count ? "o\(start + slice.count)" : nil))
         case ("GET", let rest) where rest.count == 2 && ["inbox", "permission", "form"].contains(rest[1]):
-            settle(rest[0])
-            guard let state = state(rest[0]) else { return nil }
+            // The app reads these alongside the message page when it opens a session, so they must not end the
+            // replay that page started. Once the session has moved on, its request has been answered.
+            guard let state = requests(rest[0]) else { return nil }
             return (200, .object(["data": .array(rest[1] == "inbox" ? state.inbox : rest[1] == "permission" ? state.permissions : state.forms)]))
         case ("GET", let rest) where rest.count == 3 && ["permission", "form"].contains(rest[1]):
             guard let session = session(rest[0]), phase(rest[0]) == .opening, let request = session.request, request["id"]?.stringValue == rest[2] else { return nil }
@@ -256,7 +257,7 @@ actor ScenarioServer {
             return (200, page(infos.sorted { updated($0) > updated($1) }))
         case ("GET", "/api/permission/request"), ("GET", "/api/form"):
             let field = key == "/api/form" ? \DemoScenario.Snapshot.forms : \DemoScenario.Snapshot.permissions
-            let pending = scenario.sessions.compactMap { state($0.id)?[keyPath: field] }.flatMap(\.self)
+            let pending = scenario.sessions.compactMap { requests($0.id)?[keyPath: field] }.flatMap(\.self)
             return (200, located(.array(pending)))
         case ("GET", "/api/fs/find"):
             let needle = query["query"]?.lowercased() ?? ""
@@ -279,6 +280,11 @@ actor ScenarioServer {
     private func state(_ id: String) -> DemoScenario.Snapshot? {
         guard let session = session(id) else { return nil }
         return phase(id) == .final ? session.final : session.opening
+    }
+    /// Pending inbox items and requests: those of the opening state until a reply or an open starts the replay.
+    private func requests(_ id: String) -> DemoScenario.Snapshot? {
+        guard let session = session(id) else { return nil }
+        return phase(id) == .opening ? session.opening : session.final
     }
     private func page(_ items: [JSONValue], next: String? = nil) -> JSONValue {
         .object(["data": .array(items), "cursor": .object(next.map { ["next": .string($0)] } ?? [:])])
