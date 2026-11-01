@@ -38,7 +38,9 @@ final class ScreenshotTests: SmokeTestCase {
 
     @MainActor private func capture(dark: Bool) throws {
         scheme = dark ? "dark" : "light"
-        try launchFreshApp(suffix: "shots-" + scheme, dark: dark, arguments: ["--ui-testing-screenshots"])
+        // The detail preset comes from the launch arguments, so a preset left by an earlier run never changes a shot.
+        // Everything shows each tool row the streaming and Markdown shots are built around.
+        try launchFreshApp(suffix: "shots-" + scheme, dark: dark, arguments: ["--ui-testing-screenshots", "-timelineDetail", "everything"])
 
         app.buttons["addFirstServer"].tap()
         XCTAssertTrue(app.buttons["Cancel"].waitForExistence(timeout: 5)); shot("add-server")
@@ -54,27 +56,48 @@ final class ScreenshotTests: SmokeTestCase {
         XCTAssertTrue(homeSessionRow(Self.permissionSession).waitForExistence(timeout: 15))
         if !ipad { shot("home") }
 
-        open(Self.finishedSession); shot("session")
-
-        open(Self.markdownSession)
-        XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "Valibot")).firstMatch.waitForExistence(timeout: 10))
-        shot("markdown")
-        // The top of the long session, where earlier messages load.
-        let transcript = app.descendants(matching: .any)["transcriptScroll"].firstMatch
-        for _ in 0..<12 { transcript.swipeDown(velocity: .fast) }
-        shot("history")
-
+        // The running session streams its reply when it is first opened, so it is captured before the longer visits below.
         open(Self.liveSession)
         XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS[c] %@", "validate")).firstMatch.waitForExistence(timeout: 20))
         Thread.sleep(forTimeInterval: 3)
         shot("streaming")
+
+        open(Self.finishedSession); shot("session")
+
+        open(Self.markdownSession)
+        XCTAssertTrue(app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "Valibot")).firstMatch.waitForExistence(timeout: 10))
+        // The session opens at its end, with the table's header row just above the transcript: drag it into view, by
+        // less than the 80 points that stop the transcript following its end and bring up Jump to latest.
+        let transcript = app.descendants(matching: .any)["transcriptScroll"].firstMatch
+        let header = app.staticTexts["Option"].firstMatch
+        XCTAssertTrue(header.waitForExistence(timeout: 5))
+        let hidden = transcript.frame.minY + 16 - header.frame.minY
+        if hidden > 0 {
+            let from = transcript.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            from.press(forDuration: 0.1, thenDragTo: from.withOffset(CGVector(dx: 0, dy: min(hidden + 12, 70))), withVelocity: .slow, thenHoldForDuration: 0.5)
+            Thread.sleep(forTimeInterval: 1)
+        }
+        shot("markdown")
+        // Checked after the shot: a later layout pass could have pinned the transcript back to its end.
+        XCTAssertGreaterThanOrEqual(header.frame.minY, transcript.frame.minY, "The table's header row shows")
+        // The top of the long session, where earlier messages load.
+        for _ in 0..<12 { transcript.swipeDown(velocity: .fast) }
+        shot("history")
 
         open(Self.permissionSession)
         let dock = app.descendants(matching: .any).matching(identifier: "approvalDock").firstMatch
         XCTAssertTrue(dock.waitForExistence(timeout: 15)); shot("permission-dock")
         let reviewRequest = dock.buttons["reviewPermission"].firstMatch
         XCTAssertTrue(reviewRequest.waitForExistence(timeout: 5)); reviewRequest.tap()
-        XCTAssertTrue(app.buttons["allowOnce"].waitForExistence(timeout: 10)); shot("permission")
+        let allow = app.buttons["allowOnce"]
+        XCTAssertTrue(allow.waitForExistence(timeout: 10))
+        // The sheet is taller than an iPhone screen: scroll to its end so Reject, Allow always and Allow once show whole.
+        let sheet = app.scrollViews.containing(.button, identifier: "allowOnce").firstMatch
+        for _ in 0..<3 where allow.frame.maxY > sheet.frame.maxY - 20 {
+            sheet.swipeUp(); Thread.sleep(forTimeInterval: 1)
+        }
+        XCTAssertLessThanOrEqual(allow.frame.maxY, sheet.frame.maxY - 20, "The reply buttons show whole")
+        shot("permission")
         closeSheet()
 
         open(Self.formSession)

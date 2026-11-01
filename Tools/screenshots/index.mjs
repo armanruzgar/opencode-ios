@@ -1,8 +1,9 @@
 // App Store and README screenshots from the in-app demo, light and dark:
 //   node Tools/screenshots/index.mjs [--device "iPhone 17 Pro"] [--device "opencode-ios iPad"] [--readme]
 //
-// Runs the ScreenshotTests UI test on each named simulator (existing ones only; nothing is created or changed) and
-// saves `.build/store-screenshots/<device>/<light|dark>-<n>-<screen>.png`. `--readme` then rebuilds the README
+// Runs the ScreenshotTests UI test on each named simulator (existing ones only; nothing is created or changed, and the
+// status bar override for the capture is cleared after it) and saves
+// `.build/store-screenshots/<device>/<light|dark>-<n>-<screen>.png`. `--readme` then rebuilds the README
 // images in docs/images from the light captures (an iPhone and an iPad device are needed for the hero); it needs
 // `cwebp` (Homebrew `webp`).
 import assert from 'node:assert/strict';
@@ -34,6 +35,14 @@ export const README_IMAGES = {
   'add-server': 'iphone-add-server.webp',
 };
 export const README_WIDTH = 600;
+/** `simctl status_bar override` arguments for every capture. */
+export const STATUS_BAR = ['--time', '9:41', '--dataNetwork', 'wifi', '--wifiMode', 'active', '--wifiBars', '3',
+  '--cellularMode', 'active', '--cellularBars', '4', '--batteryState', 'discharging', '--batteryLevel', '100'];
+/** Puts a simulator's status bar back; a failure is reported, since the override would otherwise stay. */
+const clearStatusBar = async udid => {
+  try { await run('/usr/bin/xcrun', ['simctl', 'status_bar', udid, 'clear']); }
+  catch (error) { console.error(`Could not clear the status bar of ${udid}: ${error.message}`); }
+};
 
 async function capture(device, runID) {
   const simctl = await run('/usr/bin/xcrun', ['simctl', 'list', 'devices', 'available', '--json']);
@@ -46,6 +55,13 @@ async function capture(device, runID) {
   await mkdir(folder, { recursive: true });
   console.log(`Capturing on ${device}`);
   const log = path.join(output, `${device}.log`);
+  // The status bar reads 9:41 with full Wi-Fi, cellular and battery while capturing, and goes back to normal after,
+  // even when the capture fails. An override needs a booted device, so it is booted first.
+  await run('/usr/bin/xcrun', ['simctl', 'bootstatus', simulator.udid, '-b']);
+  await run('/usr/bin/xcrun', ['simctl', 'status_bar', simulator.udid, 'override', ...STATUS_BAR]);
+  // An interrupted run clears it too; the finally below does not run when Node is signalled.
+  const interrupted = signal => { clearStatusBar(simulator.udid).finally(() => process.exit(128 + (signal === 'SIGINT' ? 2 : 15))); };
+  process.once('SIGINT', interrupted); process.once('SIGTERM', interrupted);
   try {
     await writeFile(log, await run('/usr/bin/xcodebuild', ['-project', 'Opencode.xcodeproj', '-scheme', 'Opencode', '-destination', destination,
       '-derivedDataPath', '.build/DerivedData', '-skipPackagePluginValidation', '-resultBundlePath', result, '-parallel-testing-enabled', 'NO',
@@ -53,6 +69,9 @@ async function capture(device, runID) {
   } catch (error) {
     await writeFile(log, `${error.stdout ?? ''}\n${error.message}`);
     throw new Error(`ScreenshotTests failed on ${device}; see ${path.relative(repository, log)}`);
+  } finally {
+    process.off('SIGINT', interrupted); process.off('SIGTERM', interrupted);
+    await clearStatusBar(simulator.udid);
   }
   await run('/usr/bin/xcrun', ['xcresulttool', 'export', 'attachments', '--path', result, '--output-path', attachments]);
   const manifest = JSON.parse(await readFile(path.join(attachments, 'manifest.json'), 'utf8'));
