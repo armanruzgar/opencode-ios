@@ -21,6 +21,17 @@ const replayText = socket => {
   const marker = socket.received.findIndex(control);
   return socket.received.slice(0, marker).filter(frame => frame.opcode === 1).map(frame => frame.bytes.toString('utf8'));
 };
+/** 3,000,000 bytes of output, then a marker. bash echoes the command line first, so printf assembles the marker: the
+ * echo never contains it, and a wait for it ends only when the output does. */
+export const bufferCommand = "head -c 3000000 /dev/zero | tr '\\0' a; echo; printf 'buffer-%s\\n' done\n";
+export const bufferDone = text => text.includes('buffer-done\r\n');
+/** How many of the written bytes arrived live: the run of `a` that ends at the marker. */
+export const bufferRun = text => {
+  const done = text.indexOf('\r\nbuffer-done\r\n');
+  let first = done;
+  while (first > 0 && text[first - 1] === 'a') first--;
+  return done - first;
+};
 
 export async function ptyContract(sandbox) {
   const c = new Capture(sandbox);
@@ -76,8 +87,9 @@ export async function ptyContract(sandbox) {
     // The 2 MiB buffer: output beyond it is gone, and a stale cursor learns how much.
     const writer = await connect(`/api/pty/${id}/connect?cursor=-1`);
     await writer.wait(frames => frames.find(control), 'writer control');
-    writer.send("head -c 3000000 /dev/zero | tr '\\0' a; echo; echo buffer-done\n");
-    await writer.wait(() => liveText(writer).includes('buffer-done\r\n'), 'buffer output', 60000);
+    writer.send(bufferCommand);
+    await writer.wait(() => bufferDone(liveText(writer)), 'buffer output', 60000);
+    assert.equal(bufferRun(liveText(writer)), 3000000, 'Live output carries every byte');
     await new Promise(resolve => setTimeout(resolve, 500));
     const end = cursor + liveText(writer).length;
     await writer.close();

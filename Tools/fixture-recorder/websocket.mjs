@@ -73,7 +73,7 @@ export async function connectWS(capture, path, connection, { auth = true } = {})
     received,
     text: () => received.filter(frame => frame.opcode === 1 || frame.opcode === 0).map(frame => frame.bytes.toString('utf8')).join(''),
     send: text => send(1, text),
-    wait(predicate, label) { return until(() => { if (failure) throw failure; return predicate(received); }, label); },
+    wait(predicate, label, timeout) { return until(() => { if (failure) throw failure; return predicate(received); }, label, timeout); },
     async close() {
       if (!socket.destroyed) {
         closed = true;

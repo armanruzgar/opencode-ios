@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: '26'
       - name: Test mock and harness
-        run: node --test Tools/mock-llm/*.test.mjs Tools/opencode-sandbox/*.test.mjs Tools/fixture-recorder/*.test.mjs
+        run: node --test Tools/mock-llm/*.test.mjs Tools/opencode-sandbox/*.test.mjs Tools/fixture-recorder/*.test.mjs Tools/contract/*.test.mjs
       - name: Resolve V2 once for contracts and recordings
         env:
           REQUESTED_VERSION: ${{ inputs.version }}
