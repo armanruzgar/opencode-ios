@@ -57,3 +57,19 @@ jobs:
           node-version: '26'
       - name: Check tracked files
         run: node --test Tools/fixture-recorder/home-paths.test.mjs
+
+  generated:
+    name: Notices and onboarding page
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '26'
+      - name: Licence notices match their sources
+        run: node Tools/notices/generate.mjs --check
+      - name: Onboarding page matches its constants
+        run: node Tools/onboarding/sync.mjs --check
