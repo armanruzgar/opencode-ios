@@ -348,6 +348,14 @@ creates a session with a unique title, then leaves the app for the system:
   from the widget gallery, checks that its top row is that session, opens it from the widget
   and removes the widget again, also when the test fails.
 
+`testShortcutsRunTheIntents` and `testWidgetOnTheHomeScreen` need the system's App Intents
+registry (`linkd`) to accept the app: Shortcuts lists the app's App Shortcuts from it, and the
+Needs you widget is configured through an App Intent. A simulator runtime older than the SDK
+the app is built with may not read the app's executable: with Xcode 27.2 and only the iOS 26.5
+runtime installed, `linkd` logs `resolveWithBundle … executableError … Invalid argument` and
+`Failed to register "dev.opencodeios.client": … aggregateMetadataIsEmpty`, and both tests fail
+for any build of the app, with or without the debug dylib.
+
 The DEBUG app handles the intent link only under a `ui-` test identity. Under a test identity
 it also exposes an `intentTrace` element: each intent records in the App Group which process
 ran it and what it answered, and the test reads the answers there. What each system app
@@ -375,19 +383,39 @@ their reference images are 3x) while the iPad UI stage runs on the iPad (`iPad.x
 `ipad.log`), then the iPhone UI stage (`Smoke.xcresult`, `test.log`). Without the iPad
 simulator the stages run one after another. Beside the iPad stage, the read performance budgets
 are left out of the unit stage and run on their own once both stages end (`Performance.xcresult`,
-`performance.log`), and the reference-image check spans both stages. `timings.json` records each
-stage's start, end and minutes. When UI tests fail, their stage runs the failed tests again together, up to
+`performance.log`), after a burst of load has settled as it must before a retry, and the
+reference-image check spans both stages. A run that uses the iPad starts by shutting it down and
+booting it again; the iPhone is booted only when it is down, one at a time and without creating, erasing or
+reconfiguring either: an iPad that has been booted for a while can stop finishing rotations, and
+then every iPad test fails in its setup, while right after a boot Shortcuts does not list the app's
+App Shortcuts and the widget does not show its snapshot, which fails the iPhone's system tests. A
+restart or boot that has not finished within 10 minutes fails the run. `timings.json` records each
+stage's start, end and minutes, and those of the restarts (`simulators`), of each retry's setup and
+of the wait before the performance budgets (`performance setup`). When UI tests fail, their stage runs the failed tests again together, up to
 twice, on the same build (`xcodebuild test-without-building` with an `-only-testing:` for each,
 into `Smoke-attempt-2.xcresult` and `test-attempt-2.log`, and so on); a test passes when any
-attempt passes or ends in an expected failure. Before each retry the fault proxy's faults are
-cleared and the no-Git review fixture loses the repository a failed attempt may have created.
+attempt passes or ends in an expected failure. Before each retry the one-minute load average must
+drop under four per core, since a timing-sensitive test that failed in a burst of load from other
+work on the host fails again inside it; the tool waits at most 15 minutes and prints `LOAD` when it
+waited. Then the iPad boots afresh and gets a minute to settle (a test runner launched right after
+a boot can fail on the containers the last attempt left) and the tool prints `RESTARTED`; the iPhone
+keeps running. The fault proxy's faults are then cleared and the no-Git review fixture loses the
+repository a failed attempt may have created.
 A booted location keeps the repository it detected after `.git` is gone, so the fixture's
 location is evicted (`DELETE /api/debug/location`), after which `GET /api/vcs` must report no
 provider for it; other server state stays, so a retried test sees the sessions and
 messages its earlier attempt left. `ReviewSmokeTests` and `SystemSmokeTests`, which look for
 their own messages on the server, count only those created after the test started. UI stages
 pass `-test-timeouts-enabled YES`, so a test that hangs fails at its `executionTimeAllowance`
-(600 seconds when it sets none) and is retried like any other failure.
+(600 seconds when it sets none) and is retried like any other failure. No test timeout applies
+before a test starts, where `xcodebuild` can wait forever on a simulator that stopped answering,
+so an `xcodebuild` run of the unit, performance or UI tests that prints nothing for 25 minutes is
+stopped: a UI test prints each of its steps, and a hung one fails at its allowance (900 seconds at
+most). A stalled run prints `STALLED` and runs again whole, once, after the same setup as a retry,
+on either simulator booted afresh; its bundle and log keep a `-stalled` suffix, and a second stall
+fails the stage. The push stage's
+script, silent while its tests build and run, is stopped after 40 silent minutes, and each
+simulator command that ends the run after 5 minutes.
 A crash during a test is that test's failure and is retried. A failure that belongs to no
 failed test (a test runner lost outside any test, a summary that disagrees with the result
 tree, an unknown result) fails the stage without a retry. The tool

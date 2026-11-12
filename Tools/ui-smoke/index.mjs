@@ -7,13 +7,15 @@ import { configureComposer } from './composer-config.mjs';
 import { seedReadScreens } from './read-screens.mjs';
 import { seedAdmin } from './admin-fixture.mjs';
 import { evictLocation, vcsProvider, waitForNoProvider } from './vcs-reset.mjs';
+import { bootSimulator, restartSimulator, settleLoad, simctlJSON, withDeadline } from './simulators.mjs';
+import { runUntilQuiet } from './stall.mjs';
 import path from 'node:path';
-import { mkdir, writeFile, readFile, copyFile, rm, readdir, stat } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, copyFile, rm, readdir, stat, rename } from 'node:fs/promises';
 import { parseArgs, promisify } from 'node:util';
 import { execFile } from 'node:child_process';
 import { repository, resolveVersion, startSandbox, V1_VERSION } from '../opencode-sandbox/index.mjs';
 import { audit } from '../opencode-sandbox/isolation.mjs';
-import { stopAll, run } from '../opencode-sandbox/process.mjs';
+import { launch, stopAll, run } from '../opencode-sandbox/process.mjs';
 import { startMock } from '../mock-llm/server.mjs';
 
 const { values } = parseArgs({ options: { version: { type: 'string' }, 'skip-snapshots': { type: 'boolean' }, 'review-only': { type: 'boolean' }, 'review-test': { type: 'string' }, 'ipad-only': { type: 'boolean' }, 'read-flows-only': { type: 'boolean' }, 'composer-only': { type: 'boolean' }, 'worktree-only': { type: 'boolean' }, 'composer-test': { type: 'string' }, 'workspace-only': { type: 'boolean' }, 'workspace-test': { type: 'string' }, 'system-only': { type: 'boolean' }, 'system-test': { type: 'string' }, 'admin-only': { type: 'boolean' }, 'admin-test': { type: 'string' }, 'terminal-only': { type: 'boolean' }, 'terminal-test': { type: 'string' }, 'session-only': { type: 'boolean' }, 'a11y-only': { type: 'boolean' } } });
@@ -96,16 +98,20 @@ async function buildForTesting() {
   assert.ok(runs.length > 0, 'build-for-testing wrote no .xctestrun');
   return runs.sort((a, b) => b.modified - a.modified)[0].file;
 }
+// The longest a working xcodebuild stays silent: a UI test prints each of its steps, and a hung one fails at its time
+// allowance (900 seconds at most); a longer silence is a simulator that stopped answering (see stall.mjs).
+const quietLimit = 25 * 60_000;
 /**
  * Runs the built tests into a result bundle and writes its log. A run that adds or changes a reference image fails;
- * `guard: false` leaves that check to a stage running beside this one, so a recording is reported once.
+ * `guard: false` leaves that check to a stage running beside this one, so a recording is reported once. A run that
+ * prints nothing for `quietLimit` is stopped and throws an error marked `stalled`.
  */
 async function xcodebuildTest(result, log, args, env, { guard = true } = {}) {
   const before = guard ? await snapshotTree(repository) : undefined;
   let failure;
   try {
-    await writeFile(path.join(output, log), await run('/usr/bin/xcodebuild', ['-xctestrun', xctestrun, '-resultBundlePath', result,
-      '-parallel-testing-enabled', 'NO', ...args, '-collect-test-diagnostics', 'never', 'test-without-building'], { cwd: repository, env }));
+    await writeFile(path.join(output, log), await runUntilQuiet(launch, '/usr/bin/xcodebuild', ['-xctestrun', xctestrun, '-resultBundlePath', result,
+      '-parallel-testing-enabled', 'NO', ...args, '-collect-test-diagnostics', 'never', 'test-without-building'], { cwd: repository, env }, { quiet: quietLimit }));
   } catch (error) {
     failure = error;
     await writeFile(path.join(output, log), error.message);
@@ -125,6 +131,48 @@ async function timed(stage, work) {
     await writeFile(path.join(output, 'timings.json'), JSON.stringify(timings, null, 2) + '\n');
   }
 }
+const xcrun = args => run('/usr/bin/xcrun', args);
+const destinationOf = simulator => `platform=iOS Simulator,id=${simulator}`;
+/** Waits out a burst of load on the host before work that measures time, and says so when it waited. */
+async function settle(before) {
+  const load = await settleLoad();
+  if (load.minutes > 0) console.log(`LOAD ${load.before} before ${before}: waited ${load.minutes} min, now ${load.after}${load.settled ? '' : `, still not under ${load.limit}`}`);
+}
+/**
+ * Before tests run again. A timing-sensitive test that failed in a burst of load fails again inside it, so the load
+ * settles first. The iPad boots afresh, since one that stopped finishing rotations fails every iPad test in its setup;
+ * the iPhone keeps running, since right after a boot Shortcuts does not list the app's App Shortcuts and the widget
+ * does not show the app's snapshot, which fails the system tests. `restart` boots either afresh, as after a stall.
+ * Then the fixtures reset.
+ */
+const prepareRetry = (stage, simulator, beforeRetry, before, { restart = simulator === ipad?.udid } = {}) => timed(`${stage} ${before} setup`, async () => {
+  await settle(`${stage} ${before}`);
+  if (restart) {
+    await restartSimulator(xcrun, simulator);
+    // Right after a boot the simulator is still clearing away the containers of the apps the last attempt installed;
+    // a test runner launched then can fail with "Failed to create a bundle instance" for a path under
+    // containermanagerd/Dead, which ends the stage, so the simulator gets a minute to settle.
+    await new Promise(resolve => setTimeout(resolve, 60_000));
+    console.log(`RESTARTED the ${stage} simulator before ${before}`);
+  }
+  await beforeRetry();
+});
+/**
+ * Runs a stage's tests; when they stall, keeps the stalled bundle and log beside the next ones (`-stalled`) and runs
+ * them again whole, once, after the same setup as a retry. A stalled attempt may have finished no test, so its results
+ * explain nothing; a second stall fails the stage.
+ */
+async function onceMoreIfStalled(stage, simulator, result, log, attempt, beforeRerun = async () => {}) {
+  try { return await attempt(); } catch (error) {
+    if (!error.stalled) throw error;
+    console.log(`STALLED ${stage}: xcodebuild printed nothing for ${quietLimit / 60_000} minutes and was stopped; the stage runs again`);
+    await rename(result, result.replace(/\.xcresult$/, '-stalled.xcresult')).catch(() => rm(result, { recursive: true, force: true }));
+    await rename(path.join(output, log), path.join(output, log.replace(/\.log$/, '-stalled.log'))).catch(() => {});
+    // A simulator that stopped answering boots afresh, iPhone or iPad.
+    await prepareRetry(stage, simulator, beforeRerun, 'rerun', { restart: true });
+    return await attempt();
+  }
+}
 const retried = {};
 const exportAttachments = async (result, folder) => {
   await run('/usr/bin/xcrun', ['xcresulttool', 'export', 'attachments', '--path', result, '--output-path', folder]);
@@ -133,27 +181,33 @@ const exportAttachments = async (result, folder) => {
 /**
  * A UI stage. The failed tests run again together, up to twice, on the same build; the tool does this itself because
  * Xcode 26 and later drops its own retry when a failure in an async test that stops at its first failure relaunches
- * the test runner (Apple's known issue 108565878). `beforeRetry` resets the fixtures a failed attempt can leave
- * changed. Prints the tests that ran again, keeps them in retried.json, and returns each test's attachments from the
- * attempt that passed.
+ * the test runner (Apple's known issue 108565878). Before each retry the host's load settles, the iPad boots afresh
+ * (see prepareRetry) and `beforeRetry` resets the fixtures a failed attempt can leave changed. A first attempt that stalls
+ * runs again whole, once. Prints the tests that ran again, keeps them in retried.json, and returns each test's
+ * attachments from the attempt that passed.
  */
-async function uiStage(stage, destination, result, log, attachments, filters, env, beforeRetry, { guard = true } = {}) {
+async function uiStage(stage, simulator, result, log, attachments, filters, env, beforeRetry, { guard = true } = {}) {
   let failure;
-  try { await xcodebuildTest(result, log, ['-destination', destination, ...timeouts, ...filters], env, { guard }); } catch (error) { failure = error; }
-  // A run that recorded a reference image is never retried: a second attempt would compare against that image.
-  if (failure?.recorded) throw failure;
+  try {
+    await onceMoreIfStalled(stage, simulator, result, log,
+      () => xcodebuildTest(result, log, ['-destination', destinationOf(simulator), ...timeouts, ...filters], env, { guard }), beforeRetry);
+  } catch (error) { failure = error; }
+  // A run that recorded a reference image is never retried: a second attempt would compare against that image. A
+  // run that stalled twice has no results that could explain it.
+  if (failure?.recorded || failure?.stalled) throw failure;
   let failing = failure ? await failedTests(stage, result, failure) : [];
   const manifest = await exportAttachments(result, attachments);
   const tests = failing.map(test => ({ test: test.id, attempts: 1, passed: null })), later = [];
   try {
     for (let attempt = 2; attempt <= attemptsAllowed && failing.length > 0; attempt++) {
-      await beforeRetry();
+      await prepareRetry(stage, simulator, beforeRetry, `attempt ${attempt}`);
       const bundle = result.replace(/\.xcresult$/, `-attempt-${attempt}.xcresult`), folder = `attempt-${attempt}`;
+      const retryLog = log.replace(/\.log$/, `-attempt-${attempt}.log`);
       let retryFailure;
       try {
-        await xcodebuildTest(bundle, log.replace(/\.log$/, `-attempt-${attempt}.log`), ['-destination', destination, ...timeouts,
-          ...failing.map(test => '-only-testing:' + test.only)], env, { guard });
-      } catch (error) { if (error.recorded) throw error; retryFailure = error; }
+        await onceMoreIfStalled(stage, simulator, bundle, retryLog, () => xcodebuildTest(bundle, retryLog, ['-destination', destinationOf(simulator),
+          ...timeouts, ...failing.map(test => '-only-testing:' + test.only)], env, { guard }), beforeRetry);
+      } catch (error) { if (error.recorded || error.stalled) throw error; retryFailure = error; }
       for (const entry of tests) if (failing.some(test => test.id === entry.test)) entry.attempts = attempt;
       if (retryFailure) await failedTests(`${stage} attempt ${attempt}`, bundle, retryFailure);
       const outcomes = new Map(testCases(await testResults(bundle)).map(test => [test.id, test.result]));
@@ -173,18 +227,25 @@ async function uiStage(stage, destination, result, log, attachments, filters, en
   return mergeAttempts(manifest, later);
 }
 await run('xcodegen', ['generate'], { cwd: repository });
-// simctl can print installer notices before its JSON (an Xcode update waiting for an administrator); skip them.
-const simctlJSON = (output) => JSON.parse(output.slice(output.indexOf('{')));
 const inventory = simctlJSON(await run('/usr/bin/xcrun', ['simctl', 'list', 'devices', 'available', '--json']));
 const devices = Object.values(inventory.devices).flat();
 const device = devices.find(device => device.name === 'iPhone 17 Pro' && device.state === 'Booted')
   ?? devices.find(device => device.name === 'iPhone 17 Pro');
 assert.ok(device, 'The existing iPhone 17 Pro simulator is required');
 const ipad = devices.find(device => device.name === 'opencode-ios iPad');
-const destination = `platform=iOS Simulator,id=${values['ipad-only'] || workspaceOnly ? (assert.ok(ipad, 'The workspace tests need the opencode-ios iPad simulator'), ipad.udid) : device.udid}`;
+const mainSimulator = values['ipad-only'] || workspaceOnly ? (assert.ok(ipad, 'The workspace tests need the opencode-ios iPad simulator'), ipad.udid) : device.udid;
+const destination = destinationOf(mainSimulator);
+const ipadRun = ipad && !values['ipad-only'] && !composerOnly && !workspaceOnly && !systemOnly && !adminOnly && !sessionOnly;
+// Every simulator the run uses: the app is installed and launched on the iPhone at the end of every run.
+const simulators = [...new Set([device.udid, mainSimulator, ...(ipadRun ? [ipad.udid] : [])])];
 await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), async () => {
-  // The build needs no server, so it runs while the sandbox starts; its failure surfaces where it is awaited.
-  const building = timed('build', buildForTesting);
+  // A run that uses the iPad starts on a freshly booted one (see restartSimulator); the iPhone is booted and keeps
+  // running when it is up (see prepareRetry). One at a time, so two boots don't pile onto a loaded host. The build
+  // waits for them and needs no server, so both run while the sandbox starts; a failure surfaces where it is awaited.
+  const restarting = timed('simulators', async () => {
+    for (const simulator of simulators) await (simulator === ipad?.udid ? restartSimulator : bootSimulator)(xcrun, simulator);
+  });
+  const building = restarting.then(() => timed('build', buildForTesting));
   building.catch(() => {});
   const mock = await startMock();
   let server, v1, proxy;
@@ -245,8 +306,8 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
     const performance = '-only-testing:ReadSnapshots/ReadPerformanceTests';
     const unitsStage = async ({ guard = true, skipPerformance = false } = {}) => {
       const units = path.join(output, 'Units.xcresult');
-      await xcodebuildTest(units, 'units.log', ['-destination', destination, '-skip-testing:OpencodeUITests',
-        ...(skipPerformance ? [performance.replace('-only-', '-skip-')] : [])], environment, { guard });
+      await onceMoreIfStalled('units', mainSimulator, units, 'units.log', () => xcodebuildTest(units, 'units.log', ['-destination', destination,
+        '-skip-testing:OpencodeUITests', ...(skipPerformance ? [performance.replace('-only-', '-skip-')] : [])], environment, { guard }));
       // The full test tree outgrows the process helper's 24,000-character output tail.
       const editorResults = await testResults(units);
       await writeFile(path.join(output, 'test-results.json'), JSON.stringify(editorResults, null, 2));
@@ -255,7 +316,7 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
     };
     const iphoneStage = async () => {
       const attachments = path.join(output, 'attachments');
-      const manifest = await uiStage(values['ipad-only'] || workspaceOnly ? 'iPad' : 'iPhone', destination, result, 'test.log', attachments, ['-skip-testing:OpencodeUITests/PushSmokeTests', '-skip-testing:OpencodeUITests/ScreenshotTests',
+      const manifest = await uiStage(values['ipad-only'] || workspaceOnly ? 'iPad' : 'iPhone', mainSimulator, result, 'test.log', attachments, ['-skip-testing:OpencodeUITests/PushSmokeTests', '-skip-testing:OpencodeUITests/ScreenshotTests',
         ...(a11yOnly ? ['-only-testing:OpencodeUITests/AccessibilitySmokeTests'] : sessionOnly ? ['-only-testing:OpencodeUITests/SessionSmokeTests'] : adminOnly ? ['-only-testing:OpencodeUITests/AdminSmokeTests' + (adminTest ? '/' + adminTest : '')] : workspaceOnly ? ['-only-testing:OpencodeUITests/WorkspaceSmokeTests' + (workspaceTest ? '/' + workspaceTest : '')] : terminalOnly ? ['-only-testing:OpencodeUITests/TerminalSmokeTests' + (terminalTest ? '/' + terminalTest : '')] : systemOnly ? ['-only-testing:OpencodeUITests/SystemSmokeTests' + (systemTest ? '/' + systemTest : '')] : reviewOnly ? ['-only-testing:OpencodeUITests/ReviewSmokeTests' + (reviewTest ? '/' + reviewTest : '')] : composerOnly ? ['-only-testing:OpencodeUITests/ComposerSmokeTests' + (composerTest ? '/' + composerTest : '')] : values['ipad-only'] || values['read-flows-only'] ? ['-only-testing:OpencodeUITests/ReadSmokeTests'] : ['-only-testing:OpencodeUITests', '-skip-testing:OpencodeUITests/WorkspaceSmokeTests'])],
         environment, beforeRetry);
       if (full || adminOnly) assert.ok(manifest.some(test => test.testIdentifier?.includes('AdminSmokeTests/')), 'Server settings smoke tests must run; regenerate the Xcode project after adding test sources');
@@ -320,7 +381,7 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
           '-only-testing:OpencodeUITests/WorkspaceSmokeTests', '-only-testing:OpencodeUITests/TerminalSmokeTests',
           '-only-testing:OpencodeUITests/AdminSmokeTests/testSwitcherOpensSettings']), '-only-testing:OpencodeUITests/ReviewSmokeTests' + (reviewTest ? '/' + reviewTest : '')];
       const ipadScreens = a11yOnly ? [] : terminalOnly ? terminalScreens(true) : [...(reviewOnly ? [] : ['ipad-split', 'ipad-portrait', 'ipad-composer-queue', 'ipad-composer-new', ...workspaceScreens, ...terminalScreens(true)]), ...reviewScreens(true)];
-      const ipadManifest = await uiStage('iPad', `platform=iOS Simulator,id=${ipad.udid}`, ipadResult, 'ipad.log', ipadAttachments, ipadFilters,
+      const ipadManifest = await uiStage('iPad', ipad.udid, ipadResult, 'ipad.log', ipadAttachments, ipadFilters,
         environment, beforeRetry, options);
       const ipadCaptured = new Set();
       for (const test of ipadManifest) for (const attachment of test.attachments ?? []) {
@@ -341,7 +402,6 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
       }
       console.log(a11yOnly ? 'PASS iPad accessibility audit' : terminalOnly ? 'PASS iPad terminals' : 'PASS iPad read flows, split-view captures, menu bar, switcher, two windows, drag and drop and terminals');
     };
-    const ipadRun = ipad && !values['ipad-only'] && !composerOnly && !workspaceOnly && !systemOnly && !adminOnly && !sessionOnly;
     xctestrun = await building;
     if (full && ipadRun) {
       // The snapshot and unit stage needs the iPhone simulator, whose screen scale its references use, and the iPad UI
@@ -356,21 +416,26 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
       const failures = stages.filter(stage => stage.status === 'rejected').map(stage => stage.reason);
       for (const failure of failures) console.error(failure);
       if (failures.length > 0) throw failures.length === 1 ? failures[0] : new AggregateError(failures, 'The unit and iPad stages failed');
-      await timed('performance', () => xcodebuildTest(path.join(output, 'Performance.xcresult'), 'performance.log',
-        ['-destination', destination, performance], environment));
+      // The budgets measure wall-clock time and never run again, so a burst of load on the host is waited out first.
+      await timed('performance setup', () => settle('the performance budgets'));
+      const budgets = path.join(output, 'Performance.xcresult');
+      await timed('performance', () => onceMoreIfStalled('performance', mainSimulator, budgets, 'performance.log',
+        () => xcodebuildTest(budgets, 'performance.log', ['-destination', destination, performance], environment)));
       await timed('iPhone', iphoneStage);
     } else {
       if (full) await timed('units', unitsStage);
       await timed(values['ipad-only'] || workspaceOnly ? 'iPad' : 'iPhone', iphoneStage);
       if (ipadRun) await timed('iPad', ipadStage);
     }
-    // Leave a freshly installed, launched app on the requested booted simulator.
-    const afterTests = simctlJSON(await run('/usr/bin/xcrun', ['simctl', 'list', 'devices', '--json']));
+    // Leave a freshly installed, launched app on the requested booted simulator. A simulator that stopped answering
+    // can hold any of these commands forever, so each has 5 minutes; cleanup below stops one that ran out.
+    const bounded = (args, options) => withDeadline(run('/usr/bin/xcrun', args, options), 5 * 60_000, `simctl ${args[1]} did not finish within 5 minutes`);
+    const afterTests = simctlJSON(await bounded(['simctl', 'list', 'devices', '--json']));
     const current = Object.values(afterTests.devices).flat().find(item => item.udid === device.udid);
-    if (current.state !== 'Booted') await run('/usr/bin/xcrun', ['simctl', 'boot', device.udid]);
-    await run('/usr/bin/xcrun', ['simctl', 'bootstatus', device.udid, '-b']);
-    await run('/usr/bin/xcrun', ['simctl', 'install', device.udid, '.build/DerivedData/Build/Products/Debug-iphonesimulator/Opencode.app']);
-    await run('/usr/bin/xcrun', ['simctl', 'launch', '--terminate-running-process', device.udid, 'dev.opencodeios.client'],
+    if (current.state !== 'Booted') await bounded(['simctl', 'boot', device.udid]);
+    await bounded(['simctl', 'bootstatus', device.udid, '-b']);
+    await bounded(['simctl', 'install', device.udid, '.build/DerivedData/Build/Products/Debug-iphonesimulator/Opencode.app']);
+    await bounded(['simctl', 'launch', '--terminate-running-process', device.udid, 'dev.opencodeios.client'],
       { env: { ...process.env, SIMCTL_CHILD_OPENCODE_UI_TEST_ID: runID + '-read' } });
     console.log('PASS screenshots exported; app installed and launched on the booted simulator');
   } finally {
@@ -383,7 +448,9 @@ console.log('PASS UI smoke process cleanup and opencode isolation audit');
 if (full) {
   // The push stage runs its one test once, with no retry, and must not record a reference image either.
   const before = await snapshotTree(repository);
-  console.log(await run(process.execPath, ['Tools/push-e2e/simulator.mjs', '--version', version], { cwd: repository }));
+  // Its script prints nothing while its xcodebuild builds and tests, so it is stopped after 40 silent minutes, well
+  // past an incremental build and one test (600-second allowance) on a loaded host.
+  console.log(await runUntilQuiet(launch, process.execPath, ['Tools/push-e2e/simulator.mjs', '--version', version], { cwd: repository }, { quiet: 40 * 60_000 }));
   const recorded = changedSnapshots(before, await snapshotTree(repository));
   for (const file of recorded) console.log(`RECORDED ${file}`);
   assert.deepEqual(recorded, [], 'The push stage added or changed reference images');

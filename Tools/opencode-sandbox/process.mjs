@@ -53,7 +53,7 @@ function alive(pid) {
     // Darwin can report EPERM for a process group during teardown. Confirm its
     // membership rather than interpreting a permission error as either success
     // or a dead process. Keep polling existing members until they are reaped;
-    // permission failures when sending TERM/KILL still fail cleanup.
+    // a group that refused TERM/KILL and outlives the wait still fails cleanup.
     if (error.code === 'EPERM') {
       const groups = execFileSync('/bin/ps', ['-axo', 'pgid='], { encoding: 'utf8' }).trim().split(/\s+/).map(Number);
       return groups.includes(pid);
@@ -142,11 +142,15 @@ export function launch(command, args, { cwd, env, sandboxed = false, enforcement
         if (ownedGroups.has(ownGroup)) throw new Error('Refusing to signal the harness process group');
         for (const signal of ['SIGTERM', 'SIGKILL']) {
           for (const pgid of ownedGroups) if (alive(pgid)) {
-            try { process.kill(-pgid, signal); } catch (error) { if (error.code !== 'ESRCH') throw error; }
+            // Darwin can also refuse a signal with EPERM to a group that is already tearing down (xcodebuild does
+            // under load); whether the group is gone is what counts, and the survivor check below decides that.
+            try { process.kill(-pgid, signal); } catch (error) { if (error.code !== 'ESRCH' && error.code !== 'EPERM') throw error; }
           }
           for (let i = 0; i < 40 && [...ownedGroups].some(alive); i++) await delay(50);
           if (![...ownedGroups].some(alive)) break;
         }
+        // A loaded host can take longer than that to reap a killed group.
+        for (let i = 0; i < 600 && [...ownedGroups].some(alive); i++) await delay(50);
         const survivors = [...ownedGroups].filter(alive);
         if (survivors.length) throw new Error(`Process groups ${survivors.join(', ')} survived cleanup`);
         groups.delete(group);
