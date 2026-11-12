@@ -1,0 +1,690 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/session",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "title": "Fixture retry-429",
+        "location": {
+          "directory": "/sandbox/project"
+        },
+        "model": {
+          "providerID": "mock",
+          "id": "mock-1"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "412",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f855d0ffedvjqTJDzjwQa3K",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 0,
+            "output": 0,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "time": {
+            "created": 1794088872496,
+            "updated": 1794088872496
+          },
+          "title": "Fixture retry-429",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "412",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f855d0ffedvjqTJDzjwQa3K",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 0,
+            "output": 0,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "time": {
+            "created": 1794088872496,
+            "updated": 1794088872496
+          },
+          "title": "Fixture retry-429",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "50",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [],
+        "cursor": {
+          "previous": null,
+          "next": null
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/inbox",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/permission",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/form",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/prompt",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "text": "Run the retry-429 fixture scenario."
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "216",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "msg_1b807aa34001P3TkmpUCPZY1eJ",
+          "sessionID": "ses_e47f855d0ffedvjqTJDzjwQa3K",
+          "time": {
+            "created": 1794088872500
+          },
+          "type": "user",
+          "payload": {
+            "text": "Run the retry-429 fixture scenario."
+          },
+          "delivery": "steer"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/experimental/session/ses_e47f855d0ffedvjqTJDzjwQa3K/wait",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 204,
+      "headers": {
+        "connection": "keep-alive",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin"
+      },
+      "body": null,
+      "bodyFormat": "empty"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "1008",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [
+          {
+            "id": "msg_1b807aa34001P3TkmpUCPZY1eJ",
+            "time": {
+              "created": 1794088872502
+            },
+            "text": "Run the retry-429 fixture scenario.",
+            "type": "user"
+          },
+          {
+            "id": "msg_1b807aa37001tPrhp5ent4SE9T",
+            "time": {
+              "created": 1794088874917,
+              "streamed": 1794088874928,
+              "completed": 1794088874936
+            },
+            "type": "assistant",
+            "agent": "build",
+            "model": {
+              "id": "mock-1",
+              "providerID": "mock",
+              "variant": "default"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Recovered from 429."
+              }
+            ],
+            "snapshot": {
+              "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "files": []
+            },
+            "finish": "stop",
+            "rawFinish": "stop",
+            "cost": 0,
+            "tokens": {
+              "input": 24,
+              "output": 9,
+              "reasoning": 3,
+              "cache": {
+                "read": 0,
+                "write": 0
+              }
+            }
+          },
+          {
+            "id": "msg_1b807b3b9001CwXeJioe9tP6sT",
+            "time": {
+              "created": 1794088874937
+            },
+            "type": "idle",
+            "outcome": "succeeded"
+          }
+        ],
+        "cursor": {
+          "previous": "eyJpZCI6Im1zZ18xYjgwN2FhMzQwMDFQM1RrbXBVQ1BaWTFlSiIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoicHJldmlvdXMifQ",
+          "next": "eyJpZCI6Im1zZ18xYjgwN2IzYjkwMDFDd1hlSmlvZTl0UDZzVCIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "477",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f855d0ffedvjqTJDzjwQa3K",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 24,
+            "output": 9,
+            "reasoning": 3,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "outcome": "succeeded",
+          "time": {
+            "created": 1794088872496,
+            "updated": 1794088874936,
+            "busy": 1794088872500,
+            "idle": 1794088874937
+          },
+          "title": "Fixture retry-429",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "477",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f855d0ffedvjqTJDzjwQa3K",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 24,
+            "output": 9,
+            "reasoning": 3,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "outcome": "succeeded",
+          "time": {
+            "created": 1794088872496,
+            "updated": 1794088874936,
+            "busy": 1794088872500,
+            "idle": 1794088874937
+          },
+          "title": "Fixture retry-429",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "1008",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [
+          {
+            "id": "msg_1b807aa34001P3TkmpUCPZY1eJ",
+            "time": {
+              "created": 1794088872502
+            },
+            "text": "Run the retry-429 fixture scenario.",
+            "type": "user"
+          },
+          {
+            "id": "msg_1b807aa37001tPrhp5ent4SE9T",
+            "time": {
+              "created": 1794088874917,
+              "streamed": 1794088874928,
+              "completed": 1794088874936
+            },
+            "type": "assistant",
+            "agent": "build",
+            "model": {
+              "id": "mock-1",
+              "providerID": "mock",
+              "variant": "default"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Recovered from 429."
+              }
+            ],
+            "snapshot": {
+              "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "files": []
+            },
+            "finish": "stop",
+            "rawFinish": "stop",
+            "cost": 0,
+            "tokens": {
+              "input": 24,
+              "output": 9,
+              "reasoning": 3,
+              "cache": {
+                "read": 0,
+                "write": 0
+              }
+            }
+          },
+          {
+            "id": "msg_1b807b3b9001CwXeJioe9tP6sT",
+            "time": {
+              "created": 1794088874937
+            },
+            "type": "idle",
+            "outcome": "succeeded"
+          }
+        ],
+        "cursor": {
+          "previous": "eyJpZCI6Im1zZ18xYjgwN2FhMzQwMDFQM1RrbXBVQ1BaWTFlSiIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoicHJldmlvdXMifQ",
+          "next": "eyJpZCI6Im1zZ18xYjgwN2IzYjkwMDFDd1hlSmlvZTl0UDZzVCIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/message?limit=200&cursor=eyJpZCI6Im1zZ18xYjgwN2IzYjkwMDFDd1hlSmlvZTl0UDZzVCIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "50",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [],
+        "cursor": {
+          "previous": null,
+          "next": null
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/inbox",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/permission",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f855d0ffedvjqTJDzjwQa3K/form",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:14 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  }
+]

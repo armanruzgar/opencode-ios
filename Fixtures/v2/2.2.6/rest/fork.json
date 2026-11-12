@@ -1,0 +1,837 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/session",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "title": "Fixture fork",
+        "location": {
+          "directory": "/sandbox/project"
+        },
+        "model": {
+          "providerID": "mock",
+          "id": "mock-1"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "407",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 0,
+            "output": 0,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "time": {
+            "created": 1794088872396,
+            "updated": 1794088872396
+          },
+          "title": "Fixture fork",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "407",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 0,
+            "output": 0,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "time": {
+            "created": 1794088872396,
+            "updated": 1794088872396
+          },
+          "title": "Fixture fork",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "50",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [],
+        "cursor": {
+          "previous": null,
+          "next": null
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/inbox",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/permission",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/form",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/prompt",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "text": "Run the fork fixture scenario."
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "211",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "msg_1b807a9d100144v6cJXxJRx3Gp",
+          "sessionID": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+          "time": {
+            "created": 1794088872402
+          },
+          "type": "user",
+          "payload": {
+            "text": "Run the fork fixture scenario."
+          },
+          "delivery": "steer"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/experimental/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/wait",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 204,
+      "headers": {
+        "connection": "keep-alive",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin"
+      },
+      "body": null,
+      "bodyFormat": "empty"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "1000",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [
+          {
+            "id": "msg_1b807a9d100144v6cJXxJRx3Gp",
+            "time": {
+              "created": 1794088872404
+            },
+            "text": "Run the fork fixture scenario.",
+            "type": "user"
+          },
+          {
+            "id": "msg_1b807a9d5001xEn6uI56Dh0OyR",
+            "time": {
+              "created": 1794088872406,
+              "streamed": 1794088872417,
+              "completed": 1794088872425
+            },
+            "type": "assistant",
+            "agent": "build",
+            "model": {
+              "id": "mock-1",
+              "providerID": "mock",
+              "variant": "default"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "History to fork."
+              }
+            ],
+            "snapshot": {
+              "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "files": []
+            },
+            "finish": "stop",
+            "rawFinish": "stop",
+            "cost": 0,
+            "tokens": {
+              "input": 24,
+              "output": 9,
+              "reasoning": 3,
+              "cache": {
+                "read": 0,
+                "write": 0
+              }
+            }
+          },
+          {
+            "id": "msg_1b807a9ea002kP6N3c5Yx9MaRy",
+            "time": {
+              "created": 1794088872426
+            },
+            "type": "idle",
+            "outcome": "succeeded"
+          }
+        ],
+        "cursor": {
+          "previous": "eyJpZCI6Im1zZ18xYjgwN2E5ZDEwMDE0NHY2Y0pYeEpSeDNHcCIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoicHJldmlvdXMifQ",
+          "next": "eyJpZCI6Im1zZ18xYjgwN2E5ZWEwMDJrUDZOM2M1WXg5TWFSeSIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/fork",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {}
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "546",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f85612ffeXYRCK2qeOo44Eg",
+          "fork": {
+            "sessionID": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+            "boundary": {
+              "type": "through",
+              "messageID": "msg_1b807a9ea002kP6N3c5Yx9MaRy"
+            }
+          },
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 0,
+            "output": 0,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "time": {
+            "created": 1794088872429,
+            "updated": 1794088872429
+          },
+          "title": "Fixture fork (fork #1)",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85612ffeXYRCK2qeOo44Eg/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "1013",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [
+          {
+            "id": "msg_1b807a9ed002HJaRBw7rpoOrjE_4",
+            "time": {
+              "created": 1794088872404
+            },
+            "text": "Run the fork fixture scenario.",
+            "type": "user"
+          },
+          {
+            "id": "msg_1b807a9ed002HJaRBw7rpoOrjE_5",
+            "time": {
+              "created": 1794088872406,
+              "streamed": 1794088872417,
+              "completed": 1794088872425
+            },
+            "type": "assistant",
+            "agent": "build",
+            "model": {
+              "id": "mock-1",
+              "providerID": "mock",
+              "variant": "default"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "History to fork."
+              }
+            ],
+            "snapshot": {
+              "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "files": []
+            },
+            "finish": "stop",
+            "rawFinish": "stop",
+            "cost": 0,
+            "tokens": {
+              "input": 24,
+              "output": 9,
+              "reasoning": 3,
+              "cache": {
+                "read": 0,
+                "write": 0
+              }
+            }
+          },
+          {
+            "id": "msg_1b807a9ed002HJaRBw7rpoOrjE_10",
+            "time": {
+              "created": 1794088872426
+            },
+            "type": "idle",
+            "outcome": "succeeded"
+          }
+        ],
+        "cursor": {
+          "previous": "eyJpZCI6Im1zZ18xYjgwN2E5ZWQwMDJISmFSQnc3cnBvT3JqRV80Iiwib3JkZXIiOiJhc2MiLCJkaXJlY3Rpb24iOiJwcmV2aW91cyJ9",
+          "next": "eyJpZCI6Im1zZ18xYjgwN2E5ZWQwMDJISmFSQnc3cnBvT3JqRV8xMCIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "472",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 24,
+            "output": 9,
+            "reasoning": 3,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "outcome": "succeeded",
+          "time": {
+            "created": 1794088872396,
+            "updated": 1794088872425,
+            "busy": 1794088872402,
+            "idle": 1794088872426
+          },
+          "title": "Fixture fork",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "472",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": {
+          "id": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+          "projectID": "global",
+          "model": {
+            "id": "mock-1",
+            "providerID": "mock",
+            "variant": "default"
+          },
+          "cost": 0,
+          "tokens": {
+            "input": 24,
+            "output": 9,
+            "reasoning": 3,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "outcome": "succeeded",
+          "time": {
+            "created": 1794088872396,
+            "updated": 1794088872425,
+            "busy": 1794088872402,
+            "idle": 1794088872426
+          },
+          "title": "Fixture fork",
+          "location": {
+            "directory": "/sandbox/project"
+          }
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/message?limit=200&order=asc",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "1000",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [
+          {
+            "id": "msg_1b807a9d100144v6cJXxJRx3Gp",
+            "time": {
+              "created": 1794088872404
+            },
+            "text": "Run the fork fixture scenario.",
+            "type": "user"
+          },
+          {
+            "id": "msg_1b807a9d5001xEn6uI56Dh0OyR",
+            "time": {
+              "created": 1794088872406,
+              "streamed": 1794088872417,
+              "completed": 1794088872425
+            },
+            "type": "assistant",
+            "agent": "build",
+            "model": {
+              "id": "mock-1",
+              "providerID": "mock",
+              "variant": "default"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "History to fork."
+              }
+            ],
+            "snapshot": {
+              "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+              "files": []
+            },
+            "finish": "stop",
+            "rawFinish": "stop",
+            "cost": 0,
+            "tokens": {
+              "input": 24,
+              "output": 9,
+              "reasoning": 3,
+              "cache": {
+                "read": 0,
+                "write": 0
+              }
+            }
+          },
+          {
+            "id": "msg_1b807a9ea002kP6N3c5Yx9MaRy",
+            "time": {
+              "created": 1794088872426
+            },
+            "type": "idle",
+            "outcome": "succeeded"
+          }
+        ],
+        "cursor": {
+          "previous": "eyJpZCI6Im1zZ18xYjgwN2E5ZDEwMDE0NHY2Y0pYeEpSeDNHcCIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoicHJldmlvdXMifQ",
+          "next": "eyJpZCI6Im1zZ18xYjgwN2E5ZWEwMDJrUDZOM2M1WXg5TWFSeSIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9"
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/message?limit=200&cursor=eyJpZCI6Im1zZ18xYjgwN2E5ZWEwMDJrUDZOM2M1WXg5TWFSeSIsIm9yZGVyIjoiYXNjIiwiZGlyZWN0aW9uIjoibmV4dCJ9",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "50",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": [],
+        "cursor": {
+          "previous": null,
+          "next": null
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/inbox",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/permission",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/session/ses_e47f85634ffe3Gv4c6ftXNAGEa/form",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "11",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:12 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "data": []
+      },
+      "bodyFormat": "json"
+    }
+  }
+]

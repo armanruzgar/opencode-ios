@@ -7,19 +7,26 @@ import OCFoundation
 private struct RecordedFrame: Decodable {
     let connection: Int
     let direction: String
+    let path: String?
     let opcode: Int?
     let payload: String?
     var bytes: Data { payload.flatMap { Data(base64Encoded: $0) } ?? Data() }
 }
 
-/// The recorded PTY session (Tools/fixture-recorder `pty`): replayed and live text, then one 0x00 control frame per
-/// connection, and a resume whose cursor counts the first connection's live output in UTF-16 code units.
+/// The recorded PTY session (Tools/fixture-recorder `pty`): per connection, text replayed from the cursor it asked
+/// for, one 0x00 control frame with the position after the replay, then live text; and a resume whose cursor counts
+/// the first connection's output in UTF-16 code units. Whether the shell's greeting is replayed or arrives live
+/// depends on timing: 2.0.32's recording has it live, 2.2.6's replayed.
 @Test(arguments: Fixtures.versions) func recordedFramesParseInOrder(version: URL) throws {
     let url = version.appending(path: "ws/pty.json")
     guard FileManager.default.fileExists(atPath: url.path) else { return }
-    let frames = try JSONDecoder().decode([RecordedFrame].self, from: Data(contentsOf: url)).filter { $0.direction == "received" }
-    var cursors: [Int: Int] = [:], live: [Int: Int] = [:], controls: [Int: Int] = [:]
-    for frame in frames {
+    let recorded = try JSONDecoder().decode([RecordedFrame].self, from: Data(contentsOf: url))
+    var requested: [Int: Int] = [:]
+    for frame in recorded where frame.direction == "handshake" {
+        requested[frame.connection] = frame.path.flatMap { path in URLComponents(string: path)?.queryItems?.first { $0.name == "cursor" }?.value }.flatMap { Int($0) }
+    }
+    var cursors: [Int: Int] = [:], live: [Int: Int] = [:], replayed: [Int: Int] = [:], controls: [Int: Int] = [:]
+    for frame in recorded where frame.direction == "received" {
         let parsed = frame.opcode == 2 ? PTYFrame.parse(binary: frame.bytes) : frame.opcode == 1 ? .output(String(decoding: frame.bytes, as: UTF8.self)) : nil
         switch parsed {
         case .control(let cursor)?:
@@ -27,11 +34,16 @@ private struct RecordedFrame: Decodable {
             controls[frame.connection] = cursor; cursors[frame.connection] = cursor
         case .output(let text)?:
             if let cursor = cursors[frame.connection] { cursors[frame.connection] = cursor + text.utf16.count; live[frame.connection, default: 0] += text.utf16.count }
+            else { replayed[frame.connection, default: 0] += text.utf16.count }
         case .ignored?, nil: break
         }
     }
     let first = try #require(cursors[1]), resumed = try #require(controls[2])
-    #expect(controls[1] == 0)
+    for (connection, control) in controls {
+        let start = try #require(requested[connection], "connection \(connection) asked for a cursor")
+        #expect(control == start + replayed[connection, default: 0], "connection \(connection): the control frame follows the replay")
+    }
+    #expect(requested[1] == 0)
     #expect(live[1, default: 0] > 0)
     #expect(resumed >= first, "The resumed connection starts at or after the cursor the first one reached")
 }

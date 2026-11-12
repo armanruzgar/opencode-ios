@@ -40,9 +40,12 @@ import OCSecurity
     /// Reply failures keyed by permission or form id, shown on that request instead of server-wide.
     public internal(set) var approvalErrors: [String: String] = [:]
     public internal(set) var failedCreationDirectories: [String: String] = [:]
-    /// Moves requested from this device, until `session.moved` or a failure; the inbox item shows moves from anywhere.
     /// Whether this server's session info has `time.busy`, which the projection then keeps as the server does.
     @ObservationIgnored public var projectsBusyTime = false
+    /// Whether this server lists archived sessions apart (2.1.0 and later), so the root lists Home pages through
+    /// leave them out.
+    @ObservationIgnored public var filtersArchived = false
+    /// Moves requested from this device, until `session.moved` or a failure; the inbox item shows moves from anywhere.
     public internal(set) var requestedMoves: [String: SessionMove] = [:]
     /// The side question of each session (`/btw`). It is never part of the history.
     public internal(set) var sideQuestions: [String: SideQuestion] = [:]

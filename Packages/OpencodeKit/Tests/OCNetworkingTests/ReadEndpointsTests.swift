@@ -19,6 +19,12 @@ import OCModels
     let endpoint = ReadEndpoints.sessions(filter: .init(search: "hello", parentID: "parent", project: "p"), cursor: "opaque")
     #expect(Set(endpoint.query.map(\.name)) == ["cursor", "limit"])
 }
+@Test func sessionListsFilterArchivedSessionsOnlyWhenAsked() {
+    #expect(!ReadEndpoints.sessions().query.contains { $0.name == "archived" })
+    #expect(ReadEndpoints.sessions(filter: .init(archived: false)).query.contains { $0.name == "archived" && $0.value == "false" })
+    #expect(ReadEndpoints.sessions(filter: .init(archived: true)).query.contains { $0.name == "archived" && $0.value == "true" })
+    #expect(Set(ReadEndpoints.sessions(filter: .init(archived: false), cursor: "opaque").query.map(\.name)) == ["cursor", "limit"])
+}
 @Test func locationInfoIsAnUnwrappedObject() async throws {
     let transport = FakeTransport { _, _ in
         response(body: Data(#"{"directory":"/canonical","project":{"id":"p","directory":"/canonical","canonical":"/root"}}"#.utf8))

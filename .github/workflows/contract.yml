@@ -60,8 +60,9 @@ jobs:
 
   spec-watch:
     name: Spec watch
-    # New @opencode/cli releases: oasdiff of /openapi.json against research/opencode-openapi.json and a diff
-    # of the event union, reported as one issue per release with this workflow's own token.
+    # New @opencode/cli releases: oasdiff of /openapi.json against the newest recording's
+    # (Fixtures/v2/<version>/openapi.json) and a diff of the event union, reported as one issue per
+    # release with this workflow's own token.
     runs-on: xcode-27
     timeout-minutes: 20
     permissions:

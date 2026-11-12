@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { vcsProvider, waitForNoProvider } from './vcs-reset.mjs';
+import { evictLocation, vcsProvider, waitForNoProvider } from './vcs-reset.mjs';
 
 const clock = () => {
   let time = 0;
@@ -38,6 +38,25 @@ test('an answer without its data object is an error, not "no provider"', async (
     assert.equal(await vcsProvider(server, '/fixture'), undefined);
     await assert.rejects(vcsProvider(server, '/fixture'), /without a data object/);
     await assert.rejects(vcsProvider(server, '/fixture'), /without a data object/);
+  } finally {
+    await new Promise(resolve => http.close(resolve));
+  }
+});
+
+test('the eviction deletes the fixture location and fails on any answer but 204', async () => {
+  const requests = [], statuses = [204, 404];
+  const http = createServer((request, response) => {
+    requests.push({ method: request.method, url: request.url, authorization: request.headers.authorization });
+    response.statusCode = statuses.shift();
+    response.end();
+  });
+  await new Promise(resolve => http.listen(0, '127.0.0.1', resolve));
+  const server = { baseURL: `http://127.0.0.1:${http.address().port}`, password: 'test' };
+  try {
+    await evictLocation(server, '/fixture dir');
+    await assert.rejects(evictLocation(server, '/fixture dir'), /answered 404/);
+    assert.deepEqual(requests[0], { method: 'DELETE', url: '/api/debug/location?location%5Bdirectory%5D=%2Ffixture+dir',
+      authorization: 'Basic ' + Buffer.from('opencode:test').toString('base64') });
   } finally {
     await new Promise(resolve => http.close(resolve));
   }

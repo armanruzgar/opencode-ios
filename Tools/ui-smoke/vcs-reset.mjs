@@ -12,6 +12,16 @@ export async function vcsProvider(server, directory) {
 }
 
 /**
+ * Evicts the server's booted location for a directory. A booted location keeps the repository state it detected after
+ * the directory's `.git` is removed (2.0.32 and 2.2.6 both do); the next request boots it again and detects anew.
+ */
+export async function evictLocation(server, directory) {
+  const query = new URLSearchParams({ 'location[directory]': directory });
+  const response = await fetch(`${server.baseURL}/api/debug/location?${query}`, { method: 'DELETE', headers: { authorization: basic(server.password) }, signal: AbortSignal.timeout(5000) });
+  if (response.status !== 204) throw new Error(`DELETE /api/debug/location answered ${response.status}`);
+}
+
+/**
  * Waits until the server stops reporting a repository for a directory whose `.git` was removed, in case it kept the
  * repository state it saw; throws when it still reports one at the deadline.
  */

@@ -49,6 +49,8 @@ public enum ServerEvent: Sendable, Equatable {
     case sessionMetadataUpdated(EventHeader, SessionMetadataUpdatedPayload)
     case sessionPermissions(EventHeader, SessionPermissionsPayload)
     case sessionViewed(EventHeader, SessionViewedPayload)
+    case sessionArchived(EventHeader, SessionArchivedPayload)
+    case sessionUnarchived(EventHeader, SessionUnarchivedPayload)
     case sessionUsageUpdated(EventHeader, SessionUsageUpdatedPayload)
     case sessionDeleted(EventHeader, SessionDeletedPayload)
     case sessionForked(EventHeader, SessionForkedPayload)
@@ -107,6 +109,7 @@ public enum ServerEvent: Sendable, Equatable {
     case ptyDeleted(EventHeader, PtyDeletedPayload)
     case persistentPtyAdded(EventHeader, PersistentPtyAddedPayload)
     case persistentPtyRemoved(EventHeader, PersistentPtyRemovedPayload)
+    case persistentPtyUpdated(EventHeader, PersistentPtyUpdatedPayload)
     case shellCreated(EventHeader, ShellCreatedPayload)
     case shellExited(EventHeader, ShellExitedPayload)
     case shellDeleted(EventHeader, ShellDeletedPayload)
@@ -114,6 +117,7 @@ public enum ServerEvent: Sendable, Equatable {
     case formReplied(EventHeader, FormRepliedPayload)
     case formCancelled(EventHeader, FormCancelledPayload)
     case websearchUpdated(EventHeader, WebsearchUpdatedPayload)
+    case artifactUpdated(EventHeader, ArtifactUpdatedPayload)
     case sessionStatusUpdated(EventHeader, SessionStatusUpdatedPayload)
     case sessionIdle(EventHeader, SessionIdlePayload)
     case tuiPromptAppend(EventHeader, TuiPromptAppendPayload)
@@ -147,6 +151,8 @@ public enum ServerEvent: Sendable, Equatable {
         case .sessionMetadataUpdated(let h, _): h
         case .sessionPermissions(let h, _): h
         case .sessionViewed(let h, _): h
+        case .sessionArchived(let h, _): h
+        case .sessionUnarchived(let h, _): h
         case .sessionUsageUpdated(let h, _): h
         case .sessionDeleted(let h, _): h
         case .sessionForked(let h, _): h
@@ -205,6 +211,7 @@ public enum ServerEvent: Sendable, Equatable {
         case .ptyDeleted(let h, _): h
         case .persistentPtyAdded(let h, _): h
         case .persistentPtyRemoved(let h, _): h
+        case .persistentPtyUpdated(let h, _): h
         case .shellCreated(let h, _): h
         case .shellExited(let h, _): h
         case .shellDeleted(let h, _): h
@@ -212,6 +219,7 @@ public enum ServerEvent: Sendable, Equatable {
         case .formReplied(let h, _): h
         case .formCancelled(let h, _): h
         case .websearchUpdated(let h, _): h
+        case .artifactUpdated(let h, _): h
         case .sessionStatusUpdated(let h, _): h
         case .sessionIdle(let h, _): h
         case .tuiPromptAppend(let h, _): h
@@ -246,6 +254,8 @@ public enum ServerEvent: Sendable, Equatable {
         case .sessionMetadataUpdated(_, let p): p.raw
         case .sessionPermissions(_, let p): p.raw
         case .sessionViewed(_, let p): p.raw
+        case .sessionArchived(_, let p): p.raw
+        case .sessionUnarchived(_, let p): p.raw
         case .sessionUsageUpdated(_, let p): p.raw
         case .sessionDeleted(_, let p): p.raw
         case .sessionForked(_, let p): p.raw
@@ -304,6 +314,7 @@ public enum ServerEvent: Sendable, Equatable {
         case .ptyDeleted(_, let p): p.raw
         case .persistentPtyAdded(_, let p): p.raw
         case .persistentPtyRemoved(_, let p): p.raw
+        case .persistentPtyUpdated(_, let p): p.raw
         case .shellCreated(_, let p): p.raw
         case .shellExited(_, let p): p.raw
         case .shellDeleted(_, let p): p.raw
@@ -311,6 +322,7 @@ public enum ServerEvent: Sendable, Equatable {
         case .formReplied(_, let p): p.raw
         case .formCancelled(_, let p): p.raw
         case .websearchUpdated(_, let p): p.raw
+        case .artifactUpdated(_, let p): p.raw
         case .sessionStatusUpdated(_, let p): p.raw
         case .sessionIdle(_, let p): p.raw
         case .tuiPromptAppend(_, let p): p.raw
@@ -375,6 +387,8 @@ public enum ServerEvent: Sendable, Equatable {
         case "session.metadata.updated": return .sessionMetadataUpdated(header, .init(raw: payload))
         case "session.permissions": return .sessionPermissions(header, .init(raw: payload))
         case "session.viewed": return .sessionViewed(header, .init(raw: payload))
+        case "session.archived": return .sessionArchived(header, .init(raw: payload))
+        case "session.unarchived": return .sessionUnarchived(header, .init(raw: payload))
         case "session.usage.updated": return .sessionUsageUpdated(header, .init(raw: payload))
         case "session.deleted": return .sessionDeleted(header, .init(raw: payload))
         case "session.forked": return .sessionForked(header, .init(raw: payload))
@@ -433,6 +447,7 @@ public enum ServerEvent: Sendable, Equatable {
         case "pty.deleted": return .ptyDeleted(header, .init(raw: payload))
         case "persistent-pty.added": return .persistentPtyAdded(header, .init(raw: payload))
         case "persistent-pty.removed": return .persistentPtyRemoved(header, .init(raw: payload))
+        case "persistent-pty.updated": return .persistentPtyUpdated(header, .init(raw: payload))
         case "shell.created": return .shellCreated(header, .init(raw: payload))
         case "shell.exited": return .shellExited(header, .init(raw: payload))
         case "shell.deleted": return .shellDeleted(header, .init(raw: payload))
@@ -440,6 +455,7 @@ public enum ServerEvent: Sendable, Equatable {
         case "form.replied": return .formReplied(header, .init(raw: payload))
         case "form.cancelled": return .formCancelled(header, .init(raw: payload))
         case "websearch.updated": return .websearchUpdated(header, .init(raw: payload))
+        case "artifact.updated": return .artifactUpdated(header, .init(raw: payload))
         case "session.status": return .sessionStatusUpdated(header, .init(raw: payload))
         case "session.idle": return .sessionIdle(header, .init(raw: payload))
         case "tui.prompt.append": return .tuiPromptAppend(header, .init(raw: payload))
@@ -473,6 +489,8 @@ public enum ServerEvent: Sendable, Equatable {
         "session.metadata.updated",
         "session.permissions",
         "session.viewed",
+        "session.archived",
+        "session.unarchived",
         "session.usage.updated",
         "session.deleted",
         "session.forked",
@@ -531,6 +549,7 @@ public enum ServerEvent: Sendable, Equatable {
         "pty.deleted",
         "persistent-pty.added",
         "persistent-pty.removed",
+        "persistent-pty.updated",
         "shell.created",
         "shell.exited",
         "shell.deleted",
@@ -538,6 +557,7 @@ public enum ServerEvent: Sendable, Equatable {
         "form.replied",
         "form.cancelled",
         "websearch.updated",
+        "artifact.updated",
         "session.status",
         "session.idle",
         "tui.prompt.append",
@@ -573,6 +593,8 @@ public enum ServerEvent: Sendable, Equatable {
         case "session.metadata.updated": fields = [("sessionID", "string")]
         case "session.permissions": fields = [("sessionID", "string")]
         case "session.viewed": fields = [("sessionID", "string"), ("idle", "number")]
+        case "session.archived": fields = [("sessionID", "string")]
+        case "session.unarchived": fields = [("sessionID", "string")]
         case "session.usage.updated": fields = [("sessionID", "string"), ("cost", "number"), ("tokens", "model")]
         case "session.deleted": fields = [("sessionID", "string")]
         case "session.forked": fields = [("sessionID", "string"), ("parentID", "string")]
@@ -631,6 +653,7 @@ public enum ServerEvent: Sendable, Equatable {
         case "pty.deleted": fields = [("id", "string")]
         case "persistent-pty.added": fields = [("sessionID", "string")]
         case "persistent-pty.removed": fields = [("sessionID", "string"), ("ptyID", "string")]
+        case "persistent-pty.updated": fields = [("sessionID", "string"), ("terminal", "model")]
         case "shell.created": fields = [("info", "model")]
         case "shell.exited": fields = [("id", "string"), ("exit", "number"), ("status", "string")]
         case "shell.deleted": fields = [("id", "string")]
@@ -638,6 +661,7 @@ public enum ServerEvent: Sendable, Equatable {
         case "form.replied": fields = [("id", "string"), ("sessionID", "string")]
         case "form.cancelled": fields = [("id", "string"), ("sessionID", "string")]
         case "websearch.updated": fields = []
+        case "artifact.updated": fields = []
         case "session.status": fields = [("sessionID", "string")]
         case "session.idle": fields = [("sessionID", "string")]
         case "tui.prompt.append": fields = [("text", "string")]

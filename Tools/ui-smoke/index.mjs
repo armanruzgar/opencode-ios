@@ -6,7 +6,7 @@ import { startFaultProxy } from './fault-proxy.mjs';
 import { configureComposer } from './composer-config.mjs';
 import { seedReadScreens } from './read-screens.mjs';
 import { seedAdmin } from './admin-fixture.mjs';
-import { vcsProvider, waitForNoProvider } from './vcs-reset.mjs';
+import { evictLocation, vcsProvider, waitForNoProvider } from './vcs-reset.mjs';
 import path from 'node:path';
 import { mkdir, writeFile, readFile, copyFile, rm, readdir, stat } from 'node:fs/promises';
 import { parseArgs, promisify } from 'node:util';
@@ -224,7 +224,9 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
         body: JSON.stringify({ blocked: false, dropPrompts: 0, pauseEvents: false, reset: true }) });
       assert.equal(reset.status, 200, 'The fault proxy resets before a retry');
       await rm(path.join(review.noGit, '.git'), { recursive: true, force: true });
-      // The server could keep the repository state it saw; the retried test must start without a repository.
+      // A booted location keeps the repository it detected, so the fixture's location is evicted and boots again;
+      // the retried test must start without a repository.
+      await evictLocation(server, review.noGit);
       await waitForNoProvider(() => vcsProvider(server, review.noGit));
     };
     const screenshots = path.join(repository, '.build/screenshots');

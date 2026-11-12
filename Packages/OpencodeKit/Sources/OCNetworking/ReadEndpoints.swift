@@ -36,9 +36,12 @@ public struct SessionFilter: Sendable {
     public var directory: String?
     public var project: String?
     public var subpath: String?
+    /// `true` lists only archived sessions and `false` leaves them out (2.1.0 and later); `nil` lists both.
+    public var archived: Bool?
     public init(search: String? = nil, parentID: String? = "null", directory: String? = nil,
-                project: String? = nil, subpath: String? = nil) {
+                project: String? = nil, subpath: String? = nil, archived: Bool? = nil) {
         self.search = search; self.parentID = parentID; self.directory = directory; self.project = project; self.subpath = subpath
+        self.archived = archived
     }
 }
 public enum ReadEndpoints {
@@ -47,8 +50,10 @@ public enum ReadEndpoints {
         var q = [URLQueryItem(name: "limit", value: String(limit))]
         if let cursor { q.append(.init(name: "cursor", value: cursor)) }
         else {
+            // A cursor carries the filters of its first page.
             q += query([("order", order.rawValue), ("search", filter.search), ("parentID", filter.parentID),
-                        ("directory", filter.directory), ("project", filter.project), ("subpath", filter.subpath)])
+                        ("directory", filter.directory), ("project", filter.project), ("subpath", filter.subpath),
+                        ("archived", filter.archived.map(String.init))])
         }
         return .json(path: "/api/session", query: q)
     }

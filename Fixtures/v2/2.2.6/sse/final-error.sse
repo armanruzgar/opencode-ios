@@ -1,0 +1,20 @@
+data: {"id":"evt_1b807bc760015u4cGEDCtrfXzl","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1b807bc78001LSkV4GQDITcjek","created":1794088877176,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","slug":"cosmic-squid","version":"2.2.6","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture final-error","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":0,"version":1}}
+
+data: {"id":"evt_1b807bc80002pLXTAGrvkCCZpA","created":1794088877184,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1b807bc80001dLKmwqsEnhUytU","sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","item":{"type":"user","payload":{"text":"Run the final-error fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":1,"version":1}}
+
+data: {"id":"evt_1b807bc810013Qh3P6fwjw6rVB","created":1794088877185,"type":"session.execution.started","data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo"},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":2,"version":1}}
+
+data: {"id":"evt_1b807bc85001d6P9K6izyXIt0D","created":1794088877189,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","delta":{"core/codemode":"1f1291478accf8b3e4d96a40c150bf844d60557dede4aae56c47ea0043bbdce2","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"52842fc7a9d26d4c5bc7e09406e655e0dbca8bff01999769b56d50cc104a399f","core/environment":"275a49566510c27f19965b0960b1e4bd6ca3401aa5fd8afbb285271f7ea73c99"}},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":3,"version":2}}
+
+data: {"id":"evt_1b807bc860018KpeAuHLLwa26E","created":1794088877190,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","inboxID":"msg_1b807bc80001dLKmwqsEnhUytU"},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":4,"version":1}}
+
+data: {"id":"evt_1b807bcf3001TXIY1YeV0ZX9OW","created":1794088877299,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1b807bc88001yFe4avsDVOpj1i","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794088877193},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":5,"version":1}}
+
+data: {"id":"evt_1b807bd06001KDcTbL2105xWe9","created":1794088877318,"type":"session.step.failed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","assistantMessageID":"msg_1b807bc88001yFe4avsDVOpj1i","error":{"type":"provider.invalid-request","message":"Scripted terminal error","status":400,"response":{"body":"{\"error\":{\"message\":\"Scripted terminal error\",\"type\":\"api_error\",\"code\":\"400\"}}"}},"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":6,"version":1}}
+
+data: {"id":"evt_1b807bd080010510n4ywwhPcTu","created":1794088877320,"type":"session.execution.failed","data":{"sessionID":"ses_e47f84388ffeFgZAq48wepD0Oo","error":{"type":"provider.invalid-request","message":"Scripted terminal error","status":400,"response":{"body":"{\"error\":{\"message\":\"Scripted terminal error\",\"type\":\"api_error\",\"code\":\"400\"}}"}}},"durable":{"aggregateID":"ses_e47f84388ffeFgZAq48wepD0Oo","seq":7,"version":1}}
+

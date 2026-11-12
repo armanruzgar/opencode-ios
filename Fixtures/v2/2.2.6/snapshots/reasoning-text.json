@@ -1,0 +1,143 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e47f862d1ffeNyly2QkUrPexFv",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e47f862d1ffeNyly2QkUrPexFv",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794088869167,
+        "updated": 1794088869167
+      },
+      "title": "Fixture reasoning-text",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e47f862d1ffeNyly2QkUrPexFv",
+    "eventOffset": 17,
+    "session": {
+      "id": "ses_e47f862d1ffeNyly2QkUrPexFv",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 24,
+        "output": 9,
+        "reasoning": 3,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794088869167,
+        "updated": 1794088869215,
+        "busy": 1794088869173,
+        "idle": 1794088869216
+      },
+      "title": "Fixture reasoning-text",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1b8079d34001P7j7wYLSVScGay",
+        "time": {
+          "created": 1794088869175
+        },
+        "text": "Run the reasoning-text fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b8079d39001zQcNGk3yY44LlJ",
+        "time": {
+          "created": 1794088869178,
+          "streamed": 1794088869208,
+          "completed": 1794088869215
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "reasoning",
+            "text": "Let me think.",
+            "native": {
+              "reasoningField": "reasoning_content"
+            },
+            "time": {
+              "created": 1794088869204,
+              "completed": 1794088869206
+            }
+          },
+          {
+            "type": "text",
+            "text": "The answer is 42."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b8079d60002w5Ed6qpwS0ql5U",
+        "time": {
+          "created": 1794088869216
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

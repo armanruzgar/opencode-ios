@@ -39,6 +39,9 @@ enum ProjectionFixtures {
         #expect(["pairing", "pty", "v1-probe"].contains(file.deletingPathExtension().lastPathComponent)); return
     }
     let store = ReadStore(serverID: "fixture")
+    // Project what the recording's server reports, as ServerStore does after its probe (2.2.2 adds `time.busy`).
+    let server = file.deletingLastPathComponent().deletingLastPathComponent().appending(path: "info.json")
+    store.projectsBusyTime = try JSONDecoder().decode(ServerInfo.self, from: Data(contentsOf: server)).reportsBusyTime
     let info = try #require(start["session"]).decoded(SessionInfo.self)
     let messages = try #require(start["messages"]).decoded([SessionMessage].self)
     store.seed(info: info, messages: messages,

@@ -23,10 +23,11 @@ extension ReadStore {
         guard let item else { return }
         if type.hasSuffix("delta") { item.append(p.string("delta")); return }
         item.end(p.string("text"))
+        // Provider state is `state` up to 2.0.x and `native` from 2.1.0; the app only carries it.
         if reasoning {
             if let state = p["state"] { item.fields["state"] = state }
             if let native = p["native"] { item.fields["native"] = native }
-        } else { item.fields["state"] = p["state"] }
+        } else { item.fields["state"] = p["state"]; item.fields["native"] = p["native"] }
         if reasoning {
             item.fields["time"] = .object(["created": item.fields["time"]?["created"] ?? .number(created), "completed": .number(created)])
         }
@@ -58,7 +59,7 @@ extension ReadStore {
             item.joinedMidStream = false
         case "session.tool.called":
             item.fields.raw.set(["time", "ran"], .number(created)); item.fields["executed"] = p["executed"]
-            item.fields["providerState"] = p["state"]
+            item.fields["providerState"] = p["state"]; item.fields["native"] = p["native"]
             state.raw = .object(["status": .string("running"), "input": p["input"] ?? .object([:]), "metadata": .object([:])])
         case "session.tool.progress":
             if state.status == "running" { state["metadata"] = p["metadata"] }
@@ -68,6 +69,9 @@ extension ReadStore {
             for field in ["metadata", "content", "error"] { state[field] = p[field] }
             item.fields["executed"] = .bool(p["executed"]?.boolValue == true || item.fields.executed == true)
             item.fields["providerResultState"] = p["resultState"]
+            if let native = p["native"]?.objectValue {
+                item.fields["native"] = .object((item.fields["native"]?.objectValue ?? [:]).merging(native) { _, new in new })
+            }
             item.fields.raw.set(["time", "completed"], .number(created)); item.joinedMidStream = false
         default: return
         }

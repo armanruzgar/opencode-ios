@@ -1,6 +1,7 @@
 // Spec watch: finds stable 2.x releases newer than the recorded fixtures, compares the newest one's
-// /openapi.json with research/opencode-openapi.json (oasdiff when installed, plus a structural summary),
-// diffs its generated event union against the app's decoder, and opens one GitHub issue per release.
+// /openapi.json with the one served by the newest recorded release, Fixtures/v2/<baseline>/openapi.json
+// (oasdiff when installed, plus a structural summary), diffs its generated event union against the app's
+// decoder, and opens one GitHub issue per release. Recording a release moves the baseline.
 //
 //   node Tools/spec-watch/index.mjs                     # report only; the issue text goes to stdout
 //   node Tools/spec-watch/index.mjs --issue             # also open the issue (CI: GITHUB_TOKEN, GITHUB_REPOSITORY)
@@ -87,7 +88,7 @@ const output = path.join(repository, '.build/spec-watch', version);
 await mkdir(output, { recursive: true });
 const next = values.openapi ? JSON.parse(await read(values.openapi)) : await servedOpenAPI(version);
 await writeFile(path.join(output, 'openapi.json'), JSON.stringify(next, null, 2) + '\n');
-const baseFile = path.join(repository, 'research/opencode-openapi.json');
+const baseFile = path.join(repository, 'Fixtures/v2', baseline, 'openapi.json');
 const base = JSON.parse(await read(baseFile));
 const changes = await oasdiff(baseFile, path.join(output, 'openapi.json'));
 if (!changes) notes.push('oasdiff is not installed here; install it to list breaking changes.');

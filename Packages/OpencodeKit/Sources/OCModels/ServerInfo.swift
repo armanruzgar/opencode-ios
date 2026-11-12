@@ -26,8 +26,10 @@ public struct ServerInfo: Codable, Equatable, Sendable {
     /// get the update screen, which names this version.
     public static let minimumVersion = "2.0.25"
     public var supportsPairing: Bool { isAtLeast(Self.minimumVersion) }
-    /// Session info carries `time.busy`, the start of the latest turn (seen on 2.2.2, absent on 2.0.32).
-    public var reportsBusyTime: Bool { isAtLeast("2.2.0") }
+    /// Session info carries `time.busy`, the start of the latest turn, from 2.2.2 on.
+    public var reportsBusyTime: Bool { isAtLeast("2.2.2") }
+    /// `GET /api/session` takes `archived=true|false` from 2.1.0 on; older servers ignore it and list both.
+    public var filtersArchivedSessions: Bool { isAtLeast("2.1.0") }
     public var isSupported: Bool { isAtLeast(Self.minimumVersion) && SemVer(version)?.major == 2 }
     private func isAtLeast(_ minimum: String) -> Bool {
         guard let version = SemVer(version), let minimum = SemVer(minimum) else { return false }

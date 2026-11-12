@@ -145,7 +145,7 @@ await audit(auditDir, async () => {
     }
     await c.closeSSE();
     const demo = { version: 1, server: version, directory: DEMO_DIRECTORY, routes, files, sessions };
-    let text = relocate(JSON.stringify(demo), [sandbox.root]).toString();
+    let text = relocate(JSON.stringify(demo), [sandbox.root], [routes['GET /api/info']?.hostname].filter(Boolean)).toString();
     text = text.replaceAll('/sandbox/project', DEMO_DIRECTORY);
     // The rest of the sandbox layout reads as an ordinary machine's.
     for (const [from, to] of [['/sandbox/home', '/Users/Shared'], ['/sandbox/data', '/Users/Shared/.local/share'], ['/sandbox/config', '/Users/Shared/.config'], ['/sandbox/cache', '/Users/Shared/.cache'], ['/sandbox/state', '/Users/Shared/.local/state'], ['/sandbox/tmp', '/tmp']]) {

@@ -28,11 +28,13 @@ permissions and forms. Pairing, PTY and V1 detection have no session snapshot.
 
 Published fixtures say `/sandbox` wherever the server reported the sandbox run
 root (`.build/opencode-sandbox/<version>/<run-id>`), in plain, JSON-escaped and
-URL-encoded form, so they never reveal where the checkout lives. The file hashes
+URL-encoded form, so they never reveal where the checkout lives. They say
+`sandbox.local` wherever the server reported this machine's host name (opencode
+2.2 adds `hostname` to `/api/info`); the demo recorder does the same. The file hashes
 in `manifest.json` cover the rewritten bytes. `Tools/fixture-recorder/home-paths.test.mjs`
 fails if a tracked file, or an untracked file that is not ignored, contains a home
-directory path, and CI runs it on every push. Example paths in docs and screenshots
-use `/Users/Shared`.
+directory path or a recorded `hostname` other than `sandbox.local`, and CI runs it
+on every push. Example paths in docs and screenshots use `/Users/Shared`.
 
 ## Live contracts
 
@@ -378,9 +380,10 @@ stage's start, end and minutes. When UI tests fail, their stage runs the failed 
 twice, on the same build (`xcodebuild test-without-building` with an `-only-testing:` for each,
 into `Smoke-attempt-2.xcresult` and `test-attempt-2.log`, and so on); a test passes when any
 attempt passes or ends in an expected failure. Before each retry the fault proxy's faults are
-cleared and the no-Git review fixture loses the repository a failed attempt may have created,
-after which `GET /api/vcs` must report no provider for it (the server could otherwise keep
-the repository it saw); other server state stays, so a retried test sees the sessions and
+cleared and the no-Git review fixture loses the repository a failed attempt may have created.
+A booted location keeps the repository it detected after `.git` is gone, so the fixture's
+location is evicted (`DELETE /api/debug/location`), after which `GET /api/vcs` must report no
+provider for it; other server state stays, so a retried test sees the sessions and
 messages its earlier attempt left. `ReviewSmokeTests` and `SystemSmokeTests`, which look for
 their own messages on the server, count only those created after the test started. UI stages
 pass `-test-timeouts-enabled YES`, so a test that hangs fails at its `executionTimeAllowance`
@@ -470,5 +473,5 @@ node Tools/onboarding/sync.mjs --check           # web/index.html matches the ap
 
 - **Demo.** `Tools/demo/script.mjs` holds the sample project and the scripted sessions; the recorder runs them on a sandboxed server with the scripted model and writes `Packages/OpencodeKit/Sources/OCSync/Resources/Demo/demo.json`, with sandbox paths moved to `/Users/Shared/trailhead`. The app plays it with `ScenarioTransport`, which answers only its own `.invalid` host. Recording again changes the session IDs that `DemoSmokeTests` and `ScreenshotTests` name.
 - **Screenshots.** `ScreenshotTests` walks the demo in light and dark on each named simulator (existing ones only) and the tool saves `.build/store-screenshots/<device>/<light|dark>-<n>-<screen>.png`. While it captures, the status bar shows 9:41 with full Wi-Fi, cellular and battery (`simctl status_bar … override`), cleared afterwards. `--readme` rebuilds `docs/images/hero.webp` and `docs/images/iphone-*.webp` from the light captures; it needs `cwebp` (Homebrew `webp`). The full UI run skips this test.
-- **Spec watch.** Compares the newest `@opencode/cli` release with the newest `Fixtures/v2` baseline: its `/openapi.json` (with `oasdiff` when installed, else a built-in summary) and its event union against the app's `ServerEvent.knownTypes`. With `--issue` it opens or updates a GitHub issue using `GITHUB_TOKEN`; `--dry-run` writes the issue to `.build/spec-watch/<version>/issue.md` instead. CI runs it daily.
+- **Spec watch.** Compares the newest `@opencode/cli` release with the newest `Fixtures/v2` baseline: its `/openapi.json` against the one recorded in `Fixtures/v2/<baseline>/openapi.json` (with `oasdiff` when installed, else a built-in summary) and its event union against the app's `ServerEvent.knownTypes`. Recording a newer release, once its changes are handled, moves the baseline. With `--issue` it opens or updates a GitHub issue using `GITHUB_TOKEN`; `--dry-run` writes the issue to `.build/spec-watch/<version>/issue.md` instead. CI runs it daily.
 - **Release.** `Config/Version.xcconfig` is the only place the version and build number are set. Every signed step (`archive`, `export`, `upload`) refuses to run without `TEAM_ID`; `.github/workflows/release.yml` runs them on manual dispatch.

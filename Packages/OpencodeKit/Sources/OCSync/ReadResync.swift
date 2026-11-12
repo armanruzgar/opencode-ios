@@ -19,10 +19,15 @@ extension ReadStore {
         let token = UUID(), overlay = FetchOverlay()
         overlays[token] = overlay
         defer { overlays.removeValue(forKey: token) }
+        // From 2.1.0 the first page leaves archived sessions out, so scripted `opencode run --archived` runs cannot fill
+        // it. Archiving moves `time.updated`, so the newest archived page holds any held session archived while the
+        // stream was down.
+        let apart = filtersArchived
         async let activeRequest = api.send(ReadEndpoints.active)
         async let projectRequest = api.send(ReadEndpoints.projects)
-        async let sessionRequest = api.send(ReadEndpoints.sessions())
-        let (active, projects, roots) = try await (activeRequest, projectRequest, sessionRequest)
+        async let sessionRequest = api.send(ReadEndpoints.sessions(filter: .init(archived: apart ? false : nil)))
+        async let archivedRequest: Page<SessionInfo>? = apart ? api.send(ReadEndpoints.sessions(filter: .init(archived: true))) : nil
+        let (active, projects, roots, archivedRoots) = try await (activeRequest, projectRequest, sessionRequest, archivedRequest)
         try Task.checkCancellation()
         var nextRunning = Set(active.data.keys)
         for event in overlay.events {
@@ -41,6 +46,11 @@ extension ReadStore {
             let model = sessions[info.id] ?? SessionModel(info: info)
             model.info = overlay.apply(to: info); model.resetSequence(); sessions[info.id] = model; dirty.insert(info.id)
             if let title = pendingTitles[info.id] { model.info["title"] = .string(title) }
+        }
+        // Only sessions the app already holds; Home leaves archived ones out, so the rest need not be loaded.
+        for info in archivedRoots?.data ?? [] where !deleted.contains(info.id) && !hiddenSessions.contains(info.id) {
+            guard let model = sessions[info.id] else { continue }
+            model.info = overlay.apply(to: info); model.resetSequence(); dirty.insert(info.id)
         }
         for (id, session) in sessions {
             session.executionID = nil

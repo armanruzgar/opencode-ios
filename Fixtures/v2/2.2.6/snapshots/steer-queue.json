@@ -1,0 +1,232 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e47f85eeeffeeRM3KVr7RABQjh",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e47f85eeeffeeRM3KVr7RABQjh",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794088870162,
+        "updated": 1794088870162
+      },
+      "title": "Fixture steer-queue",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e47f85eeeffeeRM3KVr7RABQjh",
+    "eventOffset": 34,
+    "session": {
+      "id": "ses_e47f85eeeffeeRM3KVr7RABQjh",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 72,
+        "output": 27,
+        "reasoning": 9,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794088870162,
+        "updated": 1794088871721,
+        "busy": 1794088871663,
+        "idle": 1794088871722
+      },
+      "title": "Fixture steer-queue",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1b807a116001Uj8GuptEa1kxne",
+        "time": {
+          "created": 1794088870169
+        },
+        "text": "Run the steer-queue fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b807a11a001M6SAgWP5q3O06N",
+        "time": {
+          "created": 1794088870171,
+          "streamed": 1794088871403,
+          "completed": 1794088871411
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Initial turn."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b807a5f5001Ki9IKJuajmFHV2",
+        "time": {
+          "created": 1794088871413
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      },
+      {
+        "id": "msg_1b807a6ee001wshPbUtkWxkxAF",
+        "time": {
+          "created": 1794088871666
+        },
+        "text": "Apply steering input.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b807a6f4001HLSXFreO0knj3x",
+        "time": {
+          "created": 1794088871669,
+          "streamed": 1794088871690,
+          "completed": 1794088871697
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Steering applied."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b807a6f6001bnWgVGTjpdZ5at",
+        "time": {
+          "created": 1794088871699
+        },
+        "text": "Run this on the next turn.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b807a715001L05zMIy8ajyFFA",
+        "time": {
+          "created": 1794088871702,
+          "streamed": 1794088871712,
+          "completed": 1794088871721
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Queued turn completed."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b807a72a0020gkDK64CIncbX0",
+        "time": {
+          "created": 1794088871722
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

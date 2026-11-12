@@ -50,7 +50,7 @@ extension ReadStore {
         guard let client else { return nil }
         let api = try await client(), token = UUID(), overlay = FetchOverlay()
         overlays[token] = overlay; defer { overlays.removeValue(forKey: token) }
-        let page = try await api.send(ReadEndpoints.sessions(filter: .init(search: search, project: project), limit: 200, cursor: cursor))
+        let page = try await api.send(ReadEndpoints.sessions(filter: .init(search: search, project: project, archived: filtersArchived ? false : nil), limit: 200, cursor: cursor))
         try Task.checkCancellation()
         for info in page.data {
             guard !hiddenSessions.contains(info.id), !overlay.events.contains(where: { $0.header?.type == "session.deleted" && $0.sessionID == info.id }) else { continue }

@@ -10,11 +10,11 @@ public struct HomeSection: Identifiable {
 /// Home's lists: "Needs you" and "Running" from every server, then the filtered sessions by day. ⌘1–9, the session
 /// commands and the switcher follow this same order.
 public enum HomeOrdering {
-    /// Root sessions, pinned first, then by latest activity.
+    /// Root sessions that are not archived, pinned first, then by latest activity.
     public static func all(_ servers: [ServerStore], hidden: Bool = false, search: String = "") -> [SessionSummary] {
         var values: [SessionSummary] = []
         for server in servers {
-            for session in server.sessions.values where session.info.parentID == nil {
+            for session in server.sessions.values where session.info.parentID == nil && session.info.time.archived == nil {
                 let item = SessionSummary(server: server, session: session)
                 guard hidden == item.meta.hidden else { continue }
                 let title = session.info.title ?? localized("Untitled session")

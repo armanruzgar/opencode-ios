@@ -92,7 +92,8 @@ extension ReadStore {
         let assistant = transcript?.messages[p.string("assistantMessageID")]
         let touchTypes: Set<String> = ["session.moved", "session.agent.selected", "session.model.selected", "session.renamed",
             "session.metadata.updated", "session.permissions", "session.inbox.enqueued", "session.step.started", "session.step.ended",
-            "session.step.failed", "session.revert.staged", "session.revert.cleared", "session.revert.committed"]
+            "session.step.failed", "session.revert.staged", "session.revert.cleared", "session.revert.committed",
+            "session.archived", "session.unarchived"]
         if touchTypes.contains(type) { session.info.raw.set(["time", "updated"], .number(created)) }
         func protect(_ rowID: String) {
             guard event.sequence != nil else { return }
@@ -114,6 +115,9 @@ extension ReadStore {
         case "session.viewed":
             session.info.raw.set(["time", "viewed"], .number(max(session.info.time.viewed ?? 0, p.number("idle"))))
             updateAttention()
+        // 2.1.0 and later: archived from another client, or by `opencode run --archived`. Home leaves it out.
+        case "session.archived": session.info.raw.set(["time", "archived"], .number(created))
+        case "session.unarchived": session.info.raw.set(["time", "archived"], nil)
         case "session.agent.selected", "session.model.selected":
             let field = type == "session.agent.selected" ? "agent" : "model"
             let previous = p["previous"] ?? session.info[field]
@@ -190,7 +194,7 @@ extension ReadStore {
                 protect(previous.id)
             }
             if let assistant {
-                for key in ["retry", "error", "finish", "rawFinish", "providerState"] { assistant.fields[key] = nil }
+                for key in ["retry", "error", "finish", "rawFinish", "providerState", "native"] { assistant.fields[key] = nil }
                 assistant.fields["agent"] = p["agent"]; assistant.fields["model"] = p["model"]
                 assistant.fields["time"] = .object(["created": p["started"] ?? .number(created)])
                 if let snapshot = p["snapshot"] { assistant.fields.raw.set(["snapshot", "start"], snapshot) }
@@ -202,7 +206,7 @@ extension ReadStore {
         case "session.step.streamed": assistant?.fields.raw.set(["time", "streamed"], .number(created))
         case "session.step.ended", "session.step.failed":
             assistant?.fields.raw.set(["time", "completed"], .number(created))
-            for key in ["finish", "rawFinish", "providerState"] { assistant?.fields[key] = p[key] }
+            for key in ["finish", "rawFinish", "providerState", "native"] { assistant?.fields[key] = p[key] }
             if type == "session.step.ended" || (p["cost"] != nil && p["tokens"] != nil) {
                 assistant?.fields["cost"] = p["cost"]; assistant?.fields["tokens"] = p["tokens"]
             }
@@ -221,7 +225,8 @@ extension ReadStore {
         case "session.compaction.started":
             let input = p["inputID"]?.stringValue
             session.pending.removeAll { $0.id == input }
-            insert("compaction", ["status": .string("running"), "reason": p["reason"], "summary": .string(""), "recent": p["recent"] ?? .string("")], rowID: input)
+            // `recent` is gone from 2.1.0 on.
+            insert("compaction", ["status": .string("running"), "reason": p["reason"], "summary": .string(""), "recent": p["recent"]], rowID: input)
         case "session.compaction.delta":
             if let row = activeCompaction(transcript) { row.fields["summary"] = .string((row.fields.summary ?? "") + p.string("text")) }
         case "session.compaction.ended", "session.compaction.failed":
@@ -232,7 +237,7 @@ extension ReadStore {
             if failed { fields["error"] = p["error"] }
             else {
                 fields["summary"] = p["text"]; fields["recent"] = p["recent"]
-                for key in ["model", "providerState", "providerContext"] { fields[key] = p[key] }
+                for key in ["model", "providerState", "providerContext", "native"] { fields[key] = p[key] }
             }
             if let current {
                 fields["time"] = current.fields["time"]

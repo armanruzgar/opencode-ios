@@ -88,6 +88,38 @@ func readEvent(_ type: String, id: String = UUID().uuidString, session: String =
     #expect(snapshot.raw["content"]?.arrayValue?.first?["native"] == completed)
     #expect(snapshot.raw["content"]?.arrayValue?.first?["state"] == legacy)
 }
+@Test @MainActor func nativeProviderStateIsKeptOnTextToolsStepsAndCompaction() throws {
+    // opencode 2.1.0 renamed `state`, `providerState` and `resultState` to `native` and dropped compaction's `recent`.
+    let store = ReadStore(serverID: "server")
+    store.seed(info: readInfo(), messages: [readRow("a", type: "assistant")])
+    let called: JSONValue = .object(["call": .string("one")]), result: JSONValue = .object(["result": .string("two")])
+    let tokens: JSONValue = .object(["input": .integer(1), "output": .integer(1), "reasoning": .integer(0), "cache": .object(["read": .integer(0), "write": .integer(0)])])
+    store.apply(try readEvent("session.step.started", data: ["assistantMessageID": .string("a"), "agent": .string("build"), "model": .object([:])]))
+    store.apply(try readEvent("session.text.started", data: ["assistantMessageID": .string("a"), "ordinal": .integer(0)]))
+    store.apply(try readEvent("session.text.ended", data: ["assistantMessageID": .string("a"), "ordinal": .integer(0), "text": .string("Hi"), "native": called]))
+    store.apply(try readEvent("session.tool.input.started", data: ["assistantMessageID": .string("a"), "id": .string("t"), "name": .string("read")]))
+    store.apply(try readEvent("session.tool.called", data: ["assistantMessageID": .string("a"), "id": .string("t"), "input": .object([:]), "executed": .bool(true), "native": called]))
+    store.apply(try readEvent("session.tool.success", data: ["assistantMessageID": .string("a"), "id": .string("t"), "executed": .bool(true),
+        "content": .array([.object(["type": .string("text"), "text": .string("ok")])]), "native": result]))
+    store.apply(try readEvent("session.step.ended", data: ["assistantMessageID": .string("a"), "finish": .string("stop"), "cost": .integer(0), "tokens": tokens, "native": result]))
+    let row = try #require(store.sessions["s"]?.transcript?.snapshot.first)
+    let content = row.raw["content"]?.arrayValue ?? []
+    #expect(row.raw["native"] == result)
+    #expect(content.first { $0["type"] == .string("text") }?["native"] == called)
+    #expect(content.first { $0["type"] == .string("tool") }?["native"] == .object(["call": .string("one"), "result": .string("two")]), "Merged, like the server")
+    store.apply(try readEvent("session.compaction.started", data: ["reason": .string("manual")]))
+    #expect(store.sessions["s"]?.transcript?.snapshot.last?.raw["recent"] == nil)
+    store.apply(try readEvent("session.compaction.ended", data: ["reason": .string("manual"), "text": .string("Summary"), "native": called]))
+    let compaction = try #require(store.sessions["s"]?.transcript?.snapshot.last)
+    #expect(compaction.raw["status"] == .string("completed") && compaction.raw["native"] == called && compaction.raw["recent"] == nil)
+}
+@Test @MainActor func archiveEventsSetAndClearTheArchiveTime() throws {
+    let store = ReadStore(serverID: "server"); store.seed(info: readInfo(), messages: [])
+    store.apply(try readEvent("session.archived", seq: 1, created: 50))
+    #expect(store.sessions["s"]?.info.time.archived == 50 && store.sessions["s"]?.info.time.updated == 50)
+    store.apply(try readEvent("session.unarchived", seq: 2, created: 60))
+    #expect(store.sessions["s"]?.info.raw["time"]?["archived"] == nil && store.sessions["s"]?.info.time.updated == 60)
+}
 @Test @MainActor func childAttentionWalksParents() throws {
     let store = ReadStore(serverID: "server")
     store.seed(info: readInfo("root")); store.seed(info: readInfo("child", parent: "root")); store.seed(info: readInfo("grandchild", parent: "child"))

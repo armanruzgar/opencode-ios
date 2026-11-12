@@ -1,0 +1,128 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/pty",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "command": "/bin/bash",
+        "args": [
+          "--noprofile",
+          "--norc"
+        ],
+        "title": "Fixture PTY",
+        "env": {
+          "PS1": "",
+          "PROMPT_COMMAND": "",
+          "HISTFILE": "/dev/null"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "361",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:17 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "location": {
+          "directory": "/sandbox/project"
+        },
+        "data": {
+          "id": "pty_1b807bd20001xCiqosZQocJjgK",
+          "title": "Fixture PTY",
+          "command": "/bin/bash",
+          "args": [
+            "--noprofile",
+            "--norc",
+            "-l"
+          ],
+          "cwd": "/sandbox/project",
+          "status": "running",
+          "pid": 10600
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "PUT",
+      "path": "/api/pty/pty_1b807bd20001xCiqosZQocJjgK",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "size": {
+          "cols": 100,
+          "rows": 30
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "361",
+        "content-type": "application/json",
+        "date": "Sat, 07 Nov 2026 22:01:17 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "location": {
+          "directory": "/sandbox/project"
+        },
+        "data": {
+          "id": "pty_1b807bd20001xCiqosZQocJjgK",
+          "title": "Fixture PTY",
+          "command": "/bin/bash",
+          "args": [
+            "--noprofile",
+            "--norc",
+            "-l"
+          ],
+          "cwd": "/sandbox/project",
+          "status": "running",
+          "pid": 10600
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "DELETE",
+      "path": "/api/pty/pty_1b807bd20001xCiqosZQocJjgK",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 204,
+      "headers": {
+        "connection": "keep-alive",
+        "date": "Sat, 07 Nov 2026 22:01:17 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin"
+      },
+      "body": null,
+      "bodyFormat": "empty"
+    }
+  }
+]

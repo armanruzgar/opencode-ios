@@ -111,6 +111,20 @@ private func removeMutation(_ raw: JSONValue) -> JSONValue { stripMutation(raw) 
     if case .undecodable = mcp[1] {} else { Issue.record("Malformed MCP status") }
     if case .connected = mcp[2] {} else { Issue.record("MCP decoding did not continue") }
 }
+@Test func eventsAddedAfter2_0Decode() {
+    // Recorded scenarios do not produce these: archiving came in 2.1.0, terminal renames and artifacts in 2.2.4.
+    let archived = ServerEvent.decode(Data(#"{"id":"evt_a","type":"session.archived","created":5,"durable":{"aggregateID":"ses_1","seq":3,"version":1},"data":{"sessionID":"ses_1"}}"#.utf8))
+    if case .sessionArchived(let header, let payload) = archived { #expect(payload.sessionID == "ses_1" && header.created == 5) }
+    else { Issue.record("session.archived") }
+    if case .sessionUnarchived(_, let payload) = ServerEvent.decode(Data(#"{"id":"evt_u","type":"session.unarchived","data":{"sessionID":"ses_1"}}"#.utf8)) {
+        #expect(payload.sessionID == "ses_1")
+    } else { Issue.record("session.unarchived") }
+    let terminal = ServerEvent.decode(Data(#"{"id":"evt_t","type":"persistent-pty.updated","data":{"sessionID":"ses_1","terminal":{"id":"pty_1","userTitle":"Server"}}}"#.utf8))
+    if case .persistentPtyUpdated(_, let payload) = terminal { #expect(payload.terminal["userTitle"] == .string("Server")) }
+    else { Issue.record("persistent-pty.updated") }
+    if case .artifactUpdated = ServerEvent.decode(Data(#"{"id":"evt_r","type":"artifact.updated","data":{}}"#.utf8)) {} else { Issue.record("artifact.updated") }
+    #expect(ServerEvent.decode(Data(#"{"id":"evt_x","type":"session.archived","data":{}}"#.utf8)).isFallback, "A session event still needs its session")
+}
 @Test func toolInputsAcceptModelOutputAndLegacyNames() {
     let raw = JSONValue.object(["command": .string("pwd"), "timeout": .string("500"), "future": .bool(true)])
     let shell = ShellInput(raw: raw)

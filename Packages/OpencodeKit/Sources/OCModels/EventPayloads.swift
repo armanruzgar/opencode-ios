@@ -97,6 +97,18 @@ public struct SessionViewedPayload: WireValue {
     public var `sessionID`: String { string("sessionID") }
     public var `idle`: Double { number("idle") }
 }
+/// Since 2.1.0. The event's `created` time is the session's new `time.archived`.
+public struct SessionArchivedPayload: WireValue {
+    public var raw: JSONValue
+    public init(raw: JSONValue) { self.raw = raw }
+    public var `sessionID`: String { string("sessionID") }
+}
+/// Since 2.1.0. Clears the session's `time.archived`.
+public struct SessionUnarchivedPayload: WireValue {
+    public var raw: JSONValue
+    public init(raw: JSONValue) { self.raw = raw }
+    public var `sessionID`: String { string("sessionID") }
+}
 public struct SessionUsageUpdatedPayload: WireValue {
     public var raw: JSONValue
     public init(raw: JSONValue) { self.raw = raw }
@@ -527,6 +539,13 @@ public struct PersistentPtyRemovedPayload: WireValue {
     public var `sessionID`: String { string("sessionID") }
     public var `ptyID`: String { string("ptyID") }
 }
+/// Since 2.2.4: a session terminal was renamed or changed.
+public struct PersistentPtyUpdatedPayload: WireValue {
+    public var raw: JSONValue
+    public init(raw: JSONValue) { self.raw = raw }
+    public var `sessionID`: String { string("sessionID") }
+    public var `terminal`: JSONValue { self["terminal"] ?? .object([:]) }
+}
 public struct ShellCreatedPayload: WireValue {
     public var raw: JSONValue
     public init(raw: JSONValue) { self.raw = raw }
@@ -563,6 +582,11 @@ public struct FormCancelledPayload: WireValue {
     public var `sessionID`: String { string("sessionID") }
 }
 public struct WebsearchUpdatedPayload: WireValue {
+    public var raw: JSONValue
+    public init(raw: JSONValue) { self.raw = raw }
+}
+/// Since 2.2.4, for the experimental artifacts the app does not show.
+public struct ArtifactUpdatedPayload: WireValue {
     public var raw: JSONValue
     public init(raw: JSONValue) { self.raw = raw }
 }

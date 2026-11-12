@@ -306,3 +306,37 @@ private actor Counter {
     #expect(splice.rows.map(\.id) == ["a", "b", "c", "d"])
     #expect(splice.cursor == nil)
 }
+private actor ArchiveFilters {
+    var values: [String] = []
+    func record(_ value: String) { values.append(value) }
+}
+@Test(arguments: [false, true]) @MainActor func archivedSessionsAreListedApartFrom2_1(apart: Bool) async throws {
+    #expect(ServerInfo(version: "2.1.0").filtersArchivedSessions && !ServerInfo(version: "2.0.32").filtersArchivedSessions)
+    let store = ReadStore(serverID: "server")
+    store.seed(info: readInfo("kept")); store.seed(info: readInfo("away"))
+    store.filtersArchived = apart
+    func archived(_ id: String) -> JSONValue {
+        var raw = readInfo(id).raw; raw.set(["time", "archived"], .integer(5)); raw.set(["time", "updated"], .integer(5)); return raw
+    }
+    let filters = ArchiveFilters(), away = archived("away"), other = archived("other"), kept = readInfo("kept").raw
+    store.client = { readAPI { request in
+        switch request.url?.path {
+        case "/api/session/active": return .object(["data": .object([:])])
+        case "/api/project": return .array([])
+        case "/api/session":
+            let filter = URLComponents(url: try #require(request.url), resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "archived" }?.value
+            await filters.record(filter ?? "both")
+            // A 2.0.x server ignores the filter and lists both.
+            let rows = filter == "false" ? [kept] : filter == "true" ? [away, other] : [kept, away]
+            return .object(["data": .array(rows), "cursor": .object([:])])
+        default: return .object(["data": .array([]), "cursor": .object([:])])
+        }
+    } }
+    try await store.resync(reason: .backlogOverflow)
+    #expect(await filters.values.sorted() == (apart ? ["false", "true"] : ["both"]))
+    #expect(store.sessions["away"]?.info.time.archived == 5, "Archived while the app was away")
+    #expect(store.sessions["other"] == nil, "Archived sessions the app never held stay unloaded")
+    _ = try await store.listSessions()
+    #expect(await filters.values.last == (apart ? "false" : "both"), "Home's own pages")
+    await store.stop()
+}

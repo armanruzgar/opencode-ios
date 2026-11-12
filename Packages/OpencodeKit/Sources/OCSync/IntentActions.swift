@@ -153,7 +153,7 @@ import OCShared
     }
     static func directory(_ registry: ServerRegistry) -> IntentDirectory {
         let servers = registry.servers
-        let sessions = HomeOrdering.all(servers).filter { $0.session.info.time.archived == nil }.map(SystemSnapshotBuilder.session)
+        let sessions = HomeOrdering.all(servers).map(SystemSnapshotBuilder.session)
         let snapshot = SystemSnapshotBuilder.build(servers, lastProject: nil, syncedAt: { _, _ in nil }, now: Date())
         return IntentDirectory(servers: snapshot.servers, projects: SystemSnapshotBuilder.projects(servers), sessions: sessions,
                                suggestsSessions: registry.system?.spotlightEnabled ?? true)

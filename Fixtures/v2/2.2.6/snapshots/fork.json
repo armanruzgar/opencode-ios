@@ -1,0 +1,132 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794088872396,
+        "updated": 1794088872396
+      },
+      "title": "Fixture fork",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+    "eventOffset": 15,
+    "session": {
+      "id": "ses_e47f85634ffe3Gv4c6ftXNAGEa",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 24,
+        "output": 9,
+        "reasoning": 3,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794088872396,
+        "updated": 1794088872425,
+        "busy": 1794088872402,
+        "idle": 1794088872426
+      },
+      "title": "Fixture fork",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1b807a9d100144v6cJXxJRx3Gp",
+        "time": {
+          "created": 1794088872404
+        },
+        "text": "Run the fork fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b807a9d5001xEn6uI56Dh0OyR",
+        "time": {
+          "created": 1794088872406,
+          "streamed": 1794088872417,
+          "completed": 1794088872425
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "History to fork."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b807a9ea002kP6N3c5Yx9MaRy",
+        "time": {
+          "created": 1794088872426
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

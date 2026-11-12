@@ -1,0 +1,249 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e47f860f6ffeCdn5mdrNuKsVLX",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e47f860f6ffeCdn5mdrNuKsVLX",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794088869642,
+        "updated": 1794088869642
+      },
+      "title": "Fixture permission-reject",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e47f860f6ffeCdn5mdrNuKsVLX",
+    "eventOffset": 32,
+    "session": {
+      "id": "ses_e47f860f6ffeCdn5mdrNuKsVLX",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 72,
+        "output": 27,
+        "reasoning": 9,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794088869642,
+        "updated": 1794088869742,
+        "busy": 1794088869647,
+        "idle": 1794088869744
+      },
+      "title": "Fixture permission-reject",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1b8079f0e001TwV6mRJQX14Pxt",
+        "time": {
+          "created": 1794088869649
+        },
+        "text": "Run the permission-reject fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b8079f13001fenUKwvaNYQnOq",
+        "time": {
+          "created": 1794088869652,
+          "streamed": 1794088869679,
+          "completed": 1794088869689
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "tool",
+            "id": "call_11_0",
+            "name": "read",
+            "executed": false,
+            "state": {
+              "status": "completed",
+              "input": {
+                "path": "sample.txt"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Read file sample.txt, lines 1-2\n1: original fixture line\n2: second line"
+                }
+              ],
+              "metadata": {
+                "truncated": false
+              }
+            },
+            "time": {
+              "created": 1794088869678,
+              "ran": 1794088869679,
+              "completed": 1794088869681
+            }
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "tool-calls",
+        "rawFinish": "tool_calls",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b8079f3b001Z8WtWpaM0xN1DS",
+        "time": {
+          "created": 1794088869692,
+          "streamed": 1794088869705,
+          "completed": 1794088869719
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "tool",
+            "id": "call_12_0",
+            "name": "edit",
+            "executed": false,
+            "state": {
+              "status": "error",
+              "input": {
+                "path": "sample.txt",
+                "oldString": "original",
+                "newString": "edited"
+              },
+              "error": {
+                "type": "permission.rejected",
+                "message": "Keep the original fixture text."
+              }
+            },
+            "time": {
+              "created": 1794088869700,
+              "ran": 1794088869704,
+              "completed": 1794088869711
+            }
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "tool-calls",
+        "rawFinish": "tool_calls",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b8079f5a0014QzeUSgsAIz4tE",
+        "time": {
+          "created": 1794088869722,
+          "streamed": 1794088869733,
+          "completed": 1794088869742
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "I will leave the file unchanged."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b8079f700011yloOIoQ6fkmmk",
+        "time": {
+          "created": 1794088869744
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

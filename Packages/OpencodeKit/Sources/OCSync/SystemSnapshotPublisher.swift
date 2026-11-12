@@ -13,7 +13,7 @@ import OCShared
     static func build(_ servers: [ServerStore], phase: AppScenePhase = .active, lastProject: SystemSnapshot.ProjectRef?,
                       carried: [String: SystemSnapshot.Session] = [:], suggestsSessions: Bool = true,
                       syncedAt: (ServerStore, SystemSnapshot.Reachability) -> Date?, now: Date) -> SystemSnapshot {
-        let rows = HomeOrdering.all(servers).filter { $0.session.info.time.archived == nil }
+        let rows = HomeOrdering.all(servers)
             .sorted { ($0.activity, $1.id) > ($1.activity, $0.id) }
             .map { item in
                 var row = session(item)

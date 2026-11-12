@@ -262,5 +262,5 @@ private func enqueuedMove(_ directory: String, seq: Int = 4) -> ServerEvent {
     current.projectsBusyTime = true
     current.apply(started)
     #expect(current.sessions["ses_1"]?.info.raw["time"]?["busy"]?.wireNumber == 500, "2.2.2 sets busy to the turn's start")
-    #expect(ServerInfo(version: "2.2.2").reportsBusyTime && !ServerInfo(version: "2.0.32").reportsBusyTime)
+    #expect(ServerInfo(version: "2.2.2").reportsBusyTime && !ServerInfo(version: "2.2.1").reportsBusyTime && !ServerInfo(version: "2.0.32").reportsBusyTime)
 }

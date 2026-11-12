@@ -1,0 +1,132 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e47f86454ffelH9wQ1hMuX4Kow",
+    "eventOffset": 4,
+    "session": {
+      "id": "ses_e47f86454ffelH9wQ1hMuX4Kow",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794088868807,
+        "updated": 1794088868807
+      },
+      "title": "Fixture plain-text",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e47f86454ffelH9wQ1hMuX4Kow",
+    "eventOffset": 28,
+    "session": {
+      "id": "ses_e47f86454ffelH9wQ1hMuX4Kow",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 48,
+        "output": 18,
+        "reasoning": 6,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794088868807,
+        "updated": 1794088869027,
+        "busy": 1794088868934,
+        "idle": 1794088869010
+      },
+      "title": "Fixture conversation",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1b8079bfc001FkkP1J17li75AP",
+        "time": {
+          "created": 1794088868941
+        },
+        "text": "Run the plain-text fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1b8079c52001HxRn1b0cY3G36P",
+        "time": {
+          "created": 1794088868949,
+          "streamed": 1794088869000,
+          "completed": 1794088869008
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Hello, fixture world!"
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1b8079c920018ZOGgHw8vqabyS",
+        "time": {
+          "created": 1794088869010
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

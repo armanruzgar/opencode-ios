@@ -271,6 +271,20 @@ private func form(_ id: String, session: String) -> FormInfo {
         #expect(harness.log.reloads.last?.contains(.control(.newPrompt)) == true)
         await harness.cleanUp()
     }
+    @Test func homeLeavesArchivedSessionsOutAndFollowsArchiveEvents() async throws {
+        let harness = try SystemHarness()
+        try await harness.start()
+        harness.seed("ses_a"); harness.seed("ses_b"); harness.seed("ses_old", archived: true)
+        let home = { Set(HomeOrdering.all([harness.server]).map(\.session.id)) }
+        #expect(home() == ["ses_a", "ses_b"])
+        harness.server.readPath.apply(try readEvent("session.archived", session: "ses_b", seq: 1, created: 1_790_000_200_000))
+        #expect(home() == ["ses_a"], "Archived on another client")
+        harness.server.readPath.apply(try readEvent("session.unarchived", session: "ses_old", seq: 1, created: 1_790_000_300_000))
+        #expect(home() == ["ses_a", "ses_old"])
+        harness.system.flush()
+        #expect(Set(try harness.snapshot().sessions.map(\.session)) == ["ses_a", "ses_old"], "Widgets follow Home")
+        await harness.cleanUp()
+    }
 }
 
 @MainActor @Suite(.serialized) struct SpotlightIndexerTests {

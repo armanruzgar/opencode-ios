@@ -32,8 +32,13 @@ enum TimelineFixtures {
     ]
 }
 @Test func recordedScenariosAreCovered() {
-    #expect(TimelineFixtures.files.count == 20)
-    #expect(Set(TimelineFixtures.files.map { $0.deletingPathExtension().lastPathComponent }) == Set(TimelineFixtures.expected.keys))
+    // Every recorded release has the same 20 scenarios.
+    let releases = Dictionary(grouping: TimelineFixtures.files) { $0.deletingLastPathComponent().deletingLastPathComponent().lastPathComponent }
+    #expect(!releases.isEmpty)
+    for (release, files) in releases {
+        #expect(files.count == 20, "\(release)")
+        #expect(Set(files.map { $0.deletingPathExtension().lastPathComponent }) == Set(TimelineFixtures.expected.keys), "\(release)")
+    }
 }
 @Test(arguments: TimelineFixtures.files) func recordedTimeline(file: URL) async throws {
     let snapshots = try JSONDecoder().decode(JSONValue.self, from: Data(contentsOf: file)).arrayValue ?? []

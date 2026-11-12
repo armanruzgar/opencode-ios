@@ -190,7 +190,7 @@ There is no "recent directories" endpoint in V2. Discovery works through project
 | Worktrees of a project | `GET /api/worktree?projectID=…` → `[{directory, strategy?}]`; `POST /api/worktree` `{projectID, from?, branch?, directory?, name?}` → `{directory}`; `DELETE /api/worktree` **with JSON body** `{projectID, directory, force}`; `POST /api/worktree/refresh` `{projectID}` | `packages/protocol/src/groups/worktree.ts:21-77`; errors use the odd shape `{ _tag: "WorktreeError", name: "WorktreeError", data: { message, forceRequired? } }` (`:9-19`). Events `worktree.updated`, `worktree.resolved`. |
 | Sessions of a directory | `GET /api/session?directory=<abs>` | Exact match on the session's location directory (`packages/core/src/session/store.ts:103`). |
 | Sessions of a project (optionally a subfolder) | `GET /api/session?project=<id>[&subpath=<rel>]` | `subpath` is an exact match on the session's relative path (`store.ts:105-108`). |
-| All sessions | `GET /api/session` | Plus `search=<substring of title>` (SQL `LIKE %…%`), `parentID=<id>` for children or `parentID=null` (the literal string) for roots (`store.ts:109-113`). |
+| All sessions | `GET /api/session` | Plus `search=<substring of title>` (SQL `LIKE %…%`), `parentID=<id>` for children or `parentID=null` (the literal string) for roots (`store.ts:109-113`). From 2.1.0, `archived=true` returns only archived sessions and `archived=false` leaves them out; omitted returns both, and cursors keep the filter. 2.0.x ignores the parameter. 2.2.6 answers any other value, such as `1` or `TRUE`, with 400. |
 | Which locations are booted | `GET /api/debug/location` → `Location.PublicRef[]`; `DELETE /api/debug/location?location[directory]=…` evicts one | Debug only. |
 | Recently active | No endpoint. Use `Project.time.active` and `Session.Info.time.updated`. | |
 
@@ -289,7 +289,7 @@ The spec has **118 paths / 142 operations**. They are grouped below by domain, w
 
 | Method & path | Scope | Request → response | Semantics |
 |---|---|---|---|
-| `GET /api/info` | G | → `ServerInfo { version, pid, urls[], paths{tmp}, capabilities?{persistentPty?} }` | Identity + readiness. Answered even while the service boots: `503` + `Retry-After: 1` while starting/stopping, `500` if boot failed, `200` when ready (`packages/server/src/process.ts:188-217`). Still requires auth. `urls` are the reachable base URLs (for `0.0.0.0`/`::` binds, one per non-internal interface, `packages/server/src/server-info.ts:18-39`), plus tunnel URLs if any. `capabilities` is optional at every level "so clients still decode servers that predate a capability" (`packages/protocol/src/groups/server.ts:13-18`). |
+| `GET /api/info` | G | → `ServerInfo { version, pid, hostname? /* 2.2.0+ */, urls[], paths{tmp}, capabilities?{persistentPty?} }` | Identity + readiness. Answered even while the service boots: `503` + `Retry-After: 1` while starting/stopping, `500` if boot failed, `200` when ready (`packages/server/src/process.ts:188-217`). Still requires auth. `urls` are the reachable base URLs (for `0.0.0.0`/`::` binds, one per non-internal interface, `packages/server/src/server-info.ts:18-39`), plus tunnel URLs if any. `capabilities` is optional at every level "so clients still decode servers that predate a capability" (`packages/protocol/src/groups/server.ts:13-18`). |
 | `POST /api/pair` | G | → `{ code, expires_in }` | Issues a single-use pairing code valid for 5 minutes (16 random bytes, base64url; `packages/server/src/pairing.ts:7, 24-28`). |
 | `GET /auth/connect/{code}` | G (no auth needed) | → `{ token }` | Redeems a pairing code. With `Accept: text/html` it sets the `opencode_session_<port>` cookie and redirects to `/`; otherwise it returns a session token to use **as the Basic-auth password** (`packages/server/src/handlers/server.ts:30-53`). Expired/used code: `401 UnauthorizedError` (or a plain-text 401 page for browsers). See §2.7. |
 | `GET /openapi.json` | G | → OpenAPI 3.1 document | Served by the running server (`HttpApiBuilder.layer(Api, { openapiPath: "/openapi.json" })`, `packages/server/src/routes.ts:178`). Behind auth like everything else. Useful for capability probing. |
@@ -305,7 +305,7 @@ The spec has **118 paths / 142 operations**. They are grouped below by domain, w
 | `GET /api/session` | G | query `limit, order, search, parentID, directory \| (project[, subpath]), cursor` → `{ data: Session.Info[], cursor{previous?, next?} }` | See §3.4 and §4.5. Children of a session: `parentID=<id>`; roots only: `parentID=null`. The official client pages children with `limit=200` (`packages/client/src/solid/data.ts:229, 526-534`). |
 | `POST /api/session` | G | `{ id?, parentID?, title?, agent?, model?: Model.Ref, location?: {directory}, metadata?, permissions?: Rule[] }` → `{data: Session.Info}` | Creates a session. Without `parentID` and `location` it uses the server cwd. With `parentID` it creates a child at the parent's location and inherits its metadata. Client-minted `id` is allowed (the official client mints it to render optimistically, `data.ts:1514-1562`). Emits `session.created`. |
 | `GET /api/session/{id}` | G | → `{data: Session.Info}` | 404 `SessionNotFoundError`. |
-| `PATCH /api/session/{id}` | S | `{ title?, metadata?, permissions? }` → 204 | `title: ""` (empty string) **asks the server to generate a title** (`packages/server/src/handlers/session.ts:262-270`); a non-empty title renames (`session.renamed`); `metadata` replaces host metadata (`session.metadata.updated`); `permissions` replaces the session ruleset (`session.permissions`). |
+| `PATCH /api/session/{id}` | S | `{ title?, metadata?, permissions?, archived? /* 2.1.0+ */ }` → 204 | `title: ""` (empty string) **asks the server to generate a title** (`packages/server/src/handlers/session.ts:262-270`); a non-empty title renames (`session.renamed`); `metadata` replaces host metadata (`session.metadata.updated`); `permissions` replaces the session ruleset (`session.permissions`). |
 | `DELETE /api/session/{id}` | G | → 204 | Deletes the session **and its child sessions** (`session.deleted`). |
 | `GET /api/session/active` | G | → `{ data: { [sessionID]: {type:"running"} } }` | Sessions whose agent loop is currently running in this process; absent = idle. Used after every (re)connect to seed busy/idle state (`data.ts:635-655`). |
 | `POST /api/session/{id}/fork` | S | `{ before?: msg_ }` → `{data: Session.Info}` | Creates a new **top-level** session (`parentID` unset) whose `fork = { sessionID: <source>, boundary: {type:"before"\|"through", messageID} }`, copying history before `before`, or through the newest message when omitted. It inherits location, agent, model, metadata and permissions, and gets a derived title (`packages/core/src/session.ts:319-358`, `session/projector.ts:114-175`). Empty source → `400 InvalidRequestError kind:"empty_session"` (`handlers/session.ts:225-238`). Emits only `session.forked` (no `session.created`), and the official data layer has no handler for it, so take the new session from the HTTP response or fetch it on that event. |
@@ -740,6 +740,7 @@ All 94 public event types (the `V2Event` union in `packages/client/src/promise/g
 | `plugin.updated` | `GET /api/plugin` |
 | `config.updated` | `GET /api/config` (+ web-search providers) |
 | `websearch.updated` | `GET /api/websearch/provider` |
+| `artifact.updated` (2.2.4+) | `GET /api/experimental/artifacts` |
 | `integration.updated` | integrations + models + providers |
 | `credential.updated` | integrations, for every known location |
 | `credential.switched` `{integrationID, credentialID\|null}` | reorder connections; refetch models + providers |
@@ -765,6 +766,7 @@ All 94 public event types (the `V2Event` union in `packages/client/src/promise/g
 | `session.model.selected` | D1 | `model, previous?` | Set `info.model`; insert a `model-switched` row (`data.ts:705-729`) |
 | `session.moved` | D1 | `location, projectID, subpath?` | Update location; insert a `location-switched` row |
 | `session.viewed` | D1 | `idle` (epoch ms) | Refetch session (`time.viewed`) |
+| `session.archived` / `session.unarchived` (2.1.0+) | D1 | — | Set `time.archived` to the event's `created`, or clear it; both also set `time.updated` |
 | `session.usage.updated` | E | `cost, tokens` | Replace session totals |
 
 **Inbox (pending input)**
@@ -827,6 +829,7 @@ All 94 public event types (the `V2Event` union in `packages/client/src/promise/g
 | `pty.deleted` | E | `{id}` |
 | `persistent-pty.added` | E | `{sessionID, terminal: PersistentPty.Info}` |
 | `persistent-pty.removed` | E | `{sessionID, ptyID}` |
+| `persistent-pty.updated` (2.2.4+) | E | `{sessionID, terminal: PersistentPty.Info}`, for example after a rename (`userTitle`) |
 | `shell.created` | E | `{info: Shell.Info}` |
 | `shell.exited` | E | `{id, exit?, status}` |
 | `shell.deleted` | E | `{id}` |
@@ -1150,6 +1153,18 @@ Fetching `packages/protocol/openapi.json` at the V2 tags (raw.githubusercontent.
 | v2.0.29 (10-14) = HEAD | 118 / 142 / 285 | additive: `integration.connect.external`; IDs became named schemas; byte-identical to v2.0.30 |
 
 A field-level comparison of 20 core schemas between v2.0.10 and v2.0.29 found **only additions** (for example `Provider.Info.compatibility?`, `Shell.Info.signal?`, `ServerInfo.capabilities?`, `Connection.CredentialInfo.method/status?`).
+
+### 11.7 What changed for a client from 2.0.32 to 2.2.6
+
+Checked on 2026-11-07 against both releases' served `/openapi.json` (recorded in `Fixtures/v2/`), the generated `types.ts` at each tag and `CHANGELOG.md`. `oasdiff` flags 159 changes as breaking, but almost all are schema-generator noise: query parameters lost `null` from their types, numbers gained a 2^53−1 maximum, boolean query flags became `"true" | "false"` enums, and `location` query parameters are now typed `object` (the deep-object `location[directory]` form clients already send). No operation was removed, and the message, form, statistics and session-info shapes are unchanged apart from the points below.
+
+- **Session archiving (2.1.0).** `PATCH /api/session/{id}` takes `archived: boolean`; `GET /api/session` takes `archived=true|false`, which 2.0.x ignores. The durable `session.archived` and `session.unarchived` events set and clear `time.archived` (at the event's `created`) and update `time.updated`. 2.2.6 adds `opencode run --archived`, which archives the session it creates; the desktop, the TUI and this app keep archived sessions out of their lists.
+- **Provider state is `native` (2.1.0).** `state` on text and reasoning, `providerState` on assistant messages and tool calls, and `resultState` on tool results became one opaque `native` object; a tool result's `native` is merged into the call's. Compaction messages and events lost `recent` and `providerContext`.
+- **`time.busy` (2.2.2)** on session info: the start of the latest execution.
+- **`hostname` (2.2.0)** in `GET /api/info`.
+- **New events (2.2.4).** `persistent-pty.updated` (a session terminal's rename, with `userTitle` on `PersistentPty.Info`) and `artifact.updated` (experimental artifacts). The union has 97 fixed types at 2.2.6.
+- **File reads (2.2.6).** `GET /api/fs/read/*` answers with `content-disposition: attachment`, `x-content-type-options: nosniff` and a sandboxed CSP, and sends HTML, JavaScript and XML (SVG included) as `text/plain`; images, audio and video keep their type. `/api/*` requests that carry `Sec-Fetch-Site: cross-site` or `same-site` get 403 when they are navigations or come from an origin that is not allowed; clients that send no `Sec-Fetch-*` headers are unaffected.
+- **PTY replay** is unchanged: text from the requested cursor, then the control frame at that cursor plus the replayed length. The 2.2.6 recording connects after the shell's greeting and gets it as replay; the 2.0.32 one gets it live, after a control frame at 0.
 
 ## 12. Stability, versioning and capability detection
 
@@ -1690,6 +1705,6 @@ Observed against V2 2.0.32 and 2.1.2 on 2026-10-21.
 - **`session.diff`** takes optional `from`, `to` and `context`, and no location. Omitted bounds resolve to the latest whole turn; omitted `context` returns full patches. Running steps compare against the working copy, and missing or disabled snapshots return an empty array. Failures come back as typed 400/404 errors, or as `UnknownError` for bad refs.
 - **Patch formats.** jsdiff and Git patches use different headers. Snapshot patches for binary files are empty, while VCS patches contain a "Binary files" chunk. When a patch is cut down to headers by the size budget, retry with `context=3`. A rename appears as a delete plus an add.
 - **VCS routes** use location wrappers. A branch diff without a base uses the default branch, not `vcs.base`. Keep 503 messages for the user. The provider, arrays and base may be empty until the plugin activates, and `vcs.branch.updated` requires a refresh. `vcs.init` rebuilds the location and emits `worktree.updated`.
-- **`fs.read`** returns raw bytes with a guessed Content-Type, a weak ETag, Last-Modified, `no-cache, no-transform` and Accept-Ranges. It answers 304, 206 and 416 and has no server size cap. The wildcard path is encoded segment by segment. Do not apply JSON response validation to this route.
+- **`fs.read`** returns raw bytes with a guessed Content-Type, a weak ETag, Last-Modified, `no-cache, no-transform` and Accept-Ranges. It answers 304, 206 and 416 and has no server size cap. From 2.2.6 it is an attachment and sends HTML, JavaScript and XML as `text/plain` (§11.7), so pick the viewer from the path. The wildcard path is encoded segment by segment. Do not apply JSON response validation to this route.
 - **`fs.list`** returns direct children, directories first with a trailing slash. It includes dot-files and ignored files, and drops symlinks. **`fs.find`** is fuzzy and ranked, excludes hidden and ignored files, caches its index for up to ten seconds, and takes `type` and `limit`.
 - **`filesystem.changed`** does not report ordinary working-tree edits. Refresh on step end, idle, VCS, revert and worktree events, on foreground and open, and on pull to refresh.

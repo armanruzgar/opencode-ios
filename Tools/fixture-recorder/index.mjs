@@ -49,9 +49,9 @@ await audit(auditDir, async () => {
     // Publish only after every requested scenario passed.
     await Promise.all(['rest', 'sse', 'ws', 'snapshots'].map(dir => mkdir(path.join(output, dir), { recursive: true })));
     const manifest = { recorderVersion: RECORDER_VERSION, opencodeVersion: version, v1Version: selected.includes('v1-probe') ? V1_VERSION : undefined, recordedAt: new Date().toISOString(), sourceReference: 'd0732ea (read-only)', scenarios: [], omitted: scenarioNames.filter(name => !selected.includes(name)) };
-    const roots = [server.root, v1?.root].filter(Boolean);
+    const roots = [server.root, v1?.root].filter(Boolean), hosts = [info?.hostname].filter(Boolean);
     const publish = async (relative, data) => {
-      const bytes = relocate(data, roots);
+      const bytes = relocate(data, roots, hosts);
       await writeFile(path.join(output, relative), bytes);
       return bytes;
     };

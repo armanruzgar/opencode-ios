@@ -1,0 +1,58 @@
+data: {"id":"evt_1b8079ba7001C66OerG7WCIDZE","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1b8079bc6001wW8mBbt9u2T8xf","created":1794088868806,"type":"worktree.resolved","data":{"projectID":"global","directory":"/sandbox/project","previous":"global"},"durable":{"aggregateID":"global","seq":0,"version":1}}
+
+data: {"id":"evt_1b8079bc7001cxPmJYlju5hQao","created":1794088868807,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","slug":"glowing-mountain","version":"2.2.6","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture plain-text","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":0,"version":1}}
+
+data: {"id":"evt_1b8079bd4001fbABYMnK0hFE0G","created":1794088868820,"type":"project.updated","location":{"directory":"/sandbox/project"},"data":{"id":"global","canonical":"/sandbox/project","vcs":"git","time":{"created":1794088868804,"updated":1794088868804,"active":1794088868820},"sandboxes":[]}}
+
+data: {"id":"evt_1b8079c0b001V1QFhU406TsfBL","created":1794088868875,"type":"integration.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c0b002OhHP8aOAgdxUkY","created":1794088868875,"type":"provider.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c0c001OLnpamBSKHf8Ug","created":1794088868876,"type":"model.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c1c001040u9N6pdcz1WA","created":1794088868892,"type":"vcs.branch.updated","location":{"directory":"/sandbox/project"},"data":{"branch":"master"}}
+
+data: {"id":"evt_1b8079c1c002jPolKQD5SQMcsP","created":1794088868892,"type":"agent.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c1d001rsN0KFsZMSdZEQ","created":1794088868893,"type":"command.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c1d002Z83Z73fO5Xc52s","created":1794088868893,"type":"skill.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c1d003MRtVjzhGMdXYk7","created":1794088868893,"type":"websearch.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c3d001peWgMmbfddeWdb","created":1794088868925,"type":"reference.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c44001bwpgWnCaVQDsxC","created":1794088868932,"type":"plugin.updated","location":{"directory":"/sandbox/project"},"data":{}}
+
+data: {"id":"evt_1b8079c44002lMIY8TAeT17MDP","created":1794088868932,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1b8079bfc001FkkP1J17li75AP","sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","item":{"type":"user","payload":{"text":"Run the plain-text fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":1,"version":1}}
+
+data: {"id":"evt_1b8079c460014ShDzuA7qec20V","created":1794088868934,"type":"session.execution.started","data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow"},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":2,"version":1}}
+
+data: {"id":"evt_1b8079c4b001RT8vPK9KI1MY11","created":1794088868939,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","delta":{"core/codemode":"1f1291478accf8b3e4d96a40c150bf844d60557dede4aae56c47ea0043bbdce2","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"52842fc7a9d26d4c5bc7e09406e655e0dbca8bff01999769b56d50cc104a399f","core/environment":"275a49566510c27f19965b0960b1e4bd6ca3401aa5fd8afbb285271f7ea73c99"}},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":3,"version":2}}
+
+data: {"id":"evt_1b8079c4d001cbxd7yrTFJ3OUI","created":1794088868941,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","inboxID":"msg_1b8079bfc001FkkP1J17li75AP"},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":4,"version":1}}
+
+data: {"id":"evt_1b8079c83001dVHPJLmBoftbHU","created":1794088868995,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1b8079c52001HxRn1b0cY3G36P","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794088868949},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":5,"version":1}}
+
+data: {"id":"evt_1b8079c85001sg0pQerWsHlHIT","created":1794088868997,"type":"session.text.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","assistantMessageID":"msg_1b8079c52001HxRn1b0cY3G36P","ordinal":0},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":6,"version":1}}
+
+data: {"id":"evt_1b8079c87001kLo0SrLVJ2mbZb","created":1794088868999,"type":"session.text.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","assistantMessageID":"msg_1b8079c52001HxRn1b0cY3G36P","ordinal":0,"delta":"Hello, fixture world!"}}
+
+data: {"id":"evt_1b8079c87002Ltav2xKdilE0UZ","created":1794088868999,"type":"session.text.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","assistantMessageID":"msg_1b8079c52001HxRn1b0cY3G36P","ordinal":0,"text":"Hello, fixture world!"},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":7,"version":1}}
+
+data: {"id":"evt_1b8079c88001iRuKrLoKN6jZGS","created":1794088869000,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","assistantMessageID":"msg_1b8079c52001HxRn1b0cY3G36P"},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":8,"version":1}}
+
+data: {"id":"evt_1b8079c90001zWqLRkFQY7QxBK","created":1794088869008,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","assistantMessageID":"msg_1b8079c52001HxRn1b0cY3G36P","finish":"stop","rawFinish":"stop","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":9,"version":1}}
+
+data: {"id":"evt_1b8079c91001Hfm3PLfnRcZn5R","created":1794088869009,"type":"session.usage.updated","data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","cost":0,"tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1b8079c920018ZOGgHw8vqabyS","created":1794088869010,"type":"session.execution.succeeded","data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow"},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":10,"version":1}}
+
+data: {"id":"evt_1b8079ca3001RYEJfIP3ZYLVYv","created":1794088869027,"type":"session.usage.updated","data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","cost":0,"tokens":{"input":48,"output":18,"reasoning":6,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1b8079ca3002fvU80ge0EYmuu8","created":1794088869027,"type":"session.renamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e47f86454ffelH9wQ1hMuX4Kow","title":"Fixture conversation"},"durable":{"aggregateID":"ses_e47f86454ffelH9wQ1hMuX4Kow","seq":12,"version":1}}
+
