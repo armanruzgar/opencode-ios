@@ -58,7 +58,11 @@ import FeatureTranscript
             let image = UIGraphicsImageRenderer(bounds: window.bounds).image { _ in
                 window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
             }
-            assertSnapshot(of: image, as: .image, named: label, record: ProcessInfo.processInfo.environment["OC_RECORD_SNAPSHOTS"] == "1")
+            // Large text drawn over a scrolled transcript can come out one step in 255 different in about a hundred
+            // pixels from run to run, which no one can see: the perceptual comparison lets that pass, while a moved
+            // or changed row still fails.
+            assertSnapshot(of: image, as: .image(perceptualPrecision: 0.98), named: label,
+                           record: ProcessInfo.processInfo.environment["OC_RECORD_SNAPSHOTS"] == "1")
         } }
         await server.readPath.stop()
     }
