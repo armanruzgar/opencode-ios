@@ -18,8 +18,10 @@ nonisolated final class AccessibilitySmokeTests: SmokeTestCase {
     @MainActor private var ipad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
 
     /// Controls inside layouts that re-flow as text grows (ViewThatFits rows of buttons, AnyLayout headers, Home's list headers).
+    /// New Session opens on the server's first project, which is one of the fixture projects, with or without Git.
     private static let reflowing: Set<String> = ["dockAllowOnce", "reviewPermission", "rejectPermission", "allowAlways", "allowOnce", "connectionMethod",
-        "Elevated risk", "High risk", "Low risk", "0 of 7 reviewed", "Today", "Earlier", "Yesterday", "No pairing link?", "Have a pairing link?", "review-project", "project", "Local repository"]
+        "Elevated risk", "High risk", "Low risk", "0 of 7 reviewed", "Today", "Earlier", "Yesterday", "No pairing link?", "Have a pairing link?", "review-project", "project", "Local repository",
+        "review-no-git", "No Git"]
     /// Issues that are not the app's to fix, or that the audit cannot attribute, each with its reason.
     private static let exclusions: [(reason: String, matches: @Sendable (Finding) -> Bool)] = [
         ("The system keyboard and status bar are drawn by iOS", { $0.identifier.hasPrefix("Keyboard") || $0.identifier.hasPrefix("StatusBar") }),
@@ -33,8 +35,11 @@ nonisolated final class AccessibilitySmokeTests: SmokeTestCase {
         ("Navigation bar titles and bar buttons: iOS caps their size and offers the large content viewer instead", { $0.type == "dynamicType" && $0.inBar }),
         ("Text scales with Dynamic Type (OCType is relative to text styles) and the layout re-flows at accessibility sizes (ViewThatFits, AnyLayout, list headers); the audit compares the element across that re-flow. The accessibility5 snapshots show the full size",
          { finding in finding.type == "dynamicType" && finding.summary.contains("partially") && reflowing.contains { finding.identifier == $0 || finding.label == $0 } }),
-        ("The label is the content itself: a file name or path, a directory or a server address", { $0.type == "sufficientElementDescription" && !$0.label.contains(" ")
-            && ($0.label.contains("/") || $0.label.range(of: #"^[\w.-]+\.[\w]+$"#, options: .regularExpression) != nil) }),
+        // A prompt that is only a file mention reads "@Example.swift " (the composer adds a space after a mention).
+        ("The label is the content itself: a file name or path, a file mention, a directory or a server address", { finding in
+            let label = finding.label.trimmingCharacters(in: .whitespaces)
+            return finding.type == "sufficientElementDescription" && !label.isEmpty && !label.contains(" ")
+                && (label.contains("/") || label.range(of: #"^@?[\w.-]+\.[\w]+$"#, options: .regularExpression) != nil) }),
         ("The audit names no element, frame or label for this issue, so it cannot be traced to a view", { $0.identifier.isEmpty && $0.label.isEmpty && $0.frame.isEmpty }),
     ]
 

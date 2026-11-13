@@ -69,6 +69,17 @@ test('booting leaves a booted simulator alone and boots one that is down', async
   assert.deepEqual(down.calls, [`boot ${udid}`, `bootstatus ${udid} -b`]);
 });
 
+test('booting waits for a simulator that is already booting instead of shutting it down', async () => {
+  const { xcrun, calls } = simctl({ states: ['Booting'] });
+  await bootSimulator(xcrun, udid, clock());
+  assert.deepEqual(calls, [`bootstatus ${udid} -b`]);
+});
+
+test('booting fails at its deadline when simctl stops answering, state check included', async () => {
+  const hung = async () => new Promise(() => {});
+  await assert.rejects(bootSimulator(hung, udid, { deadline: 20 }), /did not finish booting within 0.02 s/);
+});
+
 test('a boot that stalls fails the restart at its deadline', async () => {
   const { xcrun, calls } = simctl({ states: ['Shutdown'], hang: 'bootstatus' });
   await assert.rejects(restartSimulator(xcrun, udid, { deadline: 50, ...clock() }), /did not finish restarting within 0.05 s/);

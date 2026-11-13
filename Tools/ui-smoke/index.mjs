@@ -138,10 +138,14 @@ async function settle(before) {
   const load = await settleLoad();
   if (load.minutes > 0) console.log(`LOAD ${load.before} before ${before}: waited ${load.minutes} min, now ${load.after}${load.settled ? '' : `, still not under ${load.limit}`}`);
 }
+// Right after a boot the simulator is still clearing away the containers of the apps the last run installed; a test
+// runner launched then can fail with "Failed to create a bundle instance" for a path under containermanagerd/Dead,
+// which ends the stage, so a freshly booted simulator gets a minute to settle.
+const settleAfterBoot = () => new Promise(resolve => setTimeout(resolve, 60_000));
 /**
  * Before tests run again. A timing-sensitive test that failed in a burst of load fails again inside it, so the load
  * settles first. The iPad boots afresh, since one that stopped finishing rotations fails every iPad test in its setup;
- * the iPhone keeps running, since right after a boot Shortcuts does not list the app's App Shortcuts and the widget
+ * the iPhones keep running, since right after a boot Shortcuts does not list the app's App Shortcuts and the widget
  * does not show the app's snapshot, which fails the system tests. `restart` boots either afresh, as after a stall.
  * Then the fixtures reset.
  */
@@ -149,10 +153,7 @@ const prepareRetry = (stage, simulator, beforeRetry, before, { restart = simulat
   await settle(`${stage} ${before}`);
   if (restart) {
     await restartSimulator(xcrun, simulator);
-    // Right after a boot the simulator is still clearing away the containers of the apps the last attempt installed;
-    // a test runner launched then can fail with "Failed to create a bundle instance" for a path under
-    // containermanagerd/Dead, which ends the stage, so the simulator gets a minute to settle.
-    await new Promise(resolve => setTimeout(resolve, 60_000));
+    await settleAfterBoot();
     console.log(`RESTARTED the ${stage} simulator before ${before}`);
   }
   await beforeRetry();
@@ -236,8 +237,14 @@ const ipad = devices.find(device => device.name === 'opencode-ios iPad');
 const mainSimulator = values['ipad-only'] || workspaceOnly ? (assert.ok(ipad, 'The workspace tests need the opencode-ios iPad simulator'), ipad.udid) : device.udid;
 const destination = destinationOf(mainSimulator);
 const ipadRun = ipad && !values['ipad-only'] && !composerOnly && !workspaceOnly && !systemOnly && !adminOnly && !sessionOnly;
+// The system tests run on their own simulator when there is one, an iOS 27 iPhone: an older runtime's App Intents
+// registry cannot read builds from Xcode 27's SDK, so Shortcuts lists none of the app's App Shortcuts and the Needs you
+// widget gets no configuration intent. Everything else stays on the iPhone 17 Pro, whose runtime the references use.
+const systemPhone = devices.find(device => device.name === 'opencode-ios iPhone');
+const defaultUI = !reviewOnly && !composerOnly && !workspaceOnly && !systemOnly && !adminOnly && !terminalOnly && !sessionOnly && !a11yOnly && !values['ipad-only'] && !values['read-flows-only'];
+const systemStageRun = Boolean(systemPhone) && (defaultUI || systemOnly);
 // Every simulator the run uses: the app is installed and launched on the iPhone at the end of every run.
-const simulators = [...new Set([device.udid, mainSimulator, ...(ipadRun ? [ipad.udid] : [])])];
+const simulators = [...new Set([device.udid, mainSimulator, ...(ipadRun ? [ipad.udid] : []), ...(systemStageRun ? [systemPhone.udid] : [])])];
 await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), async () => {
   // A run that uses the iPad starts on a freshly booted one (see restartSimulator); the iPhone is booted and keeps
   // running when it is up (see prepareRetry). One at a time, so two boots don't pile onto a loaded host. The build
@@ -247,6 +254,9 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
   });
   const building = restarting.then(() => timed('build', buildForTesting));
   building.catch(() => {});
+  // The freshly booted iPad settles while the build runs (see settleAfterBoot).
+  const settled = restarting.then(() => simulators.includes(ipad?.udid) ? settleAfterBoot() : undefined);
+  settled.catch(() => {});
   const mock = await startMock();
   let server, v1, proxy;
   try {
@@ -317,7 +327,8 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
     const iphoneStage = async () => {
       const attachments = path.join(output, 'attachments');
       const manifest = await uiStage(values['ipad-only'] || workspaceOnly ? 'iPad' : 'iPhone', mainSimulator, result, 'test.log', attachments, ['-skip-testing:OpencodeUITests/PushSmokeTests', '-skip-testing:OpencodeUITests/ScreenshotTests',
-        ...(a11yOnly ? ['-only-testing:OpencodeUITests/AccessibilitySmokeTests'] : sessionOnly ? ['-only-testing:OpencodeUITests/SessionSmokeTests'] : adminOnly ? ['-only-testing:OpencodeUITests/AdminSmokeTests' + (adminTest ? '/' + adminTest : '')] : workspaceOnly ? ['-only-testing:OpencodeUITests/WorkspaceSmokeTests' + (workspaceTest ? '/' + workspaceTest : '')] : terminalOnly ? ['-only-testing:OpencodeUITests/TerminalSmokeTests' + (terminalTest ? '/' + terminalTest : '')] : systemOnly ? ['-only-testing:OpencodeUITests/SystemSmokeTests' + (systemTest ? '/' + systemTest : '')] : reviewOnly ? ['-only-testing:OpencodeUITests/ReviewSmokeTests' + (reviewTest ? '/' + reviewTest : '')] : composerOnly ? ['-only-testing:OpencodeUITests/ComposerSmokeTests' + (composerTest ? '/' + composerTest : '')] : values['ipad-only'] || values['read-flows-only'] ? ['-only-testing:OpencodeUITests/ReadSmokeTests'] : ['-only-testing:OpencodeUITests', '-skip-testing:OpencodeUITests/WorkspaceSmokeTests'])],
+        ...(a11yOnly ? ['-only-testing:OpencodeUITests/AccessibilitySmokeTests'] : sessionOnly ? ['-only-testing:OpencodeUITests/SessionSmokeTests'] : adminOnly ? ['-only-testing:OpencodeUITests/AdminSmokeTests' + (adminTest ? '/' + adminTest : '')] : workspaceOnly ? ['-only-testing:OpencodeUITests/WorkspaceSmokeTests' + (workspaceTest ? '/' + workspaceTest : '')] : terminalOnly ? ['-only-testing:OpencodeUITests/TerminalSmokeTests' + (terminalTest ? '/' + terminalTest : '')] : systemOnly ? ['-only-testing:OpencodeUITests/SystemSmokeTests' + (systemTest ? '/' + systemTest : '')] : reviewOnly ? ['-only-testing:OpencodeUITests/ReviewSmokeTests' + (reviewTest ? '/' + reviewTest : '')] : composerOnly ? ['-only-testing:OpencodeUITests/ComposerSmokeTests' + (composerTest ? '/' + composerTest : '')] : values['ipad-only'] || values['read-flows-only'] ? ['-only-testing:OpencodeUITests/ReadSmokeTests'] : ['-only-testing:OpencodeUITests', '-skip-testing:OpencodeUITests/WorkspaceSmokeTests',
+          ...(systemStageRun ? ['-skip-testing:OpencodeUITests/SystemSmokeTests'] : [])])],
         environment, beforeRetry);
       if (full || adminOnly) assert.ok(manifest.some(test => test.testIdentifier?.includes('AdminSmokeTests/')), 'Server settings smoke tests must run; regenerate the Xcode project after adding test sources');
       if (full || a11yOnly) assert.ok(manifest.some(test => test.testIdentifier?.includes('AccessibilitySmokeTests/')), 'The accessibility audit must run; regenerate the Xcode project after adding test sources');
@@ -340,7 +351,7 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
       if ((full || terminalOnly) && !values['ipad-only']) for (const name of terminalScreens()) assert.ok(captured.has(name), `Missing terminal screenshot: ${name}`);
       if (!reviewOnly && !composerOnly && !workspaceOnly && !systemOnly && !adminOnly && !terminalOnly && !sessionOnly && !a11yOnly) for (const name of ['inbox', 'session-list', 'transcript-tools', 'transcript-live', 'subagent']) assert.ok(captured.has(name), `Missing read screenshot: ${name}`);
       if (workspaceOnly && !workspaceTest) for (const name of workspaceScreens) assert.ok(captured.has(name), `Missing iPad workspace screenshot: ${name}`);
-      if ((full || systemOnly) && !systemTest) for (const name of systemScreens) assert.ok(captured.has(name), `Missing system screenshot: ${name}`);
+      if ((full || systemOnly) && !systemTest && !systemStageRun) for (const name of systemScreens) assert.ok(captured.has(name), `Missing system screenshot: ${name}`);
       if (!reviewOnly && !composerOnly && !workspaceOnly && !systemOnly && !adminOnly && !terminalOnly && !sessionOnly && !a11yOnly) {
       assert.ok(manifest.some(test => test.testIdentifier?.includes('ReadSmokeTests/testApprovals')), 'Approval smoke test must run');
       const latencyAttachment = manifest.flatMap(test => test.attachments ?? []).find(item => item.suggestedHumanReadableName?.startsWith('approval-latency'));
@@ -402,7 +413,23 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
       }
       console.log(a11yOnly ? 'PASS iPad accessibility audit' : terminalOnly ? 'PASS iPad terminals' : 'PASS iPad read flows, split-view captures, menu bar, switcher, two windows, drag and drop and terminals');
     };
+    // Shortcuts, Spotlight and the widget on the iOS 27 iPhone (see systemPhone), with the iPhone stage's retries.
+    const systemStage = async () => {
+      const systemAttachments = path.join(output, 'system-attachments');
+      const systemManifest = await uiStage('System', systemPhone.udid, path.join(output, 'System.xcresult'), 'system.log', systemAttachments,
+        ['-only-testing:OpencodeUITests/SystemSmokeTests' + (systemTest ? '/' + systemTest : '')], environment, beforeRetry);
+      const systemCaptured = new Set();
+      for (const test of systemManifest) for (const attachment of test.attachments ?? []) {
+        const finding = attachment.suggestedHumanReadableName ?? '';
+        if (finding.startsWith('finding-')) await copyFile(path.join(systemAttachments, attachment.exportedFileName), path.join(output, path.basename(finding)));
+        const name = systemScreens.find(name => finding.startsWith(name + '_'));
+        if (name && await saveScreenshot(path.join(systemAttachments, attachment.exportedFileName), name)) systemCaptured.add(name);
+      }
+      if (!systemTest) for (const name of systemScreens) assert.ok(systemCaptured.has(name), `Missing system screenshot: ${name}`);
+      console.log(`PASS Shortcuts, Spotlight and the widget on ${systemPhone.name}`);
+    };
     xctestrun = await building;
+    await settled;
     if (full && ipadRun) {
       // The snapshot and unit stage needs the iPhone simulator, whose screen scale its references use, and the iPad UI
       // stage runs beside it on the iPad. The unit stage's own check sees any reference image either one records.
@@ -422,9 +449,12 @@ await audit(path.join(repository, '.build/opencode-sandbox/audits', runID), asyn
       await timed('performance', () => onceMoreIfStalled('performance', mainSimulator, budgets, 'performance.log',
         () => xcodebuildTest(budgets, 'performance.log', ['-destination', destination, performance], environment)));
       await timed('iPhone', iphoneStage);
+      if (systemStageRun) await timed('System', systemStage);
     } else {
       if (full) await timed('units', unitsStage);
-      await timed(values['ipad-only'] || workspaceOnly ? 'iPad' : 'iPhone', iphoneStage);
+      // A system-only run with the iOS 27 iPhone has nothing for the iPhone stage.
+      if (!(systemOnly && systemStageRun)) await timed(values['ipad-only'] || workspaceOnly ? 'iPad' : 'iPhone', iphoneStage);
+      if (systemStageRun) await timed('System', systemStage);
       if (ipadRun) await timed('iPad', ipadStage);
     }
     // Leave a freshly installed, launched app on the requested booted simulator. A simulator that stopped answering

@@ -18,6 +18,9 @@ nonisolated final class SystemSmokeTests: SmokeTestCase {
     }
     /// Pairs the sandbox and creates one session with a unique title; returns its ID and title.
     @MainActor private func setUpServer(_ suffix: String) async throws -> (id: String, title: String) {
+        // iOS 27 keeps an App Shortcut's result over every app until Done is tapped: one an earlier test left would
+        // cover this test's screens.
+        if tapLabel("Done", in: [springboard, spotlight], timeout: 2) { finding("shortcut-result", "An App Shortcut's result was still showing; Done closed it.") }
         try launchFreshApp(suffix: suffix)
         app.buttons["addFirstServer"].tap()
         XCTAssertTrue(app.buttons["Use password"].waitForExistence(timeout: 5)); app.buttons["Use password"].tap()
@@ -52,10 +55,20 @@ nonisolated final class SystemSmokeTests: SmokeTestCase {
     /// Runs one of the app's App Shortcuts from the Shortcuts app: its tile is a button named after its symbol.
     @MainActor private func runShortcut(_ symbol: String) -> Bool {
         shortcuts.activate()
+        // iOS 27 opens Shortcuts with a one-time "What's New in Shortcuts" sheet over the library.
+        let whatsNew = shortcuts.staticTexts["What’s New in Shortcuts"]
+        if whatsNew.waitForExistence(timeout: 3) { tapLabel("Continue", in: [shortcuts], timeout: 5) }
         let tile = shortcuts.buttons[symbol]
         if !tile.waitForExistence(timeout: 5) {
-            // Not on the app's page yet: the library lists the app's tiles under its name.
-            tapLabel("Opencode", in: [shortcuts], timeout: 5)
+            // Not on the app's page yet: the library lists the app's tiles under its name. iOS 27 opens on All
+            // Shortcuts, which lists only the user's own shortcuts; the app is a level up, in the Library.
+            if !tapLabel("Opencode", in: [shortcuts], timeout: 5) {
+                let library = shortcuts.buttons["BackButton"]
+                if library.exists { library.tap() }
+                if !tapLabel("Opencode", in: [shortcuts], timeout: 5), tapLabel("Apps", in: [shortcuts], timeout: 5) {
+                    tapLabel("Opencode", in: [shortcuts], timeout: 5)
+                }
+            }
         }
         guard tile.waitForExistence(timeout: 10) else { return false }
         tile.tap()
@@ -200,11 +213,13 @@ nonisolated final class SystemSmokeTests: SmokeTestCase {
         } else {
             finding("spotlight-run", "Session status was not listed, so it was not run.")
         }
-        // A session by its title, among the results: never a web suggestion, which would open Safari.
+        // A session by its title, among the results: never a web suggestion, which would open Safari, and never Session
+        // status for it, which runs instead of opening. iOS 27 can list that App Shortcut first, its gauge symbol leading
+        // the label, after the Shortcuts test has run it; Open session's leads with "Comment Left".
         let search = openSpotlight()
         XCTAssertTrue(search.waitForExistence(timeout: 10), "Spotlight's search field")
-        let result = spotlight.cells.matching(NSPredicate(format: "label CONTAINS %@ AND (identifier BEGINSWITH %@ OR identifier BEGINSWITH %@)",
-                                                          session.title, "Identifier:ResultCell", "Identifier:AppViewResultCell")).firstMatch
+        let result = spotlight.cells.matching(NSPredicate(format: "label CONTAINS %@ AND NOT (label BEGINSWITH %@) AND (identifier BEGINSWITH %@ OR identifier BEGINSWITH %@)",
+                                                          session.title, "Gauge", "Identifier:ResultCell", "Identifier:AppViewResultCell")).firstMatch
         replaceSearch(search, with: session.title)
         var found = result.waitForExistence(timeout: 15)
         if !found { replaceSearch(search, with: session.title); found = result.waitForExistence(timeout: 15) }

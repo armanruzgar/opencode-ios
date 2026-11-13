@@ -21,10 +21,17 @@ export async function restartSimulator(xcrun, udid, { deadline = 10 * 60_000, ..
   await withDeadline(restart(xcrun, udid, options), deadline, `Simulator ${udid} did not finish restarting within ${deadline / 1000} s`);
 }
 
-/** Boots a simulator that is not booted, waiting until it has finished booting; a booted one is left as it is. */
+/**
+ * Boots a simulator that is not booted, waiting until it has finished booting; a booted one is left as it is, and one
+ * that is already booting finishes on its own. Like a restart, it fails once `deadline` passes, state check included.
+ */
 export async function bootSimulator(xcrun, udid, { deadline = 10 * 60_000, ...options } = {}) {
-  if (await simulatorState(xcrun, udid) === 'Booted') return;
-  await withDeadline(restart(xcrun, udid, options), deadline, `Simulator ${udid} did not finish booting within ${deadline / 1000} s`);
+  await withDeadline((async () => {
+    const state = await simulatorState(xcrun, udid);
+    if (state === 'Booted') return;
+    if (state === 'Booting') return void await xcrun(['simctl', 'bootstatus', udid, '-b']);
+    await restart(xcrun, udid, options);
+  })(), deadline, `Simulator ${udid} did not finish booting within ${deadline / 1000} s`);
 }
 
 /** The result of `work`, or an error with `message` once `ms` have passed; the timer never outlives the work. */

@@ -111,8 +111,11 @@ nonisolated class SmokeTestCase: XCTestCase {
         let deadline = Date().addingTimeInterval(timeout)
         while Date() < deadline {
             guard list.waitForExistence(timeout: 2) else { continue }
+            // Back to the top, where overshooting does no harm; then down in slow steps. A full-speed swipe flings the
+            // list, and when sessions earlier tests left in Needs you push a row below the screen, the fling carried it
+            // past the screen between two checks.
             for _ in 0..<6 where !visible() { list.swipeDown() }
-            for _ in 0..<15 where !visible() { list.swipeUp() }
+            for _ in 0..<30 where !visible() && Date() < deadline { list.swipeUp(velocity: .slow) }
             if visible() { return row }
         }
         return row

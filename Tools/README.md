@@ -331,8 +331,10 @@ node Tools/ui-smoke/index.mjs --system-only                               # ever
 node Tools/ui-smoke/index.mjs --system-test testShortcutsRunTheIntents    # one of them
 ```
 
-The full run's iPhone stage includes `SystemSmokeTests`. Each test pairs the sandbox and
-creates a session with a unique title, then leaves the app for the system:
+The full run runs `SystemSmokeTests` in their own stage (`System.xcresult`, `system.log`) on
+"opencode-ios iPhone", an iPhone 17 Pro on iOS 27.2, when that simulator exists (see below), and
+in the iPhone stage otherwise. Each test pairs the sandbox and creates a session with a unique
+title, then leaves the app for the system:
 
 - `testShortcutsRunTheIntents` runs Send a prompt from the app's page in the Shortcuts app. A
   simulator build is not signed with a team, so the system refuses to run it ("Unable to run
@@ -354,7 +356,12 @@ Needs you widget is configured through an App Intent. A simulator runtime older 
 the app is built with may not read the app's executable: with Xcode 27.2 and only the iOS 26.5
 runtime installed, `linkd` logs `resolveWithBundle … executableError … Invalid argument` and
 `Failed to register "dev.opencodeios.client": … aggregateMetadataIsEmpty`, and both tests fail
-for any build of the app, with or without the debug dylib.
+for any build of the app, with or without the debug dylib. The iOS 27.2 runtime registers the
+same build, so the system tests run on an iPhone 17 Pro with it, made once with
+`xcrun simctl create "opencode-ios iPhone" com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro com.apple.CoreSimulator.SimRuntime.iOS-27-2`
+after `xcodebuild -downloadPlatform iOS`. The tool only looks that simulator up by name; like the
+iPhone 17 Pro, it is booted when it is down and restarted only after a stall. Everything else stays on the
+iPhone 17 Pro, whose iOS 26.5 rendering the reference images use.
 
 The DEBUG app handles the intent link only under a `ui-` test identity. Under a test identity
 it also exposes an `intentTrace` element: each intent records in the App Group which process
@@ -374,7 +381,7 @@ The harness uses only `opencode-sandbox` and the scripted model, creates a fresh
 single-use link with `POST /api/pair`, builds once with `xcodebuild build-for-testing`
 (`build.log`, while the sandbox starts) and runs every stage with `test-without-building`
 against that build's `.xctestrun`, on iPhone 17 Pro (iOS 26.5) and the "opencode-ios iPad"
-simulator. `-skipPackagePluginValidation` lets the build run SwiftTerm's build plugin without
+simulator, plus "opencode-ios iPhone" (iOS 27.2) for the system tests when it exists. `-skipPackagePluginValidation` lets the build run SwiftTerm's build plugin without
 trusting it in Xcode's settings. `TEST_RUNNER_OPENCODE_UI_*` environment variables carry the sandbox
 URLs, passwords and link into XCUITest. Only an isolated test identifier reaches
 the app's launch environment; the tests type the connection inputs through the UI.
@@ -388,8 +395,10 @@ reference-image check spans both stages. A run that uses the iPad starts by shut
 booting it again; the iPhone is booted only when it is down, one at a time and without creating, erasing or
 reconfiguring either: an iPad that has been booted for a while can stop finishing rotations, and
 then every iPad test fails in its setup, while right after a boot Shortcuts does not list the app's
-App Shortcuts and the widget does not show its snapshot, which fails the iPhone's system tests. A
-restart or boot that has not finished within 10 minutes fails the run. `timings.json` records each
+App Shortcuts and the widget does not show its snapshot, which fails the iPhone's system tests. The
+freshly booted iPad gets a minute to settle while the build runs (see the retries below), and a
+simulator found still booting is waited for rather than shut down. A restart or boot that has not
+finished within 10 minutes fails the run. `timings.json` records each
 stage's start, end and minutes, and those of the restarts (`simulators`), of each retry's setup and
 of the wait before the performance budgets (`performance setup`). When UI tests fail, their stage runs the failed tests again together, up to
 twice, on the same build (`xcodebuild test-without-building` with an `-only-testing:` for each,
