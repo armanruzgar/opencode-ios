@@ -1,0 +1,102 @@
+[
+  {
+    "connection": 1,
+    "direction": "handshake",
+    "path": "/api/pty/pty_1cdad05760015rToa58ptlIP40/connect?cursor=0",
+    "status": 101
+  },
+  {
+    "connection": 1,
+    "direction": "received",
+    "opcode": 2,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "AHsiY3Vyc29yIjowfQ=="
+  },
+  {
+    "connection": 1,
+    "direction": "received",
+    "opcode": 1,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "DQpUaGUgZGVmYXVsdCBpbnRlcmFjdGl2ZSBzaGVsbCBpcyBub3cgenNoLg0KVG8gdXBkYXRlIHlvdXIgYWNjb3VudCB0byB1c2UgenNoLCBwbGVhc2UgcnVuIGBjaHNoIC1zIC9iaW4venNoYC4NCkZvciBtb3JlIGRldGFpbHMsIHBsZWFzZSB2aXNpdCBodHRwczovL3N1cHBvcnQuYXBwbGUuY29tL2tiL0hUMjA4MDUwLg0KG1s/MTAzNGgNG1tL"
+  },
+  {
+    "connection": 1,
+    "direction": "sent",
+    "opcode": 1,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "cHJpbnRmICdmaXh0dXJlLXB0eS0lc1xuJyAnZWNobycK"
+  },
+  {
+    "connection": 1,
+    "direction": "received",
+    "opcode": 1,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "cHJpbnRmICdmaXh0dXJlLXB0eS0lc1xuJyAnZWNobycNCmZpeHR1cmUtcHR5LWVjaG8NCg=="
+  },
+  {
+    "connection": 1,
+    "direction": "sent",
+    "opcode": 8,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "A+g="
+  },
+  {
+    "connection": 1,
+    "direction": "received",
+    "opcode": 8,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "A+g="
+  },
+  {
+    "connection": 2,
+    "direction": "handshake",
+    "path": "/api/pty/pty_1cdad05760015rToa58ptlIP40/connect?cursor=247",
+    "status": 101
+  },
+  {
+    "connection": 2,
+    "direction": "received",
+    "opcode": 2,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "AHsiY3Vyc29yIjoyNDd9"
+  },
+  {
+    "connection": 2,
+    "direction": "sent",
+    "opcode": 1,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "cHJpbnRmICdmaXh0dXJlLXJlc3VtZS0lc1xuJyAnb2snCg=="
+  },
+  {
+    "connection": 2,
+    "direction": "received",
+    "opcode": 1,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "cHJpbnRmICdmaXh0dXJlLXJlc3VtZS0lc1xuJyAnb2snDQpmaXh0dXJlLXJlc3VtZS1vaw0K"
+  },
+  {
+    "connection": 2,
+    "direction": "sent",
+    "opcode": 8,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "A+g="
+  },
+  {
+    "connection": 2,
+    "direction": "received",
+    "opcode": 8,
+    "fin": true,
+    "encoding": "base64",
+    "payload": "A+g="
+  }
+]

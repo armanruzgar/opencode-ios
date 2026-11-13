@@ -1,0 +1,10 @@
+data: {"id":"evt_1cdad05740017XdjXY4uOZbTTf","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdad05e6001w0Q1j4TWeDIEbz","created":1794452030953,"type":"pty.created","location":{"directory":"/sandbox/project"},"data":{"info":{"id":"pty_1cdad05760015rToa58ptlIP40","title":"Fixture PTY","command":"/bin/bash","args":["--noprofile","--norc","-l"],"cwd":"/sandbox/project","status":"running","pid":46902}}}
+
+data: {"id":"evt_1cdad05ee001555SI6Nn65FvMd","created":1794452030958,"type":"pty.updated","location":{"directory":"/sandbox/project"},"data":{"info":{"id":"pty_1cdad05760015rToa58ptlIP40","title":"Fixture PTY","command":"/bin/bash","args":["--noprofile","--norc","-l"],"cwd":"/sandbox/project","status":"running","pid":46902}}}
+
+data: {"id":"evt_1cdad06900012iciaUqGzjY84q","created":1794452031120,"type":"pty.deleted","location":{"directory":"/sandbox/project"},"data":{"id":"pty_1cdad05760015rToa58ptlIP40"}}
+

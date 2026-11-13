@@ -1,0 +1,20 @@
+data: {"id":"evt_1cdad0530001b6EoUOUXP28r5i","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdad0532001dj0HSDlWLJmkzo","created":1794452030770,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","slug":"sunny-forest","version":"2.2.7","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture final-error","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":0,"version":1}}
+
+data: {"id":"evt_1cdad0538002TvLuvtxLC9rdBQ","created":1794452030776,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1cdad0538001zaHciDuSU6aG9E","sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","item":{"type":"user","payload":{"text":"Run the final-error fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":1,"version":1}}
+
+data: {"id":"evt_1cdad0539001foq0I85RfMxYof","created":1794452030777,"type":"session.execution.started","data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G"},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":2,"version":1}}
+
+data: {"id":"evt_1cdad053a001GIHGa9Fj22yfeJ","created":1794452030778,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","delta":{"core/codemode":"b9321aa27fe3f9eb6662ad886008492dd401333a0049c044c54ac2323b9ead1e","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"a7e13a150687c80c4d0443d32fcf7d9efe5c87e5523d17f39302e1f532dde9d8","core/environment":"b2e6c779a5e6d62839a6acc8cc2296b080ce8dc55500cdf29b8995c398187ed5"}},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":3,"version":2}}
+
+data: {"id":"evt_1cdad053b0017pQQuUArrx0dNS","created":1794452030779,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","inboxID":"msg_1cdad0538001zaHciDuSU6aG9E"},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":4,"version":1}}
+
+data: {"id":"evt_1cdad0560001h8weApRKY7YzQP","created":1794452030816,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdad053c001bhT9njw2SAi1IE","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452030781},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":5,"version":1}}
+
+data: {"id":"evt_1cdad0569001M72b6gQhD3KVrf","created":1794452030825,"type":"session.step.failed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","assistantMessageID":"msg_1cdad053c001bhT9njw2SAi1IE","error":{"type":"provider.invalid-request","message":"Scripted terminal error","status":400,"response":{"body":"{\"error\":{\"message\":\"Scripted terminal error\",\"type\":\"api_error\",\"code\":\"400\"}}"}},"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":6,"version":1}}
+
+data: {"id":"evt_1cdad056a001GDs8uFpu3K81Dv","created":1794452030826,"type":"session.execution.failed","data":{"sessionID":"ses_e3252faceffeTbdrLWJT13sG8G","error":{"type":"provider.invalid-request","message":"Scripted terminal error","status":400,"response":{"body":"{\"error\":{\"message\":\"Scripted terminal error\",\"type\":\"api_error\",\"code\":\"400\"}}"}}},"durable":{"aggregateID":"ses_e3252faceffeTbdrLWJT13sG8G","seq":7,"version":1}}
+

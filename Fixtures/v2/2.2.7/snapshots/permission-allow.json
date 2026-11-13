@@ -1,0 +1,265 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e3253185dffedSseiGvP0LFnfd",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e3253185dffedSseiGvP0LFnfd",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452023205,
+        "updated": 1794452023205
+      },
+      "title": "Fixture permission-allow",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e3253185dffedSseiGvP0LFnfd",
+    "eventOffset": 32,
+    "session": {
+      "id": "ses_e3253185dffedSseiGvP0LFnfd",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 72,
+        "output": 27,
+        "reasoning": 9,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794452023205,
+        "updated": 1794452023555,
+        "busy": 1794452023216,
+        "idle": 1794452023557
+      },
+      "title": "Fixture permission-allow",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdace7af001uRJ6nCUNq0BDiZ",
+        "time": {
+          "created": 1794452023218
+        },
+        "text": "Run the permission-allow fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdace7b6001j4qz94pq3zOGoG",
+        "time": {
+          "created": 1794452023224,
+          "streamed": 1794452023268,
+          "completed": 1794452023285
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "tool",
+            "id": "call_8_0",
+            "name": "read",
+            "executed": false,
+            "state": {
+              "status": "completed",
+              "input": {
+                "path": "sample.txt"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Read file sample.txt, lines 1-2\n1: original fixture line\n2: second line"
+                }
+              ],
+              "metadata": {
+                "truncated": false
+              }
+            },
+            "time": {
+              "created": 1794452023265,
+              "ran": 1794452023267,
+              "completed": 1794452023271
+            }
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "tool-calls",
+        "rawFinish": "tool_calls",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdace7f9001uL3E0midrKtItc",
+        "time": {
+          "created": 1794452023290,
+          "streamed": 1794452023316,
+          "completed": 1794452023504
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "tool",
+            "id": "call_9_0",
+            "name": "edit",
+            "executed": false,
+            "state": {
+              "status": "completed",
+              "input": {
+                "path": "sample.txt",
+                "oldString": "original",
+                "newString": "edited"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Edited sample.txt (1 replacement)"
+                }
+              ],
+              "metadata": {
+                "files": [
+                  {
+                    "file": "sample.txt",
+                    "patch": "Index: sample.txt\n===================================================================\n--- sample.txt\n+++ sample.txt\n@@ -1,2 +1,2 @@\n-original fixture line\n+edited fixture line\n second line\n",
+                    "status": "modified",
+                    "additions": 1,
+                    "deletions": 1
+                  }
+                ],
+                "truncated": false
+              }
+            },
+            "time": {
+              "created": 1794452023305,
+              "ran": 1794452023315,
+              "completed": 1794452023458
+            }
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "31b6c27649a87057b58c1df6b070737bb2850ca0",
+          "files": [
+            "sample.txt"
+          ]
+        },
+        "finish": "tool-calls",
+        "rawFinish": "tool_calls",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdace8d5001kFIjt6gsQdzfoA",
+        "time": {
+          "created": 1794452023510,
+          "streamed": 1794452023534,
+          "completed": 1794452023555
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "The edit was approved."
+          }
+        ],
+        "snapshot": {
+          "start": "31b6c27649a87057b58c1df6b070737bb2850ca0",
+          "end": "31b6c27649a87057b58c1df6b070737bb2850ca0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdace905001Lo9rRjMMCR2fDY",
+        "time": {
+          "created": 1794452023557
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

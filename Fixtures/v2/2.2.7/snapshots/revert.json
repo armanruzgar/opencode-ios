@@ -1,0 +1,132 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e32530dfeffeGTj73GEpNfXHaX",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e32530dfeffeGTj73GEpNfXHaX",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452025858,
+        "updated": 1794452025858
+      },
+      "title": "Fixture revert",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e32530dfeffeGTj73GEpNfXHaX",
+    "eventOffset": 31,
+    "session": {
+      "id": "ses_e32530dfeffeGTj73GEpNfXHaX",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 48,
+        "output": 18,
+        "reasoning": 6,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794452025858,
+        "updated": 1794452025965,
+        "busy": 1794452025939,
+        "idle": 1794452025966
+      },
+      "title": "Fixture revert",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdacf252001hY3VMarIi6vdnj",
+        "time": {
+          "created": 1794452025940
+        },
+        "text": "Redo the reverted turn.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdacf2560018708BYYOW3HRft",
+        "time": {
+          "created": 1794452025943,
+          "streamed": 1794452025955,
+          "completed": 1794452025965
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Redone after revert."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdacf26e001lktPA9Gyag2BiO",
+        "time": {
+          "created": 1794452025966
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

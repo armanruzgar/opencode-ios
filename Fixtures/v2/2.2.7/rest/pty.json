@@ -1,0 +1,128 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/pty",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "command": "/bin/bash",
+        "args": [
+          "--noprofile",
+          "--norc"
+        ],
+        "title": "Fixture PTY",
+        "env": {
+          "PS1": "",
+          "PROMPT_COMMAND": "",
+          "HISTFILE": "/dev/null"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "361",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:50 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "location": {
+          "directory": "/sandbox/project"
+        },
+        "data": {
+          "id": "pty_1cdad05760015rToa58ptlIP40",
+          "title": "Fixture PTY",
+          "command": "/bin/bash",
+          "args": [
+            "--noprofile",
+            "--norc",
+            "-l"
+          ],
+          "cwd": "/sandbox/project",
+          "status": "running",
+          "pid": 46902
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "PUT",
+      "path": "/api/pty/pty_1cdad05760015rToa58ptlIP40",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "size": {
+          "cols": 100,
+          "rows": 30
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "361",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:50 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "location": {
+          "directory": "/sandbox/project"
+        },
+        "data": {
+          "id": "pty_1cdad05760015rToa58ptlIP40",
+          "title": "Fixture PTY",
+          "command": "/bin/bash",
+          "args": [
+            "--noprofile",
+            "--norc",
+            "-l"
+          ],
+          "cwd": "/sandbox/project",
+          "status": "running",
+          "pid": 46902
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "DELETE",
+      "path": "/api/pty/pty_1cdad05760015rToa58ptlIP40",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 204,
+      "headers": {
+        "connection": "keep-alive",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin"
+      },
+      "body": null,
+      "bodyFormat": "empty"
+    }
+  }
+]

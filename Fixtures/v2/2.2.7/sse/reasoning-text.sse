@@ -1,0 +1,36 @@
+data: {"id":"evt_1cdace61f001L8Ex87MA9qHlGI","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdace6230016Lju1ypYP7dljo","created":1794452022819,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","slug":"kind-garden","version":"2.2.7","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture reasoning-text","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":0,"version":1}}
+
+data: {"id":"evt_1cdace62e002ox9T75wz3rJ2aW","created":1794452022830,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1cdace62e001EzoytOcPRcXsVg","sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","item":{"type":"user","payload":{"text":"Run the reasoning-text fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":1,"version":1}}
+
+data: {"id":"evt_1cdace62f001K757CkFgJawUxU","created":1794452022831,"type":"session.execution.started","data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc"},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":2,"version":1}}
+
+data: {"id":"evt_1cdace631001mlTGH2En4VrdEM","created":1794452022833,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","delta":{"core/codemode":"b9321aa27fe3f9eb6662ad886008492dd401333a0049c044c54ac2323b9ead1e","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"a7e13a150687c80c4d0443d32fcf7d9efe5c87e5523d17f39302e1f532dde9d8","core/environment":"b2e6c779a5e6d62839a6acc8cc2296b080ce8dc55500cdf29b8995c398187ed5"}},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":3,"version":2}}
+
+data: {"id":"evt_1cdace631002qk1QZwbHek7SA2","created":1794452022833,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","inboxID":"msg_1cdace62e001EzoytOcPRcXsVg"},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":4,"version":1}}
+
+data: {"id":"evt_1cdace642001zaBgYKtI8aA7Dd","created":1794452022850,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452022838},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":5,"version":1}}
+
+data: {"id":"evt_1cdace643001Oe3zqUu2fFE4bA","created":1794452022851,"type":"session.reasoning.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","ordinal":0,"native":{"reasoningField":"reasoning_content"}},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":6,"version":1}}
+
+data: {"id":"evt_1cdace647001b3Je2kH2ig864m","created":1794452022855,"type":"session.reasoning.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","ordinal":0,"delta":"Let me think."}}
+
+data: {"id":"evt_1cdace647002fYuwEZQNKVM0Cb","created":1794452022855,"type":"session.text.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","ordinal":0},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":7,"version":1}}
+
+data: {"id":"evt_1cdace648001HV5YZl19MSAZE6","created":1794452022856,"type":"session.reasoning.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","ordinal":0,"text":"Let me think.","native":{"reasoningField":"reasoning_content"}},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":8,"version":1}}
+
+data: {"id":"evt_1cdace649001ItxMlteao74Sbh","created":1794452022857,"type":"session.text.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","ordinal":0,"delta":"The answer is 42."}}
+
+data: {"id":"evt_1cdace649002BjaNns2ElLmUw0","created":1794452022857,"type":"session.text.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","ordinal":0,"text":"The answer is 42."},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":9,"version":1}}
+
+data: {"id":"evt_1cdace64a001rUIl5V9rI28q8Q","created":1794452022858,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1"},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":10,"version":1}}
+
+data: {"id":"evt_1cdace6540010OG0re3ADYEfe0","created":1794452022868,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","assistantMessageID":"msg_1cdace633001jIF3iwl2e9jJc1","finish":"stop","rawFinish":"stop","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":11,"version":1}}
+
+data: {"id":"evt_1cdace656001NIFDOkgsCnOVcI","created":1794452022870,"type":"session.usage.updated","data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc","cost":0,"tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdace657001t3yCaUXmh8hTbx","created":1794452022871,"type":"session.execution.succeeded","data":{"sessionID":"ses_e325319deffeYdnVHRKbw6IoGc"},"durable":{"aggregateID":"ses_e325319deffeYdnVHRKbw6IoGc","seq":12,"version":1}}
+

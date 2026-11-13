@@ -25,11 +25,21 @@ export async function adminContract(sandbox) {
     const here = at(directory);
     const projectID = (await c.request('GET', '/api/location?' + here)).project.id;
 
-    // Integrations and accounts.
-    const integrations = await c.request('GET', '/api/integration?' + here);
+    // Integrations and accounts. From 2.2.7 a location that just booted lists no integrations yet and publishes
+    // integration.updated once they load, a moment later; the app reloads the list on that event, and this reads it
+    // again until the mock provider is in it.
+    let integrations, late = false;
+    await until(async () => {
+      integrations = await c.request('GET', '/api/integration?' + here);
+      if (integrations.data.some(item => item.id === 'mock')) return true;
+      late = true;
+      await new Promise(resolve => setTimeout(resolve, 250));
+    }, 'The mock provider is listed');
+    // A list that came late must say so with the event the app reloads on.
+    if (late) await c.event('integration.updated');
     assert.equal(integrations.location.directory, directory);
     const mock = integrations.data.find(item => item.id === 'mock');
-    assert.ok(mock?.methods.some(method => method.type === 'key'), 'The mock provider takes a key');
+    assert.ok(mock.methods.some(method => method.type === 'key'), 'The mock provider takes a key');
     for (const label of ['Contract first', 'Contract second']) {
       await c.request('POST', `/api/integration/mock/connect/key?${here}`, { key: 'fake-contract-key-not-a-secret', label }, { status: 204 });
     }

@@ -1,0 +1,1206 @@
+{
+  "recorderVersion": "2.0.0",
+  "opencodeVersion": "2.2.7",
+  "v1Version": "1.19.3",
+  "recordedAt": "2026-11-12T02:53:53.201Z",
+  "sourceReference": "d0732ea (read-only)",
+  "scenarios": [
+    {
+      "name": "plain-text",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "dd97472ac391c45d40a945e68ca74a9b2cf02105e563a9dafeef12c279694c32",
+      "calls": [
+        {
+          "ordinal": 1,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 2,
+          "kind": "title",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": null,
+          "status": "completed",
+          "tools": []
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/plain-text.json",
+          "sha256": "6a022e3bb2c6fdaea6ccec364e6c87976a6a6fbd9cfacd42d2a2d3f877396647"
+        },
+        {
+          "path": "snapshots/plain-text.json",
+          "sha256": "f3ba22cd6ae62cb8ac9688cb024ef805e6d8fa5e7a2932bc56e65554794e37cf"
+        },
+        {
+          "path": "sse/plain-text.sse",
+          "sha256": "5e11ad975c882c2ab38990c968b4cb6ed3a79ca5aa2f72c4c97dfcdd74a093bf"
+        }
+      ]
+    },
+    {
+      "name": "reasoning-text",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "ed61ce8098d0f79f8f45b40cea7b9880ab47ab591db99dcb436f32c9bf244472",
+      "calls": [
+        {
+          "ordinal": 3,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/reasoning-text.json",
+          "sha256": "cc4c698e634e04ffc6f1e00e70593fa0016e9453f80277b3385a7d7f50f08b84"
+        },
+        {
+          "path": "snapshots/reasoning-text.json",
+          "sha256": "546442f30538ea34247bf898651ac2b5e4dcd8a7445fdcb152d2836eeaa16489"
+        },
+        {
+          "path": "sse/reasoning-text.sse",
+          "sha256": "8fc2511e84b0a1808d15f07a20e8598273661c05a52e6008a352d552d8ecbacd"
+        }
+      ]
+    },
+    {
+      "name": "read-glob-grep",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "cad6569c597a41241eb360cae8266bc670e5a3ab192d350791f03256221e3afb",
+      "calls": [
+        {
+          "ordinal": 4,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 5,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 6,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 2,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 7,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 3,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/read-glob-grep.json",
+          "sha256": "5b9c5967991ba566a8f87935cc5b843789c3f491a67e2d7146f8eb19494f0ddc"
+        },
+        {
+          "path": "snapshots/read-glob-grep.json",
+          "sha256": "b591d2b038e3e2fdfb18803f4c76e22e5bd847b9664d45f43e38f65429ab29e5"
+        },
+        {
+          "path": "sse/read-glob-grep.sse",
+          "sha256": "40083f631165a43ff8b982b5d65c92cdc86a512f79fb414350af40d1ebecc4d8"
+        }
+      ]
+    },
+    {
+      "name": "permission-allow",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "a46509c6b09aa78b00061502d13933a81632a7f37676ad0cdc101d27f2ec8a2b",
+      "calls": [
+        {
+          "ordinal": 8,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 9,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 10,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 2,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/permission-allow.json",
+          "sha256": "8611ab0cc86b9e2e24726c2c65c8c4427110187c2ea683ebf1e8d35f5e803148"
+        },
+        {
+          "path": "snapshots/permission-allow.json",
+          "sha256": "57b50056530bcbc4b896c8cafee102308cb6191a7ebad81ad673b599aa906c27"
+        },
+        {
+          "path": "sse/permission-allow.sse",
+          "sha256": "64c2940d0c2d95660098fd8373de2315a08d4284b29a0270d36be2726f8b1013"
+        }
+      ]
+    },
+    {
+      "name": "permission-reject",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "1e8d83ede7624042310377fc66abdcf6e0f0508df2f47fbc87e61269e1391e56",
+      "calls": [
+        {
+          "ordinal": 11,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 12,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 13,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 2,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/permission-reject.json",
+          "sha256": "2a5e8ca1994123b06e763056cab5a6447ffb8997fba700014bdbb92b13ce276d"
+        },
+        {
+          "path": "snapshots/permission-reject.json",
+          "sha256": "822fc1abb9e6bce96714099ddb47e021766c6716da8c437cbd3b0ad0c79721bb"
+        },
+        {
+          "path": "sse/permission-reject.sse",
+          "sha256": "5d7850c259b76cda99d76e6cb932d69a0c37f9622b07b01ef699211c71f46f5f"
+        }
+      ]
+    },
+    {
+      "name": "shell-output",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "2e46c07ca8715f7e0b4e1485139f225ce10062daab8085aed05d47a1eaff7c61",
+      "calls": [
+        {
+          "ordinal": 14,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 15,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/shell-output.json",
+          "sha256": "6b4fb64ecc08e0c70d683321d42a698ae47262db9e71deea42959f9949b181f4"
+        },
+        {
+          "path": "snapshots/shell-output.json",
+          "sha256": "4833f71d47d8d29a9834ce18e4f0e1efc065c2306ec60616cce8e23dde72fc05"
+        },
+        {
+          "path": "sse/shell-output.sse",
+          "sha256": "138cdbf84b00bb2577b4dbf6314541803f6e6583b4dcc8a46b4585943384e6c9"
+        }
+      ]
+    },
+    {
+      "name": "question-form",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "84b3716a7b8628d2029f4e2ebf4fcfe3a3d0eb293c1cc54984b1ee6d79961df1",
+      "calls": [
+        {
+          "ordinal": 16,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 17,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/question-form.json",
+          "sha256": "81926c995baf946c0caa55ea2d5591211cfb06512b6ea96e3f78c24d3d001e47"
+        },
+        {
+          "path": "snapshots/question-form.json",
+          "sha256": "50fbe4f5e4551c443ec27859c4ffe418f91ec60ee5aa48e54f5f0ee09073e25d"
+        },
+        {
+          "path": "sse/question-form.sse",
+          "sha256": "7e2aa6f5fb3c3c1828900b3b2453729d01def7ad7752c836f7f6aa35c93c3e71"
+        }
+      ]
+    },
+    {
+      "name": "subagent",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "88bd16d05692668e88e933a1728df91d5f2bbe463c1c573cc9ad2a1104b06aca",
+      "calls": [
+        {
+          "ordinal": 18,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 19,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 20,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 2,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/subagent.json",
+          "sha256": "dadc760d06be60710b66ccbe8a97e5b2e29deb0ccd4ad2cd848fc6088437620d"
+        },
+        {
+          "path": "snapshots/subagent.json",
+          "sha256": "c93dc0340f9b596f8cbe2edd989a2bf5d336736f3e628ebc1e48fd621db3ae8c"
+        },
+        {
+          "path": "sse/subagent.sse",
+          "sha256": "fd6e66e54d329663076d4a9502ac9bb98dceb137028d95527df0126a937c202c"
+        }
+      ]
+    },
+    {
+      "name": "steer-queue",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "04376526471ce416ce57ce0b1fdb5474988b9164705eddb01f1469b717b91319",
+      "calls": [
+        {
+          "ordinal": 21,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 22,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 23,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 2,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/steer-queue.json",
+          "sha256": "3738d0a5c790d51d233abc71de52dec5dd2dbdd9772d3dd9817074402cf8ba21"
+        },
+        {
+          "path": "snapshots/steer-queue.json",
+          "sha256": "af97f18da1afadc2130b789608560608963e4c5d7d86247b88cf6fedebdcde01"
+        },
+        {
+          "path": "sse/steer-queue.sse",
+          "sha256": "bf80a2154f1d282672d32fa9320aca4adfb8290f3f2e1cce1c6c743878189d21"
+        }
+      ]
+    },
+    {
+      "name": "interrupt",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "61c45c7e0f96f6145c8ffe6635853fa684d24012ab45534af172d9f1a4f70237",
+      "calls": [
+        {
+          "ordinal": 24,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "cancelled",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/interrupt.json",
+          "sha256": "4fde79e93999c94cd4badc6065ddc0e755a997aab61e436d05c612a4ec7d4763"
+        },
+        {
+          "path": "snapshots/interrupt.json",
+          "sha256": "8f2197c32716823ca1b58303f7aeeaa3f0bb631a4f0193853916cc413a42c967"
+        },
+        {
+          "path": "sse/interrupt.sse",
+          "sha256": "37b0a1dc5b2091868087829db2abcf6b946621b51065103b061b0057faa7359c"
+        }
+      ]
+    },
+    {
+      "name": "interrupt-resume",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "0c6df54c91459228cd1d413ff71c98af6ba2fb23bd9f2632a9708916765e6ad7",
+      "calls": [
+        {
+          "ordinal": 25,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "cancelled",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 26,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/interrupt-resume.json",
+          "sha256": "6375e4087293262ad0eb52f829d33b1642afa4323eddae0440e16845343802a6"
+        },
+        {
+          "path": "snapshots/interrupt-resume.json",
+          "sha256": "2c5160a293c5de1fa337c9148e48c4d23724f93dc56323bef995894e437e5275"
+        },
+        {
+          "path": "sse/interrupt-resume.sse",
+          "sha256": "b743792f9c0ca1acaff74e46eff28ead405927b89b66fd8ac35ae927bbba9d12"
+        }
+      ]
+    },
+    {
+      "name": "revert",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "6a127fac56d1b5133c129f07e110b4eb7e3e42d5d26e18cec552b819b9b5ff77",
+      "calls": [
+        {
+          "ordinal": 27,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 28,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/revert.json",
+          "sha256": "7a35d219759b4599996ae5c7bb6d7f42f1d8a8aaaf03e883c759fb7c929ab080"
+        },
+        {
+          "path": "snapshots/revert.json",
+          "sha256": "244ab0b22ad456489c470ae08f299a45b1d439a1529e5f903dda7c209306a03b"
+        },
+        {
+          "path": "sse/revert.sse",
+          "sha256": "26de23947905dc34af6ecc307f2dc4e12c8e75e0f540a10526a445c9af071b40"
+        }
+      ]
+    },
+    {
+      "name": "fork",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "7a50c784b95bee54d0600b810783a518168ea13874d8f59f749120a197e2df5e",
+      "calls": [
+        {
+          "ordinal": 29,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/fork.json",
+          "sha256": "fafff9cb7479debb832101ccbb453e3d416e7eb13ca9fbb34b6a1d97a6907b82"
+        },
+        {
+          "path": "snapshots/fork.json",
+          "sha256": "cf25f80f5b41224d5309b5fdd930a74ad70a881181f34518e1bd810658e587db"
+        },
+        {
+          "path": "sse/fork.sse",
+          "sha256": "d359f4d1ae12fd203f953f38bbfc0d970a04b271dbe356583a7c9ef5fee61023"
+        }
+      ]
+    },
+    {
+      "name": "compaction",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "ed92274e27bcfeee7fcf82d09ceaad4cd1416da3256beac3ec6b1ad9c0af7451",
+      "calls": [
+        {
+          "ordinal": 30,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 31,
+          "kind": "compaction",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": null,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/compaction.json",
+          "sha256": "20776975137209bc880f87aad40e9d096a7f8ba7b3be87f2134adb041faa448a"
+        },
+        {
+          "path": "snapshots/compaction.json",
+          "sha256": "9d842cbecaa37cd10afe6bd9976c4b61f422f90a119f7d11d220a092f31575bd"
+        },
+        {
+          "path": "sse/compaction.sse",
+          "sha256": "9599f3771aa4e17dc3cf02ff96b1328f215fc2af8b9ba2affba85dc9b44751df"
+        }
+      ]
+    },
+    {
+      "name": "retry-429",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "aae7526eaa76ccf98331283d4278013aa3bd55d282eab814cf95f0ffe5e89b23",
+      "calls": [
+        {
+          "ordinal": 32,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": 429,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 33,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/retry-429.json",
+          "sha256": "07b73eaddc0edeaf4e39b64ffcb826dc27c2012ef919e2913441680003ad7976"
+        },
+        {
+          "path": "snapshots/retry-429.json",
+          "sha256": "ab6cf6e26f6e716f1e0141cf303e9a35d26d133ba7b19395b77a963c08bd5952"
+        },
+        {
+          "path": "sse/retry-429.sse",
+          "sha256": "905767f122f33bfda5e82e1b32bbec3551149b0b9951662bb2df7213d9ec9b3d"
+        }
+      ]
+    },
+    {
+      "name": "retry-500",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "dde8d377d50d7b9b53514c79cad1520e6245b993762a4fe272fb7f7672d78690",
+      "calls": [
+        {
+          "ordinal": 34,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": 500,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        },
+        {
+          "ordinal": 35,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 1,
+          "status": "completed",
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/retry-500.json",
+          "sha256": "172813ba3a8eb63edea3a9756454a1fdae83b73b7b4e26bbee0e9543d065da80"
+        },
+        {
+          "path": "snapshots/retry-500.json",
+          "sha256": "e7603f68a5bff6e78991fef376fdf77f9a86e21c6462bdb86b46fd91f8590ccc"
+        },
+        {
+          "path": "sse/retry-500.sse",
+          "sha256": "7c2cac708706ef2f51b1cf85426241efbf87c7abfb608a1a32417bb6055c6a3c"
+        }
+      ]
+    },
+    {
+      "name": "final-error",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "264e5873561d333eed3fab0eb4aca66f40ecde6803f95dc196251ec99fd4fdf5",
+      "calls": [
+        {
+          "ordinal": 36,
+          "kind": "primary",
+          "model": "mock-1",
+          "stream": true,
+          "scriptIndex": 0,
+          "status": 400,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "question",
+            "read",
+            "shell",
+            "skill",
+            "subagent",
+            "webfetch",
+            "websearch",
+            "write",
+            "execute"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "rest/final-error.json",
+          "sha256": "55f2bc561da8bfcc79b758fa52b489a7d0fd34e9ca037585d5d741669d76f7cb"
+        },
+        {
+          "path": "snapshots/final-error.json",
+          "sha256": "a8711fc82db604afc4f511bd7f2bdf60b81e280557b4e78a584869d2ad05ed48"
+        },
+        {
+          "path": "sse/final-error.sse",
+          "sha256": "08fe40e97362c5ca6001b03d86bda614e9b5f31717023b3db9493b58ffa473ba"
+        }
+      ]
+    },
+    {
+      "name": "pty",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "621d51202f38693e32078404ea1baf179547c67ef85fe7f6b3fdb79b22659a63",
+      "calls": [],
+      "files": [
+        {
+          "path": "rest/pty.json",
+          "sha256": "397de65c50bc2d8da282c8c93a0e8f3ecb2d6fd921c5ba3515c32ee91331816a"
+        },
+        {
+          "path": "snapshots/pty.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        {
+          "path": "sse/pty.sse",
+          "sha256": "36004ac6261275d67fdb5c7f6d4c708ce0b8e4bca6bb86a91b9652aac73882bd"
+        },
+        {
+          "path": "ws/pty.json",
+          "sha256": "2fb07ae02a39b16e6f0723ba95bc6944720878d991490b8cf5f1bc16ec0aa279"
+        }
+      ]
+    },
+    {
+      "name": "pairing",
+      "serverVersion": "2.2.7",
+      "mockScenarioHash": "621d51202f38693e32078404ea1baf179547c67ef85fe7f6b3fdb79b22659a63",
+      "calls": [],
+      "files": [
+        {
+          "path": "rest/pairing.json",
+          "sha256": "5684a1365e181ebeaaebef9d77d261fea931c08eeb49678cd692d1e26ac767f1"
+        },
+        {
+          "path": "snapshots/pairing.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        {
+          "path": "sse/pairing.sse",
+          "sha256": "00170c6b928909ccdaa4cf344d256e136ca5b56f3cecd8b3d2069e8a20b04a18"
+        }
+      ]
+    },
+    {
+      "name": "v1-probe",
+      "serverVersion": "1.19.3",
+      "mockScenarioHash": "621d51202f38693e32078404ea1baf179547c67ef85fe7f6b3fdb79b22659a63",
+      "calls": [],
+      "files": [
+        {
+          "path": "rest/v1-probe.json",
+          "sha256": "dc38f778245c2bc859dd6fd0586191316d59f040f810153ce1140aa18e891e00"
+        },
+        {
+          "path": "snapshots/v1-probe.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        }
+      ]
+    }
+  ],
+  "omitted": []
+}

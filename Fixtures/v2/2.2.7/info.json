@@ -1,0 +1,14 @@
+{
+  "version": "2.2.7",
+  "pid": 46154,
+  "hostname": "sandbox.local",
+  "urls": [
+    "http://127.0.0.1:58166"
+  ],
+  "paths": {
+    "tmp": "/sandbox/tmp/opencode"
+  },
+  "capabilities": {
+    "persistentPty": true
+  }
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "/global/health",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-length": "35",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:53 GMT",
+        "vary": "Origin"
+      },
+      "body": {
+        "healthy": true,
+        "version": "1.19.3"
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/info",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-length": "2884",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-jURJv6M3UYb5GqNE3+c1I0SvGlqS1+LmHVWtqFsefBk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; media-src 'self' data:; connect-src * data: blob:",
+        "content-type": "text/html",
+        "date": "Thu, 12 Nov 2026 02:53:53 GMT",
+        "vary": "Origin"
+      },
+      "body": "<!doctype html>\n<html lang=\"en\" style=\"background-color: var(--v2-background-bg-deep, #fafafa)\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta\n      name=\"viewport\"\n      content=\"width=device-width, initial-scale=1, interactive-widget=resizes-content, viewport-fit=cover\"\n    />\n    <title>OpenCode</title>\n    <link rel=\"icon\" type=\"image/png\" href=\"/favicon-96x96-v3.png\" sizes=\"96x96\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon-v3.svg\" />\n    <link rel=\"shortcut icon\" href=\"/favicon-v3.ico\" />\n    <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon-v3.png\" />\n    <link rel=\"manifest\" href=\"/site.webmanifest\" />\n    <meta name=\"theme-color\" content=\"#fafafa\" />\n    <meta name=\"mobile-web-app-capable\" content=\"yes\" />\n    <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n    <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\" />\n    <meta property=\"og:image\" content=\"/social-share.png\" />\n    <meta property=\"twitter:image\" content=\"/social-share.png\" />\n    <script id=\"oc-theme-preload-script\">;(function () {\n  var key = \"opencode-theme-id\"\n  var themeId = localStorage.getItem(key) || \"oc-2\"\n\n  if (themeId === \"oc-1\") {\n    themeId = \"oc-2\"\n    localStorage.setItem(key, themeId)\n    localStorage.removeItem(\"opencode-theme-css-light\")\n    localStorage.removeItem(\"opencode-theme-css-dark\")\n  }\n\n  var scheme = localStorage.getItem(\"opencode-color-scheme\") || \"system\"\n  var isDark = scheme === \"dark\" || (scheme === \"system\" && matchMedia(\"(prefers-color-scheme: dark)\").matches)\n  var mode = isDark ? \"dark\" : \"light\"\n\n  document.documentElement.dataset.theme = themeId\n  document.documentElement.dataset.colorScheme = mode\n  document.documentElement.style.backgroundColor = isDark ? \"#080808\" : \"#fafafa\"\n\n  // Update theme-color meta tag to match app color scheme\n  var metas = document.querySelectorAll(\"meta[name='theme-color']\")\n  if (metas.length > 0) metas[0].setAttribute(\"content\", isDark ? \"#080808\" : \"#fafafa\")\n\n  if (themeId === \"oc-2\") return\n\n  var css = localStorage.getItem(\"opencode-theme-css-\" + mode)\n  if (css) {\n    var style = document.createElement(\"style\")\n    style.id = \"oc-theme-preload\"\n    style.textContent =\n      \":root{color-scheme:\" +\n      mode +\n      \";--text-mix-blend-mode:\" +\n      (isDark ? \"plus-lighter\" : \"multiply\") +\n      \";\" +\n      css +\n      \"}\"\n    document.head.appendChild(style)\n  }\n})()\n</script>\n    <script type=\"module\" crossorigin src=\"/assets/index-B5F0ExSs.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DLiUNAg_.css\">\n  </head>\n  <body class=\"antialiased overscroll-none text-12-regular overflow-hidden bg-v2-background-bg-deep\">\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\" class=\"flex flex-col h-dvh bg-v2-background-bg-deep p-px\"></div>\n  </body>\n</html>\n",
+      "bodyFormat": "text"
+    }
+  }
+]

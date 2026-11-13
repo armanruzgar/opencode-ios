@@ -1,0 +1,131 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e3252faceffeTbdrLWJT13sG8G",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e3252faceffeTbdrLWJT13sG8G",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452030770,
+        "updated": 1794452030770
+      },
+      "title": "Fixture final-error",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e3252faceffeTbdrLWJT13sG8G",
+    "eventOffset": 9,
+    "session": {
+      "id": "ses_e3252faceffeTbdrLWJT13sG8G",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "failed",
+      "time": {
+        "created": 1794452030770,
+        "updated": 1794452030825,
+        "busy": 1794452030777,
+        "idle": 1794452030826
+      },
+      "title": "Fixture final-error",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdad0538001zaHciDuSU6aG9E",
+        "time": {
+          "created": 1794452030779
+        },
+        "text": "Run the final-error fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdad053c001bhT9njw2SAi1IE",
+        "time": {
+          "created": 1794452030781,
+          "completed": 1794452030825
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "error",
+        "error": {
+          "type": "provider.invalid-request",
+          "message": "Scripted terminal error",
+          "status": 400,
+          "response": {
+            "body": "{\"error\":{\"message\":\"Scripted terminal error\",\"type\":\"api_error\",\"code\":\"400\"}}"
+          }
+        }
+      },
+      {
+        "id": "msg_1cdad056a001GDs8uFpu3K81Dv",
+        "time": {
+          "created": 1794452030826
+        },
+        "type": "idle",
+        "outcome": "failed",
+        "error": {
+          "type": "provider.invalid-request",
+          "message": "Scripted terminal error",
+          "status": 400,
+          "response": {
+            "body": "{\"error\":{\"message\":\"Scripted terminal error\",\"type\":\"api_error\",\"code\":\"400\"}}"
+          }
+        }
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

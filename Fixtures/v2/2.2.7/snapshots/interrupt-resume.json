@@ -1,0 +1,179 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e32530ec0ffeLdnm7aacRPFYbE",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e32530ec0ffeLdnm7aacRPFYbE",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452025665,
+        "updated": 1794452025665
+      },
+      "title": "Fixture interrupt-resume",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e32530ec0ffeLdnm7aacRPFYbE",
+    "eventOffset": 24,
+    "session": {
+      "id": "ses_e32530ec0ffeLdnm7aacRPFYbE",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 24,
+        "output": 9,
+        "reasoning": 3,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794452025665,
+        "updated": 1794452025845,
+        "busy": 1794452025818,
+        "idle": 1794452025846
+      },
+      "title": "Fixture interrupt-resume",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdacf147001Np1rfOctaLxjaZ",
+        "time": {
+          "created": 1794452025674
+        },
+        "text": "Run the interrupt-resume fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdacf14b0019ORqfetvLoW2tk",
+        "time": {
+          "created": 1794452025676,
+          "streamed": 1794452025807,
+          "completed": 1794452025817
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Starting."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "error",
+        "error": {
+          "type": "aborted",
+          "message": "Step interrupted"
+        }
+      },
+      {
+        "id": "msg_1cdacf1da001WSVx8WeYvRyjMO",
+        "time": {
+          "created": 1794452025818
+        },
+        "type": "idle",
+        "outcome": "interrupted"
+      },
+      {
+        "id": "msg_1cdacf1cb001bMPHte2Td3CsTH",
+        "time": {
+          "created": 1794452025820
+        },
+        "text": "Apply steering input.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdacf1de001GCOt6EhDGDmgEI",
+        "time": {
+          "created": 1794452025823,
+          "streamed": 1794452025836,
+          "completed": 1794452025845
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Resumed steering input."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdacf1f60015YVPHIZmIb1LYa",
+        "time": {
+          "created": 1794452025846
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

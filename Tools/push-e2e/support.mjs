@@ -63,20 +63,31 @@ export class RpcFailure extends Error {
   }
 }
 
-/** `POST /api/rpc/mobilepush/<method>`, on the location of `directory` (the server's default without one). */
+/**
+ * `POST /api/rpc/mobilepush/<method>`, on the location of `directory` (the server's default without one). From 2.2.7
+ * a plugin's RPC answers `rpc.unavailable` for a moment after its location boots, since plugins load after it; that
+ * answer is asked again for up to 10 seconds.
+ */
 export async function rpc(server, method, input, directory) {
   const query = directory ? '?' + new URLSearchParams({ 'location[directory]': directory }) : '';
-  const response = await fetch(`${server.baseURL}/api/rpc/${RPC_ID}/${method}${query}`, {
-    method: 'POST',
-    headers: { authorization: basic(server.password), 'content-type': 'application/json', accept: 'application/json' },
-    // The server refuses a call without `input` ("Expected JSON value"), even for a method that takes none.
-    body: JSON.stringify({ input: input ?? {} }),
-    signal: AbortSignal.timeout(30000),
-  });
-  const text = await response.text();
-  const body = text ? JSON.parse(text) : null;
-  if (response.status !== 200) throw new RpcFailure(method, response.status, body);
-  return body?.output;
+  const deadline = Date.now() + 10_000;
+  for (;;) {
+    const response = await fetch(`${server.baseURL}/api/rpc/${RPC_ID}/${method}${query}`, {
+      method: 'POST',
+      headers: { authorization: basic(server.password), 'content-type': 'application/json', accept: 'application/json' },
+      // The server refuses a call without `input` ("Expected JSON value"), even for a method that takes none.
+      body: JSON.stringify({ input: input ?? {} }),
+      signal: AbortSignal.timeout(30000),
+    });
+    const text = await response.text();
+    const body = text ? JSON.parse(text) : null;
+    if (response.status === 400 && body?.type === 'rpc.unavailable' && Date.now() < deadline) {
+      await new Promise(resolve => setTimeout(resolve, 250));
+      continue;
+    }
+    if (response.status !== 200) throw new RpcFailure(method, response.status, body);
+    return body?.output;
+  }
 }
 
 export async function registerDevice(server, device, relayURL, directory, extra = {}) {

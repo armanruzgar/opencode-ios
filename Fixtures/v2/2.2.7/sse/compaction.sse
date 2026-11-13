@@ -1,0 +1,46 @@
+data: {"id":"evt_1cdacf2aa001nGPosy2xjCB190","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdacf2ac001fXwruVwptzWYLJ","created":1794452026028,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","slug":"swift-wolf","version":"2.2.7","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture compaction","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":0,"version":1}}
+
+data: {"id":"evt_1cdacf2b1001NEWnRiYOssBvAr","created":1794452026033,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1cdacf2b0001949vc9KvmNbZ9U","sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","item":{"type":"user","payload":{"text":"Run the compaction fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":1,"version":1}}
+
+data: {"id":"evt_1cdacf2b1002zE1HDx23JMSZnt","created":1794452026033,"type":"session.execution.started","data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":2,"version":1}}
+
+data: {"id":"evt_1cdacf2b3001sS6NAvDPODMdnj","created":1794452026035,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","delta":{"core/codemode":"b9321aa27fe3f9eb6662ad886008492dd401333a0049c044c54ac2323b9ead1e","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"a7e13a150687c80c4d0443d32fcf7d9efe5c87e5523d17f39302e1f532dde9d8","core/environment":"b2e6c779a5e6d62839a6acc8cc2296b080ce8dc55500cdf29b8995c398187ed5"}},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":3,"version":2}}
+
+data: {"id":"evt_1cdacf2b30025UehUzOmCCtMrG","created":1794452026035,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","inboxID":"msg_1cdacf2b0001949vc9KvmNbZ9U"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":4,"version":1}}
+
+data: {"id":"evt_1cdacf2df001tH50NNd8eC5zba","created":1794452026079,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdacf2b5001wZ87dYAfEoC7ia","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452026038},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":5,"version":1}}
+
+data: {"id":"evt_1cdacf2e0001vYIQRDeYuR1E1b","created":1794452026080,"type":"session.text.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","assistantMessageID":"msg_1cdacf2b5001wZ87dYAfEoC7ia","ordinal":0},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":6,"version":1}}
+
+data: {"id":"evt_1cdacf2e1001IVu8Ci2DdWfRw2","created":1794452026081,"type":"session.text.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","assistantMessageID":"msg_1cdacf2b5001wZ87dYAfEoC7ia","ordinal":0,"delta":"Remember the fixture context."}}
+
+data: {"id":"evt_1cdacf2e1002bsWMWgTRBTe86g","created":1794452026081,"type":"session.text.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","assistantMessageID":"msg_1cdacf2b5001wZ87dYAfEoC7ia","ordinal":0,"text":"Remember the fixture context."},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":7,"version":1}}
+
+data: {"id":"evt_1cdacf2e1003chk9bFgKxdMjvl","created":1794452026081,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","assistantMessageID":"msg_1cdacf2b5001wZ87dYAfEoC7ia"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":8,"version":1}}
+
+data: {"id":"evt_1cdacf2ea001NOHMaAe89zFwWl","created":1794452026090,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","assistantMessageID":"msg_1cdacf2b5001wZ87dYAfEoC7ia","finish":"stop","rawFinish":"stop","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":9,"version":1}}
+
+data: {"id":"evt_1cdacf2eb001SMLxUCGPBR07jV","created":1794452026091,"type":"session.usage.updated","data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","cost":0,"tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdacf2ec001A6CMBEfqd9EOnB","created":1794452026092,"type":"session.execution.succeeded","data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":10,"version":1}}
+
+data: {"id":"evt_1cdacf2f0001CamDyZFV6mvvqb","created":1794452026096,"type":"session.inbox.enqueued","data":{"inboxID":"msg_1cdacf2ef0013eE76LfwppchLN","sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","item":{"type":"compaction","payload":{},"delivery":"steer"}},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":11,"version":1}}
+
+data: {"id":"evt_1cdacf2f0002zs6sHTVtGJqFoC","created":1794452026096,"type":"session.execution.started","data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":12,"version":1}}
+
+data: {"id":"evt_1cdacf2f1001SW5itMG7nLOP4q","created":1794452026097,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","inboxID":"msg_1cdacf2ef0013eE76LfwppchLN"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":13,"version":1}}
+
+data: {"id":"evt_1cdacf2f1002GFSPu2QHI2EUkn","created":1794452026097,"type":"session.compaction.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","reason":"manual","inputID":"msg_1cdacf2ef0013eE76LfwppchLN"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":14,"version":1}}
+
+data: {"id":"evt_1cdacf2fe001kJ1yXHmNedyUa4","created":1794452026110,"type":"session.compaction.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","text":"## Objective\n- Record deterministic fixtures.\n## Requirements\n- Keep the server isolated.\n## Decisions\n- Use the mock provider.\n## Work State\n### Completed\n- Recorded a reply.\n### Active\n- (none)\n### Blocked\n- (none)\n## Next Move\n1. Continue fixture checks.\n## Relevant Files\n- (none)\n## Important Context\n- The fixture context is deterministic."}}
+
+data: {"id":"evt_1cdacf2ff00167AwjdX2H7zDZP","created":1794452026111,"type":"session.usage.updated","data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","cost":0,"tokens":{"input":48,"output":18,"reasoning":6,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdacf300001Oyryl0iRmLgI3L","created":1794452026112,"type":"session.compaction.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4","reason":"manual","model":{"id":"mock-1","providerID":"mock"},"text":"## Objective\n- Record deterministic fixtures.\n## Requirements\n- Keep the server isolated.\n## Decisions\n- Use the mock provider.\n## Work State\n### Completed\n- Recorded a reply.\n### Active\n- (none)\n### Blocked\n- (none)\n## Next Move\n1. Continue fixture checks.\n## Relevant Files\n- (none)\n## Important Context\n- The fixture context is deterministic.","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":16,"version":1}}
+
+data: {"id":"evt_1cdacf301001lCYDYLfqqeTArp","created":1794452026113,"type":"session.execution.succeeded","data":{"sessionID":"ses_e32530d54ffeGIhrplvVfh9bH4"},"durable":{"aggregateID":"ses_e32530d54ffeGIhrplvVfh9bH4","seq":17,"version":1}}
+

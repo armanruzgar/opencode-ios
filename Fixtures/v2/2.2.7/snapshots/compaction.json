@@ -1,0 +1,164 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e32530d54ffeGIhrplvVfh9bH4",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e32530d54ffeGIhrplvVfh9bH4",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452026028,
+        "updated": 1794452026028
+      },
+      "title": "Fixture compaction",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e32530d54ffeGIhrplvVfh9bH4",
+    "eventOffset": 22,
+    "session": {
+      "id": "ses_e32530d54ffeGIhrplvVfh9bH4",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 48,
+        "output": 18,
+        "reasoning": 6,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794452026028,
+        "updated": 1794452026096,
+        "busy": 1794452026096,
+        "idle": 1794452026113
+      },
+      "title": "Fixture compaction",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdacf2b0001949vc9KvmNbZ9U",
+        "time": {
+          "created": 1794452026035
+        },
+        "text": "Run the compaction fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdacf2b5001wZ87dYAfEoC7ia",
+        "time": {
+          "created": 1794452026038,
+          "streamed": 1794452026081,
+          "completed": 1794452026090
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Remember the fixture context."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdacf2ec001A6CMBEfqd9EOnB",
+        "time": {
+          "created": 1794452026092
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      },
+      {
+        "type": "compaction",
+        "id": "msg_1cdacf2ef0013eE76LfwppchLN",
+        "time": {
+          "created": 1794452026097
+        },
+        "status": "completed",
+        "reason": "manual",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock"
+        },
+        "summary": "## Objective\n- Record deterministic fixtures.\n## Requirements\n- Keep the server isolated.\n## Decisions\n- Use the mock provider.\n## Work State\n### Completed\n- Recorded a reply.\n### Active\n- (none)\n### Blocked\n- (none)\n## Next Move\n1. Continue fixture checks.\n## Relevant Files\n- (none)\n## Important Context\n- The fixture context is deterministic.",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdacf301001lCYDYLfqqeTArp",
+        "time": {
+          "created": 1794452026113
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

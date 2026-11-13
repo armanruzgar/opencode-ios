@@ -1,0 +1,186 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/info",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "64",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "_tag": "UnauthorizedError",
+        "message": "Authentication required"
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/info",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "246",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "version": "2.2.7",
+        "pid": 46154,
+        "hostname": "sandbox.local",
+        "urls": [
+          "http://127.0.0.1:58166"
+        ],
+        "paths": {
+          "tmp": "/sandbox/tmp/opencode"
+        },
+        "capabilities": {
+          "persistentPty": true
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "POST",
+      "path": "/api/pair",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "50",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "code": "[REDACTED]",
+        "expires_in": 300
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/auth/connect/[REDACTED]",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "66",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "token": "[REDACTED]"
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/api/info",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity",
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "246",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "version": "2.2.7",
+        "pid": 46154,
+        "hostname": "sandbox.local",
+        "urls": [
+          "http://127.0.0.1:58166"
+        ],
+        "paths": {
+          "tmp": "/sandbox/tmp/opencode"
+        },
+        "capabilities": {
+          "persistentPty": true
+        }
+      },
+      "bodyFormat": "json"
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "/auth/connect/[REDACTED]",
+      "headers": {
+        "accept": "application/json",
+        "accept-encoding": "identity"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "connection": "keep-alive",
+        "content-length": "77",
+        "content-type": "application/json",
+        "date": "Thu, 12 Nov 2026 02:53:51 GMT",
+        "keep-alive": "timeout=5",
+        "vary": "Origin, Accept-Encoding"
+      },
+      "body": {
+        "_tag": "UnauthorizedError",
+        "message": "Pairing link expired or already used"
+      },
+      "bodyFormat": "json"
+    }
+  }
+]

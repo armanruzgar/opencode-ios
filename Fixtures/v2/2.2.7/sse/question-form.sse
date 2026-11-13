@@ -1,0 +1,50 @@
+data: {"id":"evt_1cdacea1f001nc2MiyMbs37hBZ","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdacea24001itv212VIaynTCO","created":1794452023844,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","slug":"swift-cactus","version":"2.2.7","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture question-form","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":0,"version":1}}
+
+data: {"id":"evt_1cdacea2b001akPRjSfHw0dB21","created":1794452023851,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1cdacea2a001aFJXWc2yoohqoZ","sessionID":"ses_e325315deffepL5mfUk1LqDsy6","item":{"type":"user","payload":{"text":"Run the question-form fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":1,"version":1}}
+
+data: {"id":"evt_1cdacea2b002iZ9nyprFudQ8Yx","created":1794452023851,"type":"session.execution.started","data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":2,"version":1}}
+
+data: {"id":"evt_1cdacea2d001pLt3dbdaJgedWd","created":1794452023853,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","delta":{"core/codemode":"b9321aa27fe3f9eb6662ad886008492dd401333a0049c044c54ac2323b9ead1e","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"a7e13a150687c80c4d0443d32fcf7d9efe5c87e5523d17f39302e1f532dde9d8","core/environment":"b2e6c779a5e6d62839a6acc8cc2296b080ce8dc55500cdf29b8995c398187ed5"}},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":3,"version":2}}
+
+data: {"id":"evt_1cdacea2e0012E5upB0dKfYKEo","created":1794452023854,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","inboxID":"msg_1cdacea2a001aFJXWc2yoohqoZ"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":4,"version":1}}
+
+data: {"id":"evt_1cdacea3a001dqVUt2lE3y974g","created":1794452023866,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452023857},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":5,"version":1}}
+
+data: {"id":"evt_1cdacea3b001lkoxAAacrNbJmX","created":1794452023867,"type":"session.tool.input.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352","id":"call_16_0","name":"question"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":6,"version":1}}
+
+data: {"id":"evt_1cdacea3e001tJiAV3vihALL0P","created":1794452023870,"type":"session.tool.input.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352","id":"call_16_0","text":"{\"questions\":[{\"header\":\"Color\",\"question\":\"Which color?\",\"options\":[{\"label\":\"Blue\",\"description\":\"Use blue\"},{\"label\":\"Green\",\"description\":\"Use green\"}]}]}"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":7,"version":1}}
+
+data: {"id":"evt_1cdacea3f001IJXdAF61sfIGR1","created":1794452023871,"type":"session.tool.called","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352","id":"call_16_0","input":{"questions":[{"header":"Color","question":"Which color?","options":[{"label":"Blue","description":"Use blue"},{"label":"Green","description":"Use green"}]}]},"executed":false},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":8,"version":1}}
+
+data: {"id":"evt_1cdacea3f002ZpWc6ut8Q7dsJu","created":1794452023871,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":9,"version":1}}
+
+data: {"id":"evt_1cdacea4100241vehiBJpv0wDm","created":1794452023873,"type":"form.created","location":{"directory":"/sandbox/project"},"data":{"form":{"id":"frm_1cdacea41001sdovNX8iKU5tse","sessionID":"ses_e325315deffepL5mfUk1LqDsy6","title":"Questions","metadata":{"kind":"question","tool":{"messageID":"msg_1cdacea30001jbcMLo06x9t352","id":"call_16_0"}},"fields":[{"key":"q0","title":"Color","description":"Which color?","type":"string","options":[{"value":"Blue","label":"Blue","description":"Use blue"},{"value":"Green","label":"Green","description":"Use green"}],"custom":true}]}}}
+
+data: {"id":"evt_1cdacea950019mhDE4p01T7S79","created":1794452023957,"type":"form.replied","location":{"directory":"/sandbox/project"},"data":{"id":"frm_1cdacea41001sdovNX8iKU5tse","sessionID":"ses_e325315deffepL5mfUk1LqDsy6","answer":{"q0":"Blue"}}}
+
+data: {"id":"evt_1cdacea95002xuT9ColzsyRcKo","created":1794452023957,"type":"session.tool.success","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352","id":"call_16_0","content":[{"type":"text","text":"User has answered your questions: \"Which color?\"=\"Blue\". You can now continue with the user's answers in mind."}],"metadata":{"answers":[["Blue"]],"truncated":false},"executed":false},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":10,"version":2}}
+
+data: {"id":"evt_1cdaceaa0001AN3YbsTJlicnPD","created":1794452023968,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdacea30001jbcMLo06x9t352","finish":"tool-calls","rawFinish":"tool_calls","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":11,"version":1}}
+
+data: {"id":"evt_1cdaceaa1001Wmxb7vicQ2xQNp","created":1794452023969,"type":"session.usage.updated","data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","cost":0,"tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdaceab9001kA5LRAKQse2o8G","created":1794452023993,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdaceaa4001nBZUu7eyahHOt9","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452023973},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":12,"version":1}}
+
+data: {"id":"evt_1cdaceabb001tIS46Tx5qm4q3C","created":1794452023995,"type":"session.text.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdaceaa4001nBZUu7eyahHOt9","ordinal":0},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":13,"version":1}}
+
+data: {"id":"evt_1cdaceabc001lUpgzmbEg2avQC","created":1794452023996,"type":"session.text.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdaceaa4001nBZUu7eyahHOt9","ordinal":0,"delta":"Blue selected."}}
+
+data: {"id":"evt_1cdaceabc002wuaxzDer2TQVpk","created":1794452023996,"type":"session.text.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdaceaa4001nBZUu7eyahHOt9","ordinal":0,"text":"Blue selected."},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":14,"version":1}}
+
+data: {"id":"evt_1cdaceabd001kKSs4VFxWSd2Hh","created":1794452023997,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdaceaa4001nBZUu7eyahHOt9"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":15,"version":1}}
+
+data: {"id":"evt_1cdaceac8001aT5jY0gQEgdr67","created":1794452024008,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","assistantMessageID":"msg_1cdaceaa4001nBZUu7eyahHOt9","finish":"stop","rawFinish":"stop","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":16,"version":1}}
+
+data: {"id":"evt_1cdaceac9001L0uLYMMazamEd1","created":1794452024009,"type":"session.usage.updated","data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6","cost":0,"tokens":{"input":48,"output":18,"reasoning":6,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdaceaca001mGTFyq1FgFeD0S","created":1794452024010,"type":"session.execution.succeeded","data":{"sessionID":"ses_e325315deffepL5mfUk1LqDsy6"},"durable":{"aggregateID":"ses_e325315deffepL5mfUk1LqDsy6","seq":17,"version":1}}
+

@@ -1,0 +1,132 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e3253048dffep2p9LIUYUFmgev",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e3253048dffep2p9LIUYUFmgev",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452028275,
+        "updated": 1794452028275
+      },
+      "title": "Fixture retry-500",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e3253048dffep2p9LIUYUFmgev",
+    "eventOffset": 16,
+    "session": {
+      "id": "ses_e3253048dffep2p9LIUYUFmgev",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 24,
+        "output": 9,
+        "reasoning": 3,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "succeeded",
+      "time": {
+        "created": 1794452028275,
+        "updated": 1794452030752,
+        "busy": 1794452028324,
+        "idle": 1794452030754
+      },
+      "title": "Fixture retry-500",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdacfba3001jyaJ7JyozYwObE",
+        "time": {
+          "created": 1794452028328
+        },
+        "text": "Run the retry-500 fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdacfbaa001oyv1SCyIlyUmbG",
+        "time": {
+          "created": 1794452030731,
+          "streamed": 1794452030743,
+          "completed": 1794452030752
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Recovered from 500."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "stop",
+        "rawFinish": "stop",
+        "cost": 0,
+        "tokens": {
+          "input": 24,
+          "output": 9,
+          "reasoning": 3,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        }
+      },
+      {
+        "id": "msg_1cdad05220017zAJ1Z6FHP9H9a",
+        "time": {
+          "created": 1794452030754
+        },
+        "type": "idle",
+        "outcome": "succeeded"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

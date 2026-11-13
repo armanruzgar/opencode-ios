@@ -1,0 +1,125 @@
+[
+  {
+    "phase": "start",
+    "sessionID": "ses_e32530f74ffec2DteLD97l2QDG",
+    "eventOffset": 2,
+    "session": {
+      "id": "ses_e32530f74ffec2DteLD97l2QDG",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "time": {
+        "created": 1794452025484,
+        "updated": 1794452025484
+      },
+      "title": "Fixture interrupt",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  },
+  {
+    "phase": "end",
+    "sessionID": "ses_e32530f74ffec2DteLD97l2QDG",
+    "eventOffset": 13,
+    "session": {
+      "id": "ses_e32530f74ffec2DteLD97l2QDG",
+      "projectID": "global",
+      "model": {
+        "id": "mock-1",
+        "providerID": "mock",
+        "variant": "default"
+      },
+      "cost": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "outcome": "interrupted",
+      "time": {
+        "created": 1794452025484,
+        "updated": 1794452025650,
+        "busy": 1794452025490,
+        "idle": 1794452025652
+      },
+      "title": "Fixture interrupt",
+      "location": {
+        "directory": "/sandbox/project"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_1cdacf091001G7B4GNfgLxkJM0",
+        "time": {
+          "created": 1794452025492
+        },
+        "text": "Run the interrupt fixture scenario.",
+        "type": "user"
+      },
+      {
+        "id": "msg_1cdacf096001fl0Mx4KIc9B4O2",
+        "time": {
+          "created": 1794452025495,
+          "streamed": 1794452025641,
+          "completed": 1794452025650
+        },
+        "type": "assistant",
+        "agent": "build",
+        "model": {
+          "id": "mock-1",
+          "providerID": "mock",
+          "variant": "default"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Starting."
+          }
+        ],
+        "snapshot": {
+          "start": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "end": "86c6a54396e5e29eeb224a26866f7c5f7786cbd0",
+          "files": []
+        },
+        "finish": "error",
+        "error": {
+          "type": "aborted",
+          "message": "Step interrupted"
+        }
+      },
+      {
+        "id": "msg_1cdacf133001BDBp0vmHdJc7IA",
+        "time": {
+          "created": 1794452025652
+        },
+        "type": "idle",
+        "outcome": "interrupted"
+      }
+    ],
+    "inbox": [],
+    "permissions": [],
+    "forms": []
+  }
+]

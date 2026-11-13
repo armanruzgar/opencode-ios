@@ -10,8 +10,9 @@ a permission request and a question form, and patches and an image to review.
 compare against, on the simulator and on the Mac that runs `swift test`.
 
 `v2/<server-version>/` contains real isolated npm-server recordings: 2.0.32, an
-early release close to the 2.0.25 minimum, and 2.2.6. The fixture tests read
-every recorded release, and the newest one is the baseline the spec watch
+early release close to the 2.0.25 minimum; 2.2.6, the only one whose terminal
+connects after the shell's greeting and gets it as replay; and 2.2.7. The fixture
+tests read every recorded release, and the newest one is the baseline the spec watch
 compares new releases with. See [`Tools/README.md`](../Tools/README.md) for
 isolation, mock scripts, and commands.
 

@@ -1,0 +1,66 @@
+data: {"id":"evt_1cdace79f00119RrQVKZRxFYD6","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdace7a5001BuYDMXTQPOWVD3","created":1794452023205,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","slug":"nimble-eagle","version":"2.2.7","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture permission-allow","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":0,"version":1}}
+
+data: {"id":"evt_1cdace7af002lHGPQ3vTKZUTM6","created":1794452023215,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1cdace7af001uRJ6nCUNq0BDiZ","sessionID":"ses_e3253185dffedSseiGvP0LFnfd","item":{"type":"user","payload":{"text":"Run the permission-allow fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":1,"version":1}}
+
+data: {"id":"evt_1cdace7b0001mYBXglRov0d7AI","created":1794452023216,"type":"session.execution.started","data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":2,"version":1}}
+
+data: {"id":"evt_1cdace7b2001gn46fwhTnHsaGs","created":1794452023218,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","delta":{"core/codemode":"b9321aa27fe3f9eb6662ad886008492dd401333a0049c044c54ac2323b9ead1e","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"a7e13a150687c80c4d0443d32fcf7d9efe5c87e5523d17f39302e1f532dde9d8","core/environment":"b2e6c779a5e6d62839a6acc8cc2296b080ce8dc55500cdf29b8995c398187ed5"}},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":3,"version":2}}
+
+data: {"id":"evt_1cdace7b2002ynz9sJZ3V45U8K","created":1794452023218,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","inboxID":"msg_1cdace7af001uRJ6nCUNq0BDiZ"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":4,"version":1}}
+
+data: {"id":"evt_1cdace7df0016W5C5n0q9SR0j2","created":1794452023263,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452023224},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":5,"version":1}}
+
+data: {"id":"evt_1cdace7e1001pSni65J35mmf2Q","created":1794452023265,"type":"session.tool.input.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG","id":"call_8_0","name":"read"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":6,"version":1}}
+
+data: {"id":"evt_1cdace7e2001Up6VULxbuuaGbw","created":1794452023266,"type":"session.tool.input.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG","id":"call_8_0","text":"{\"path\":\"sample.txt\"}"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":7,"version":1}}
+
+data: {"id":"evt_1cdace7e3001B5gYLJYWp3z27z","created":1794452023267,"type":"session.tool.called","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG","id":"call_8_0","input":{"path":"sample.txt"},"executed":false},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":8,"version":1}}
+
+data: {"id":"evt_1cdace7e4001qDYWy7zw4VQi7x","created":1794452023268,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":9,"version":1}}
+
+data: {"id":"evt_1cdace7e7001tcLHTDqBjFLYEx","created":1794452023271,"type":"session.tool.success","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG","id":"call_8_0","content":[{"type":"text","text":"Read file sample.txt, lines 1-2\n1: original fixture line\n2: second line"}],"metadata":{"truncated":false},"executed":false},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":10,"version":2}}
+
+data: {"id":"evt_1cdace7f5001p0CctZLdIbfZGD","created":1794452023285,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7b6001j4qz94pq3zOGoG","finish":"tool-calls","rawFinish":"tool_calls","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":11,"version":1}}
+
+data: {"id":"evt_1cdace7f7001OeMWG4D42uJ1gc","created":1794452023287,"type":"session.usage.updated","data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","cost":0,"tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdace808001ji939FCvg8i6Lg","created":1794452023304,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452023290},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":12,"version":1}}
+
+data: {"id":"evt_1cdace809001rQZODjnnx0bamA","created":1794452023305,"type":"session.tool.input.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc","id":"call_9_0","name":"edit"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":13,"version":1}}
+
+data: {"id":"evt_1cdace812001zSrJYqqUQuWoRw","created":1794452023314,"type":"session.tool.input.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc","id":"call_9_0","text":"{\"path\":\"sample.txt\",\"oldString\":\"original\",\"newString\":\"edited\"}"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":14,"version":1}}
+
+data: {"id":"evt_1cdace813001pcQJ8Fe9OcO0Ua","created":1794452023315,"type":"session.tool.called","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc","id":"call_9_0","input":{"path":"sample.txt","oldString":"original","newString":"edited"},"executed":false},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":15,"version":1}}
+
+data: {"id":"evt_1cdace814001YMgG35jDY3oU8v","created":1794452023316,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":16,"version":1}}
+
+data: {"id":"evt_1cdace816002gKuTqCSXE1Hoh0","created":1794452023318,"type":"permission.asked","location":{"directory":"/sandbox/project"},"data":{"id":"per_1cdace816001MDpLGlzjO846Oa","sessionID":"ses_e3253185dffedSseiGvP0LFnfd","action":"edit","resources":["sample.txt"],"save":["*"],"metadata":{"files":[{"file":"sample.txt","patch":"Index: sample.txt\n===================================================================\n--- sample.txt\n+++ sample.txt\n@@ -1,2 +1,2 @@\n-original fixture line\n+edited fixture line\n second line\n","status":"modified","additions":1,"deletions":1}]},"source":{"type":"tool","messageID":"msg_1cdace7f9001uL3E0midrKtItc","id":"call_9_0"}}}
+
+data: {"id":"evt_1cdace8a0001cNRhnFeP3zd1s6","created":1794452023456,"type":"permission.replied","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","requestID":"per_1cdace816001MDpLGlzjO846Oa","reply":"once"}}
+
+data: {"id":"evt_1cdace8a20015pIibt0NaFAYrT","created":1794452023458,"type":"session.tool.success","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc","id":"call_9_0","content":[{"type":"text","text":"Edited sample.txt (1 replacement)"}],"metadata":{"files":[{"file":"sample.txt","patch":"Index: sample.txt\n===================================================================\n--- sample.txt\n+++ sample.txt\n@@ -1,2 +1,2 @@\n-original fixture line\n+edited fixture line\n second line\n","status":"modified","additions":1,"deletions":1}],"truncated":false},"executed":false},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":17,"version":2}}
+
+data: {"id":"evt_1cdace8d0001R4o3YHzzkUFxZ0","created":1794452023504,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace7f9001uL3E0midrKtItc","finish":"tool-calls","rawFinish":"tool_calls","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"31b6c27649a87057b58c1df6b070737bb2850ca0","files":["sample.txt"]},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":18,"version":1}}
+
+data: {"id":"evt_1cdace8d2001FmPIIFjJ4ns51j","created":1794452023506,"type":"session.usage.updated","data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","cost":0,"tokens":{"input":48,"output":18,"reasoning":6,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdace8e1001ffvlaeD9zRbp9M","created":1794452023521,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdace8d5001kFIjt6gsQdzfoA","snapshot":"31b6c27649a87057b58c1df6b070737bb2850ca0","started":1794452023510},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":19,"version":1}}
+
+data: {"id":"evt_1cdace8ec001adT0RwpplpxFu1","created":1794452023532,"type":"session.text.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace8d5001kFIjt6gsQdzfoA","ordinal":0},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":20,"version":1}}
+
+data: {"id":"evt_1cdace8ed001pI3NxriVbULU1M","created":1794452023533,"type":"session.text.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace8d5001kFIjt6gsQdzfoA","ordinal":0,"delta":"The edit was approved."}}
+
+data: {"id":"evt_1cdace8ed002uHnMipDvWH11Qt","created":1794452023533,"type":"session.text.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace8d5001kFIjt6gsQdzfoA","ordinal":0,"text":"The edit was approved."},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":21,"version":1}}
+
+data: {"id":"evt_1cdace8ee0016s8P3IUSHs95RT","created":1794452023534,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace8d5001kFIjt6gsQdzfoA"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":22,"version":1}}
+
+data: {"id":"evt_1cdace903001DKrNPZwVUb3iU5","created":1794452023555,"type":"session.step.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","assistantMessageID":"msg_1cdace8d5001kFIjt6gsQdzfoA","finish":"stop","rawFinish":"stop","tokens":{"input":24,"output":9,"reasoning":3,"cache":{"read":0,"write":0}},"cost":0,"snapshot":"31b6c27649a87057b58c1df6b070737bb2850ca0","files":[]},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":23,"version":1}}
+
+data: {"id":"evt_1cdace904001IqYnhcCEiCNcDS","created":1794452023556,"type":"session.usage.updated","data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd","cost":0,"tokens":{"input":72,"output":27,"reasoning":9,"cache":{"read":0,"write":0}}}}
+
+data: {"id":"evt_1cdace905001Lo9rRjMMCR2fDY","created":1794452023557,"type":"session.execution.succeeded","data":{"sessionID":"ses_e3253185dffedSseiGvP0LFnfd"},"durable":{"aggregateID":"ses_e3253185dffedSseiGvP0LFnfd","seq":24,"version":1}}
+

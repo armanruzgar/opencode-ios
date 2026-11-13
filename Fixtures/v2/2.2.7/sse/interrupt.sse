@@ -1,0 +1,28 @@
+data: {"id":"evt_1cdacf08a001OlOg5yQN0qLrZ6","type":"server.connected","data":{}}
+
+: heartbeat
+
+data: {"id":"evt_1cdacf08c001BlAl1oTHZHTpSq","created":1794452025484,"type":"session.created","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","slug":"curious-star","version":"2.2.7","projectID":"global","location":{"directory":"/sandbox/project"},"subpath":"","title":"Fixture interrupt","model":{"id":"mock-1","providerID":"mock"}},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":0,"version":1}}
+
+data: {"id":"evt_1cdacf0920015qiFxNbDKehT7P","created":1794452025490,"type":"session.inbox.enqueued","location":{"directory":"/sandbox/project"},"data":{"inboxID":"msg_1cdacf091001G7B4GNfgLxkJM0","sessionID":"ses_e32530f74ffec2DteLD97l2QDG","item":{"type":"user","payload":{"text":"Run the interrupt fixture scenario."},"delivery":"steer"}},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":1,"version":1}}
+
+data: {"id":"evt_1cdacf0920024EKQ5qLZISXtje","created":1794452025490,"type":"session.execution.started","data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG"},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":2,"version":1}}
+
+data: {"id":"evt_1cdacf094001qbbBaEMjhWmWQI","created":1794452025492,"metadata":{"instructions":{"initial":true}},"type":"session.instructions.updated","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","delta":{"core/codemode":"b9321aa27fe3f9eb6662ad886008492dd401333a0049c044c54ac2323b9ead1e","core/skill-guidance":"8394362d28c82fa4d13c7a9f5568c05680f6687e07db8f426a0e3c92f3027dc9","core/date":"a7e13a150687c80c4d0443d32fcf7d9efe5c87e5523d17f39302e1f532dde9d8","core/environment":"b2e6c779a5e6d62839a6acc8cc2296b080ce8dc55500cdf29b8995c398187ed5"}},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":3,"version":2}}
+
+data: {"id":"evt_1cdacf094002w8DclC2nJOZqyg","created":1794452025492,"type":"session.inbox.delivered","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","inboxID":"msg_1cdacf091001G7B4GNfgLxkJM0"},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":4,"version":1}}
+
+data: {"id":"evt_1cdacf0b60018juyQDcZNlgMbD","created":1794452025526,"type":"session.step.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","agent":"build","model":{"id":"mock-1","providerID":"mock","variant":"default"},"assistantMessageID":"msg_1cdacf096001fl0Mx4KIc9B4O2","snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","started":1794452025495},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":5,"version":1}}
+
+data: {"id":"evt_1cdacf0b7001hqD2VSOxtGjk7Y","created":1794452025527,"type":"session.text.started","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","assistantMessageID":"msg_1cdacf096001fl0Mx4KIc9B4O2","ordinal":0},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":6,"version":1}}
+
+data: {"id":"evt_1cdacf11d001Fw14S75kXFmIXF","created":1794452025629,"type":"session.text.delta","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","assistantMessageID":"msg_1cdacf096001fl0Mx4KIc9B4O2","ordinal":0,"delta":"Starting."}}
+
+data: {"id":"evt_1cdacf128001RFqvDD6m2OmvZB","created":1794452025640,"type":"session.text.ended","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","assistantMessageID":"msg_1cdacf096001fl0Mx4KIc9B4O2","ordinal":0,"text":"Starting."},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":7,"version":1}}
+
+data: {"id":"evt_1cdacf12900121ovfcWEY9bHce","created":1794452025641,"type":"session.step.streamed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","assistantMessageID":"msg_1cdacf096001fl0Mx4KIc9B4O2"},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":8,"version":1}}
+
+data: {"id":"evt_1cdacf132001uNEGDyQUWI4tTZ","created":1794452025650,"type":"session.step.failed","location":{"directory":"/sandbox/project"},"data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","assistantMessageID":"msg_1cdacf096001fl0Mx4KIc9B4O2","error":{"type":"aborted","message":"Step interrupted"},"snapshot":"86c6a54396e5e29eeb224a26866f7c5f7786cbd0","files":[]},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":9,"version":1}}
+
+data: {"id":"evt_1cdacf133001BDBp0vmHdJc7IA","created":1794452025652,"type":"session.execution.interrupted","data":{"sessionID":"ses_e32530f74ffec2DteLD97l2QDG","reason":"user"},"durable":{"aggregateID":"ses_e32530f74ffec2DteLD97l2QDG","seq":10,"version":1}}
+

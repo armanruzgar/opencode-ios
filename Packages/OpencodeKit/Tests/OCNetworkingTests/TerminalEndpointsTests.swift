@@ -16,7 +16,7 @@ private struct RecordedFrame: Decodable {
 /// The recorded PTY session (Tools/fixture-recorder `pty`): per connection, text replayed from the cursor it asked
 /// for, one 0x00 control frame with the position after the replay, then live text; and a resume whose cursor counts
 /// the first connection's output in UTF-16 code units. Whether the shell's greeting is replayed or arrives live
-/// depends on timing: 2.0.32's recording has it live, 2.2.6's replayed.
+/// depends on timing: 2.0.32's and 2.2.7's recordings have it live, 2.2.6's replayed.
 @Test(arguments: Fixtures.versions) func recordedFramesParseInOrder(version: URL) throws {
     let url = version.appending(path: "ws/pty.json")
     guard FileManager.default.fileExists(atPath: url.path) else { return }

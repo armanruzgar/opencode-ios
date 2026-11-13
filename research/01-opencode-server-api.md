@@ -1154,17 +1154,25 @@ Fetching `packages/protocol/openapi.json` at the V2 tags (raw.githubusercontent.
 
 A field-level comparison of 20 core schemas between v2.0.10 and v2.0.29 found **only additions** (for example `Provider.Info.compatibility?`, `Shell.Info.signal?`, `ServerInfo.capabilities?`, `Connection.CredentialInfo.method/status?`).
 
-### 11.7 What changed for a client from 2.0.32 to 2.2.6
+### 11.7 What changed for a client from 2.0.32 to 2.2.7
 
-Checked on 2026-11-07 against both releases' served `/openapi.json` (recorded in `Fixtures/v2/`), the generated `types.ts` at each tag and `CHANGELOG.md`. `oasdiff` flags 159 changes as breaking, but almost all are schema-generator noise: query parameters lost `null` from their types, numbers gained a 2^53−1 maximum, boolean query flags became `"true" | "false"` enums, and `location` query parameters are now typed `object` (the deep-object `location[directory]` form clients already send). No operation was removed, and the message, form, statistics and session-info shapes are unchanged apart from the points below.
+Checked on 2026-11-07 against 2.0.32's and 2.2.6's served `/openapi.json` (both recorded in `Fixtures/v2/`), the generated `types.ts` at each tag and `CHANGELOG.md`. `oasdiff` flags 159 changes as breaking, but almost all are schema-generator noise: query parameters lost `null` from their types, numbers gained a 2^53−1 maximum, boolean query flags became `"true" | "false"` enums, and `location` query parameters are now typed `object` (the deep-object `location[directory]` form clients already send). No operation was removed, and the message, form, statistics and session-info shapes are unchanged apart from the points below.
 
 - **Session archiving (2.1.0).** `PATCH /api/session/{id}` takes `archived: boolean`; `GET /api/session` takes `archived=true|false`, which 2.0.x ignores. The durable `session.archived` and `session.unarchived` events set and clear `time.archived` (at the event's `created`) and update `time.updated`. 2.2.6 adds `opencode run --archived`, which archives the session it creates; the desktop, the TUI and this app keep archived sessions out of their lists.
 - **Provider state is `native` (2.1.0).** `state` on text and reasoning, `providerState` on assistant messages and tool calls, and `resultState` on tool results became one opaque `native` object; a tool result's `native` is merged into the call's. Compaction messages and events lost `recent` and `providerContext`.
 - **`time.busy` (2.2.2)** on session info: the start of the latest execution.
 - **`hostname` (2.2.0)** in `GET /api/info`.
-- **New events (2.2.4).** `persistent-pty.updated` (a session terminal's rename, with `userTitle` on `PersistentPty.Info`) and `artifact.updated` (experimental artifacts). The union has 97 fixed types at 2.2.6.
+- **New events (2.2.4).** `persistent-pty.updated` (a session terminal's rename, with `userTitle` on `PersistentPty.Info`) and `artifact.updated` (experimental artifacts). The union has 97 fixed types at 2.2.6 and at 2.2.7.
 - **File reads (2.2.6).** `GET /api/fs/read/*` answers with `content-disposition: attachment`, `x-content-type-options: nosniff` and a sandboxed CSP, and sends HTML, JavaScript and XML (SVG included) as `text/plain`; images, audio and video keep their type. `/api/*` requests that carry `Sec-Fetch-Site: cross-site` or `same-site` get 403 when they are navigations or come from an origin that is not allowed; clients that send no `Sec-Fetch-*` headers are unaffected.
-- **PTY replay** is unchanged: text from the requested cursor, then the control frame at that cursor plus the replayed length. The 2.2.6 recording connects after the shell's greeting and gets it as replay; the 2.0.32 one gets it live, after a control frame at 0.
+- **PTY replay** is unchanged: text from the requested cursor, then the control frame at that cursor plus the replayed length. The 2.2.6 recording connects after the shell's greeting and gets it as replay; the 2.0.32 and 2.2.7 ones get it live, after a control frame at 0.
+
+2.2.6 to 2.2.7, checked on 2026-11-11 against both recordings' `/openapi.json` and a live 2.2.7 sandbox: no operation, schema or event type was added or removed.
+
+- **Integrations load after a location boots (2.2.7).** The first `GET /api/integration` for a location that just booted can answer an empty list; `integration.updated` follows once the integrations load (about 0.1 s later in a sandbox), and the list is complete from then on. A client reloads the list on that event.
+- **Plugins load after a location boots (2.2.7).** Until they have, a plugin's `POST /api/rpc/<id>/<method>` answers 400 with `{"_tag":"RpcError","type":"rpc.unavailable"}` (about half a second in a sandbox; 2.2.6 answered at once). A server without the plugin gives the same answer, at any time and in every release, so a client cannot tell the two apart: the app reports the push registration unavailable and tries again on its next connection or refresh.
+- **Generated text reports its usage (2.2.7).** `POST /api/session/{id}/generate` answers `tokens` and `cost` beside `text`, and they count toward the session's usage: `session.usage.recorded` has a `generate` source. `Generate.PredicateQuestion` takes optional `criteria` with `true` and `false` descriptions.
+- **`credential.updated` names the credential (2.2.7):** `integrationID` and `credentialID`.
+- **`experimental.console_watches` (2.2.7)** in the configuration lets Console event watches wake sessions. `GET /api/agent` no longer lists a 503 response.
 
 ## 12. Stability, versioning and capability detection
 
