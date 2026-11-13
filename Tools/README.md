@@ -5,6 +5,24 @@ standard macOS process utilities. Run commands from the repository root. No
 global packages, provider keys, or real model calls are needed. Design capture
 installs its pinned Playwright dependency and browser locally under `.build`.
 
+## Choosing checks
+
+```sh
+node Tools/checks/index.mjs           # the working tree against origin/main
+node Tools/checks/index.mjs HEAD~1    # against another base
+```
+
+It lists the local checks a change needs, with their commands and the paths that need them
+(`Tools/checks/scope.mjs`). The full UI run, an hour or more, is needed only for the app, its
+extensions, its UI tests, the project and configuration, the package tests the project runs on the
+simulator (snapshots, the server screens' tests, the composer editor tests and the read performance
+budgets) and the fixtures they read, and the tools the run is built on (`ui-smoke`,
+`opencode-sandbox`, `mock-llm`, the review and MCP fixtures, and the files it imports from the
+design reference and the fixture recorder; a test follows the run's imports). Push tools, the
+server's plugin and the relay need the simulator push stage on its own, recordings and the other
+package tests need the package tests, and the networking, model and sync layers and the contract's
+tools need the live contract. Documentation needs nothing.
+
 ## Record fixtures
 
 ```sh
