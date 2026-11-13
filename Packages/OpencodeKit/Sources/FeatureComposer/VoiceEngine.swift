@@ -25,8 +25,10 @@ enum VoiceError: LocalizedError {
         guard await AVAudioApplication.requestRecordPermission() else {
             return .denied(localized("Microphone access is off. Turn it on in Settings › Privacy & Security › Microphone."))
         }
+        // The answer arrives on a background queue. A handler that inherited the main actor would trap there, so it
+        // is @Sendable: it only resumes the continuation.
         let speech = await withCheckedContinuation { continuation in
-            SFSpeechRecognizer.requestAuthorization { continuation.resume(returning: $0) }
+            SFSpeechRecognizer.requestAuthorization { @Sendable status in continuation.resume(returning: status) }
         }
         guard speech == .authorized else {
             return .denied(localized("Speech recognition is off. Turn it on in Settings › Privacy & Security › Speech Recognition."))
